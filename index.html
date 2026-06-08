@@ -521,7 +521,7 @@ function rCount(q){
   el('qtext').textContent='How many can you see? 👀';
   const items=Array(q.count).fill(q.emoji).map(e=>`<span class="citem">${e}</span>`).join('');
   setV(`<div class="countgrid">${items}</div>`);
-  renderOpts(q.opts,q.answer);
+  renderOpts(q.opts,q.count);
 }
 
 /* helpers */
