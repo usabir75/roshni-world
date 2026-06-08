@@ -1,0 +1,727 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Roshni World ✨</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@700;800;900&display=swap" rel="stylesheet">
+<style>
+:root{--r:22px}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;user-select:none}
+html,body{width:100%;height:100%;overflow:hidden;touch-action:manipulation}
+body{font-family:'Nunito','Segoe UI',sans-serif;background:#120a2e;min-height:100vh}
+
+/* animated bg */
+#bg{position:fixed;inset:0;z-index:0;background:linear-gradient(135deg,#120a2e,#0d1b4a);animation:bgpulse 10s ease-in-out infinite alternate}
+@keyframes bgpulse{0%{background:linear-gradient(135deg,#120a2e,#0d1b4a)}50%{background:linear-gradient(135deg,#1a0533,#0d2e1b)}100%{background:linear-gradient(135deg,#0d1b4a,#120a2e)}}
+
+/* particles */
+#pts{position:fixed;inset:0;pointer-events:none;z-index:1;overflow:hidden}
+.pt{position:absolute;border-radius:50%;animation:ptrise linear infinite}
+@keyframes ptrise{0%{transform:translateY(105vh) scale(0);opacity:0}10%{opacity:.6}90%{opacity:.6}100%{transform:translateY(-5vh) scale(1);opacity:0}}
+
+#app{position:relative;z-index:2;width:100vw;height:100vh}
+
+.screen{display:none;position:absolute;inset:0;flex-direction:column;align-items:center;justify-content:center;padding:14px;gap:12px;overflow-y:auto;overscroll-behavior:contain}
+.screen.active{display:flex}
+
+/* typography */
+.big-title{font-size:clamp(2.2rem,9vw,4rem);font-weight:900;color:#fff;text-align:center;text-shadow:0 0 30px rgba(255,215,0,.7),0 4px 12px rgba(0,0,0,.6);letter-spacing:-1px}
+.sub{font-size:clamp(.95rem,3.2vw,1.4rem);color:rgba(255,255,255,.7);text-align:center;font-weight:700}
+
+/* profile cards */
+.profiles{display:flex;gap:18px;flex-wrap:wrap;justify-content:center}
+.pcard{background:rgba(255,255,255,.1);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border:2px solid rgba(255,255,255,.2);border-radius:26px;padding:26px 30px;text-align:center;cursor:pointer;transition:transform .2s,border-color .2s;min-width:138px}
+.pcard:hover{border-color:rgba(255,215,0,.7);transform:scale(1.06)}
+.pcard:active{transform:scale(.93)}
+.pa{font-size:4rem;margin-bottom:6px}
+.pn{font-size:1.4rem;font-weight:900;color:#fff}
+.ps{font-size:.95rem;color:#FFD700;margin-top:4px;font-weight:700}
+
+/* player badge (world screen) */
+.badge{background:rgba(255,255,255,.13);border-radius:50px;padding:9px 20px;color:#fff;font-size:1.05rem;font-weight:800;display:flex;align-items:center;gap:8px}
+.badge-stars{color:#FFD700}
+
+/* worlds grid */
+.worlds{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;width:100%;max-width:560px}
+@media(max-width:380px){.worlds{grid-template-columns:1fr 1fr}}
+.wcard{border-radius:20px;padding:20px 10px;text-align:center;cursor:pointer;border:3px solid rgba(255,255,255,.15);background:rgba(255,255,255,.07);transition:transform .18s;display:flex;flex-direction:column;align-items:center;gap:7px}
+.wcard:hover{transform:scale(1.06)}
+.wcard:active{transform:scale(.92)}
+.wicon{font-size:2.6rem}
+.wname{font-size:.9rem;font-weight:900;color:#fff;line-height:1.2}
+.w-math  {border-color:#FF8C00;background:rgba(255,140,0,.13)}
+.w-spell {border-color:#43E97B;background:rgba(67,233,123,.12)}
+.w-quran {border-color:#FFD700;background:rgba(255,215,0,.12)}
+.w-animal{border-color:#FF6B9D;background:rgba(255,107,157,.12)}
+.w-color {border-color:#C471ED;background:rgba(196,113,237,.12)}
+.w-count {border-color:#12C2E9;background:rgba(18,194,233,.12)}
+
+/* mascot */
+#mascot{position:absolute;top:13px;right:13px;font-size:2rem;z-index:10;transition:transform .3s}
+#mascot.react{animation:mreact .4s ease}
+@keyframes mreact{0%,100%{transform:scale(1)}50%{transform:scale(1.5) rotate(15deg)}}
+
+/* back button */
+.back{position:absolute;top:12px;left:12px;width:48px;height:48px;border-radius:50%;background:rgba(255,255,255,.15);border:none;font-size:1.4rem;color:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center;z-index:10;touch-action:manipulation;transition:background .2s}
+.back:hover{background:rgba(255,255,255,.28)}
+
+/* score bar */
+.sbar{width:100%;max-width:660px;display:flex;justify-content:space-between;align-items:center;background:rgba(255,255,255,.1);border-radius:50px;padding:9px 16px;gap:8px;flex-shrink:0}
+.sb-name{font-size:clamp(.8rem,2.4vw,.95rem);font-weight:900;color:#fff;white-space:nowrap}
+.sb-stars{font-size:clamp(.85rem,2.4vw,1.05rem);font-weight:900;color:#FFD700;white-space:nowrap}
+.dots{display:flex;gap:5px;align-items:center;flex-wrap:wrap;justify-content:center}
+.dot{width:11px;height:11px;border-radius:50%;background:rgba(255,255,255,.22);flex-shrink:0;transition:background .3s}
+.dot.done{background:#FFD700}
+.dot.cur{background:#fff;transform:scale(1.3)}
+
+/* question card */
+.qcard{background:rgba(255,255,255,.1);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-radius:24px;padding:18px 16px 14px;width:100%;max-width:660px;text-align:center;border:1px solid rgba(255,255,255,.15);flex-shrink:0}
+.qemoji{font-size:clamp(3rem,11vw,5.5rem);line-height:1.1}
+.qimg{width:clamp(90px,28vw,170px);height:clamp(90px,28vw,170px);border-radius:18px;object-fit:cover;display:block;margin:0 auto;background:rgba(0,0,0,.2)}
+.qimgbox{display:flex;align-items:center;justify-content:center;width:clamp(90px,28vw,170px);height:clamp(90px,28vw,170px);border-radius:18px;background:rgba(0,0,0,.2);margin:0 auto;font-size:clamp(3rem,11vw,5rem)}
+.qtext{font-size:clamp(1.3rem,5vw,2.4rem);font-weight:900;color:#fff;margin-top:8px;line-height:1.2}
+.qarabic{font-size:clamp(1.2rem,4vw,2rem);color:#FFD700;direction:rtl;font-family:'Traditional Arabic','Arial Unicode MS',serif;line-height:1.9;margin-top:8px;display:none}
+.colordisk{width:clamp(110px,32vw,200px);height:clamp(110px,32vw,200px);border-radius:50%;margin:0 auto;box-shadow:0 0 40px rgba(255,255,255,.15),0 0 0 6px rgba(255,255,255,.12)}
+.countgrid{display:flex;flex-wrap:wrap;justify-content:center;gap:4px;max-width:280px;margin:0 auto}
+.citem{font-size:clamp(1.6rem,5.5vw,2.4rem);line-height:1.2}
+
+/* try-again bar */
+.trybar{width:100%;max-width:660px;background:rgba(255,70,70,.22);border:2px solid rgba(255,70,70,.4);border-radius:50px;padding:9px 16px;text-align:center;color:#fff;font-size:clamp(.85rem,2.8vw,1.1rem);font-weight:800;display:none;flex-shrink:0}
+.trybar.show{display:block}
+
+/* options */
+.opts{display:grid;grid-template-columns:1fr 1fr;gap:11px;width:100%;max-width:660px;flex-shrink:0}
+.opt{padding:16px 10px;font-size:clamp(1.05rem,3.8vw,1.7rem);font-weight:900;border:3px solid rgba(255,255,255,.2);border-radius:18px;background:rgba(255,255,255,.09);color:#fff;cursor:pointer;min-height:68px;touch-action:manipulation;transition:transform .1s,background .15s;display:flex;align-items:center;justify-content:center;text-align:center;line-height:1.2;font-family:'Nunito',sans-serif}
+.opt:hover{background:rgba(255,255,255,.18);transform:scale(1.03)}
+.opt:active{transform:scale(.93)}
+.opt.correct{background:linear-gradient(135deg,#43E97B,#38F9D7)!important;color:#1a2e20;border-color:#43E97B}
+.opt.wrong{background:rgba(255,70,70,.3)!important;color:#fff;border-color:#ff4646;opacity:.55;pointer-events:none}
+
+/* general buttons */
+.btn{padding:15px 28px;font-size:clamp(1rem,3.2vw,1.55rem);font-weight:900;border:none;border-radius:18px;cursor:pointer;min-width:170px;min-height:58px;font-family:'Nunito',sans-serif;touch-action:manipulation;transition:transform .1s;box-shadow:0 6px 18px rgba(0,0,0,.3)}
+.btn:active{transform:scale(.93)}
+.btn-g{background:linear-gradient(135deg,#43E97B,#38F9D7);color:#1a2e20}
+.btn-b{background:linear-gradient(135deg,#4FACFE,#00F2FE);color:#0d1b4a}
+.btn-p{background:linear-gradient(135deg,#F093FB,#F5576C);color:#fff}
+.btn-o{background:linear-gradient(135deg,#F6D365,#FDA085);color:#2e1a0d}
+
+/* complete screen */
+.statrow{display:flex;gap:12px;flex-wrap:wrap;justify-content:center}
+.statbox{background:rgba(255,255,255,.1);border-radius:18px;padding:15px 20px;text-align:center;min-width:95px}
+.statval{font-size:clamp(2rem,7vw,3rem);color:#FFD700;font-weight:900}
+.statlbl{font-size:.88rem;color:#bbb;margin-top:3px}
+
+/* overlay */
+#overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.62);z-index:300;flex-direction:column;align-items:center;justify-content:center;gap:12px;pointer-events:none}
+#overlay.on{display:flex}
+.ov-e{font-size:5.5rem;animation:ovbounce .5s infinite alternate}
+.ov-t{font-size:clamp(1.4rem,5vw,2.2rem);font-weight:900;color:#FFD700;text-align:center;padding:0 20px}
+@keyframes ovbounce{from{transform:translateY(0)}to{transform:translateY(-16px)}}
+
+/* confetti */
+.cf{position:fixed;pointer-events:none;z-index:400;animation:cffall linear forwards}
+@keyframes cffall{0%{transform:translateY(-10px) rotate(0);opacity:1}100%{transform:translateY(110vh) rotate(720deg);opacity:0}}
+
+/* streak fire */
+.streak{color:#FF8C00;font-weight:900;font-size:clamp(.8rem,2.2vw,1rem)}
+
+/* animations */
+@keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-9px)}75%{transform:translateX(9px)}}
+@keyframes pop{0%{transform:scale(1)}50%{transform:scale(1.18)}100%{transform:scale(1)}}
+@keyframes fadein{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
+.shake{animation:shake .35s ease!important}
+.pop{animation:pop .28s ease!important}
+.screen.active>*{animation:fadein .32s ease both}
+
+/* mobile safe area */
+.screen{padding-top:max(14px,env(safe-area-inset-top));padding-bottom:max(14px,env(safe-area-inset-bottom))}
+
+/* landscape phone tweaks */
+@media(max-height:500px){
+  .big-title{font-size:1.8rem}
+  .pa{font-size:2.5rem}
+  .qcard{padding:10px 14px 8px}
+  .qemoji{font-size:2.4rem}
+  .qimgbox,.qimg{width:80px;height:80px}
+  .colordisk{width:80px;height:80px}
+  .opt{min-height:54px;padding:10px}
+}
+</style>
+</head>
+<body>
+<div id="bg"></div>
+<div id="pts"></div>
+<div id="app">
+
+<!-- ═══ SPLASH ═══ -->
+<div class="screen active" id="scr-splash">
+  <div class="big-title">🌟 Roshni World</div>
+  <div class="sub">Who is playing today?</div>
+  <div class="profiles">
+    <div class="pcard" onclick="pickPlayer('Abubakr','🦁')">
+      <div class="pa">🦁</div>
+      <div class="pn">Abubakr</div>
+      <div class="ps" id="ps-Abubakr">⭐ 0 stars</div>
+    </div>
+    <div class="pcard" onclick="pickPlayer('Muawiyyah','🐯')">
+      <div class="pa">🐯</div>
+      <div class="pn">Muawiyyah</div>
+      <div class="ps" id="ps-Muawiyyah">⭐ 0 stars</div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ WORLD SELECT ═══ -->
+<div class="screen" id="scr-world">
+  <button class="back" onclick="go('scr-splash')">←</button>
+  <div id="mascot">🦉</div>
+  <div class="badge">
+    <span id="wb-av"></span>
+    <span id="wb-nm"></span>
+    <span class="badge-stars" id="wb-st">⭐ 0</span>
+  </div>
+  <div class="sub">Choose your adventure!</div>
+  <div class="worlds">
+    <div class="wcard w-math"   onclick="startWorld('math')">  <div class="wicon">🔢</div><div class="wname">Math Island</div></div>
+    <div class="wcard w-spell"  onclick="startWorld('spelling')"><div class="wicon">📝</div><div class="wname">Spelling Jungle</div></div>
+    <div class="wcard w-quran"  onclick="startWorld('quran')"> <div class="wicon">📖</div><div class="wname">Quran Garden</div></div>
+    <div class="wcard w-animal" onclick="startWorld('animal')"><div class="wicon">🦁</div><div class="wname">Animal Kingdom</div></div>
+    <div class="wcard w-color"  onclick="startWorld('color')"> <div class="wicon">🎨</div><div class="wname">Colors World</div></div>
+    <div class="wcard w-count"  onclick="startWorld('count')"> <div class="wicon">🔢</div><div class="wname">Count &amp; Fun</div></div>
+  </div>
+</div>
+
+<!-- ═══ GAME ═══ -->
+<div class="screen" id="scr-game">
+  <button class="back" onclick="confirmBack()">←</button>
+  <div class="sbar">
+    <span class="sb-name" id="g-name"></span>
+    <div class="dots" id="g-dots"></div>
+    <span class="sb-stars" id="g-stars">⭐ 0</span>
+  </div>
+  <div class="qcard" id="qcard">
+    <div id="qvisual"></div>
+    <div class="qtext"   id="qtext"></div>
+    <div class="qarabic" id="qarabic"></div>
+  </div>
+  <div class="trybar" id="trybar">❌ Try again! <span id="tryleft"></span> tries left!</div>
+  <div class="opts" id="opts"></div>
+</div>
+
+<!-- ═══ COMPLETE ═══ -->
+<div class="screen" id="scr-complete">
+  <div style="font-size:5rem">🎉</div>
+  <div class="big-title" style="font-size:clamp(1.8rem,6vw,3rem)">Amazing!</div>
+  <div class="statrow">
+    <div class="statbox"><div class="statval" id="c-cor">0</div><div class="statlbl">Correct ✅</div></div>
+    <div class="statbox"><div class="statval" id="c-earn">0</div><div class="statlbl">Stars ⭐</div></div>
+    <div class="statbox"><div class="statval" id="c-tot">0</div><div class="statlbl">Total 🌟</div></div>
+  </div>
+  <button class="btn btn-g" onclick="playAgain()">Play Again! 🚀</button>
+  <button class="btn btn-b" onclick="go('scr-world')">Choose World 🌍</button>
+</div>
+
+</div><!-- #app -->
+
+<!-- ═══ OVERLAY ═══ -->
+<div id="overlay">
+  <div class="ov-e" id="ov-e">⭐</div>
+  <div class="ov-t" id="ov-t">Correct!</div>
+</div>
+
+<script>
+/* ═══════════════════════════════════════
+   CONFIG & STATE
+═══════════════════════════════════════ */
+const CFG = { totalQs:7, maxTries:3 };
+
+const S = {
+  player:'', avatar:'', world:'',
+  qs:[], qi:0, tries:0,
+  sStars:0, sCorrect:0, streak:0
+};
+
+const DB = { Abubakr:{stars:0}, Muawiyyah:{stars:0} };
+
+function dbLoad(){
+  try{const d=JSON.parse(localStorage.getItem('rw4')||'{}');
+    if(d.A) DB.Abubakr=d.A;
+    if(d.M) DB.Muawiyyah=d.M;
+  }catch(e){}
+  refreshBadges();
+}
+function dbSave(){
+  localStorage.setItem('rw4',JSON.stringify({A:DB.Abubakr,M:DB.Muawiyyah}));
+}
+function refreshBadges(){
+  el('ps-Abubakr').textContent  =`⭐ ${DB.Abubakr.stars} stars`;
+  el('ps-Muawiyyah').textContent=`⭐ ${DB.Muawiyyah.stars} stars`;
+}
+function el(id){return document.getElementById(id)}
+
+/* ═══════════════════════════════════════
+   AUDIO  (Web Audio API — no files needed)
+═══════════════════════════════════════ */
+let _ac=null;
+function ac(){return _ac||(_ac=new(window.AudioContext||window.webkitAudioContext)())}
+
+function tone(freq,dur,type='sine',vol=0.28,delay=0){
+  const c=ac(),o=c.createOscillator(),g=c.createGain();
+  o.connect(g);g.connect(c.destination);
+  o.type=type;o.frequency.value=freq;
+  g.gain.setValueAtTime(vol,c.currentTime+delay);
+  g.gain.exponentialRampToValueAtTime(0.001,c.currentTime+delay+dur);
+  o.start(c.currentTime+delay);
+  o.stop(c.currentTime+delay+dur+.05);
+}
+
+function sndCorrect(){
+  // happy ascending arpeggio C-E-G-C
+  [[523,0],[659,.11],[784,.22],[1047,.33]].forEach(([f,d])=>tone(f,.3,'sine',.26,d));
+}
+
+function sndWrong(){
+  // buzzer — descending sawtooth
+  const c=ac(),o=c.createOscillator(),g=c.createGain();
+  o.connect(g);g.connect(c.destination);
+  o.type='sawtooth';
+  o.frequency.setValueAtTime(300,c.currentTime);
+  o.frequency.exponentialRampToValueAtTime(80,c.currentTime+.45);
+  g.gain.setValueAtTime(.38,c.currentTime);
+  g.gain.exponentialRampToValueAtTime(.001,c.currentTime+.5);
+  o.start(c.currentTime);o.stop(c.currentTime+.55);
+}
+
+function sndClick(){tone(900,.07,'sine',.12)}
+
+function sndFanfare(){
+  [[523,0,.12],[523,.1,.08],[523,.2,.08],[659,.3,.25],
+   [587,.55,.08],[523,.63,.25],[784,.9,.5]].forEach(([f,d,l])=>tone(f,l,'sine',.28,d));
+}
+
+/* ═══════════════════════════════════════
+   SPEECH — Urdu TTS
+═══════════════════════════════════════ */
+let _vx=[];
+speechSynthesis.onvoiceschanged=()=>{_vx=speechSynthesis.getVoices()};
+_vx=speechSynthesis.getVoices();
+
+function speak(txt){
+  speechSynthesis.cancel();
+  const u=new SpeechSynthesisUtterance(txt);
+  u.lang='ur-PK';u.rate=.88;u.volume=1;
+  const v=_vx.find(x=>x.lang.startsWith('ur'));
+  if(v)u.voice=v;
+  speechSynthesis.speak(u);
+}
+
+const GOOD =['شاباش! بہت اچھا!','واہ! بہت خوب!','زبردست! کمال ہے!','واہ واہ! بہت ذہین ہو!'];
+const BAD  =['نہیں نہیں! دوبارہ کوشش کرو!','نہیں! ایک بار اور!','ارے نہیں! پھر سوچو!'];
+const rnd  =a=>a[Math.floor(Math.random()*a.length)];
+
+/* ═══════════════════════════════════════
+   PARTICLES (floating dots in bg)
+═══════════════════════════════════════ */
+(function initPts(){
+  const c=el('pts');
+  const cols=['#FFD700','#FF69B4','#7DF9FF','#90EE90','#FFA07A','#DA70D6'];
+  for(let i=0;i<28;i++){
+    const p=document.createElement('div');
+    p.className='pt';
+    const s=3+Math.random()*7;
+    p.style.cssText=`width:${s}px;height:${s}px;left:${Math.random()*100}vw;`+
+      `background:${cols[~~(Math.random()*cols.length)]};`+
+      `animation-duration:${9+Math.random()*13}s;animation-delay:-${Math.random()*18}s`;
+    c.appendChild(p);
+  }
+})();
+
+/* ═══════════════════════════════════════
+   NAVIGATION
+═══════════════════════════════════════ */
+function go(id){
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+  el(id).classList.add('active');
+}
+
+function pickPlayer(name,avatar){
+  sndClick();
+  S.player=name;S.avatar=avatar;
+  el('wb-av').textContent=avatar;
+  el('wb-nm').textContent=name;
+  el('wb-st').textContent=`⭐ ${DB[name].stars}`;
+  speak(`${name}! خوش آمدید! چلو کھیلتے ہیں!`);
+  go('scr-world');
+}
+
+function confirmBack(){
+  if(confirm('Go back to worlds? Progress will be lost.')){
+    speechSynthesis.cancel();go('scr-world');
+  }
+}
+function playAgain(){startWorld(S.world)}
+
+/* ═══════════════════════════════════════
+   GAME ENGINE
+═══════════════════════════════════════ */
+function startWorld(world){
+  sndClick();
+  S.world=world;S.qi=0;S.tries=0;S.sStars=0;S.sCorrect=0;S.streak=0;
+  S.qs=shuffle(getPool(world)).slice(0,CFG.totalQs);
+  go('scr-game');
+  el('g-name').textContent =`${S.avatar} ${S.player}`;
+  el('g-stars').textContent=`⭐ ${DB[S.player].stars}`;
+  renderDots();loadQ();
+}
+
+function renderDots(){
+  const c=el('g-dots');c.innerHTML='';
+  for(let i=0;i<CFG.totalQs;i++){
+    const d=document.createElement('div');
+    d.className='dot'+(i<S.qi?' done':i===S.qi?' cur':'');
+    c.appendChild(d);
+  }
+}
+
+function loadQ(){
+  if(S.qi>=S.qs.length){endSession();return}
+  S.tries=0;
+  el('trybar').classList.remove('show');
+  el('qarabic').style.display='none';
+  el('qarabic').textContent='';
+  renderDots();
+  const q=S.qs[S.qi];
+  ({math:rMath,spelling:rSpell,quran:rQuran,
+    animal:rAnimal,color:rColor,count:rCount})[S.world](q);
+}
+
+function handleAns(btn,chosen,answer){
+  const ok=String(chosen).trim()===String(answer).trim();
+  if(ok){
+    btn.classList.add('correct','pop');
+    sndCorrect();
+    speak(rnd(GOOD));
+    S.streak++;S.sCorrect++;S.sStars++;
+    DB[S.player].stars++;dbSave();refreshBadges();
+    el('g-stars').textContent=`⭐ ${DB[S.player].stars}`;
+    el('wb-st').textContent  =`⭐ ${DB[S.player].stars}`;
+    mascotReact('🤩');
+    showOv(true);
+    setTimeout(()=>{hideOv();S.qi++;loadQ()},1600);
+  } else {
+    S.tries++;S.streak=0;
+    btn.classList.add('wrong','shake');
+    sndWrong();
+    speak(rnd(BAD));
+    mascotReact('😅');
+    if(S.tries>=CFG.maxTries){
+      // max tries reached — move on without revealing answer
+      showOv(false);
+      setTimeout(()=>{hideOv();S.qi++;loadQ()},1700);
+    } else {
+      el('tryleft').textContent=CFG.maxTries-S.tries;
+      el('trybar').classList.add('show');
+    }
+  }
+}
+
+function endSession(){
+  sndFanfare();
+  speak('واہ! تم نے سب سوال مکمل کر لیے! بہت اچھے بچے ہو!');
+  spawnConfetti(55);
+  el('c-cor').textContent =`${S.sCorrect}/${CFG.totalQs}`;
+  el('c-earn').textContent=S.sStars;
+  el('c-tot').textContent =DB[S.player].stars;
+  go('scr-complete');
+}
+
+/* ═══════════════════════════════════════
+   OVERLAY & CONFETTI
+═══════════════════════════════════════ */
+function showOv(ok){
+  el('ov-e').textContent=ok?(S.streak>=3?'🔥':'⭐'):'💪';
+  el('ov-t').textContent=ok?(S.streak>=3?`🔥 ${S.streak} in a row!`:'Correct!  +1 Star ⭐'):"Let's try the next one! 💪";
+  el('overlay').classList.add('on');
+  if(ok)spawnConfetti(24);
+}
+function hideOv(){el('overlay').classList.remove('on')}
+
+function spawnConfetti(n=30){
+  const cols=['#FFD700','#FF5858','#43E97B','#4FACFE','#F093FB','#FDA085','#fff'];
+  for(let i=0;i<n;i++){
+    const p=document.createElement('div');
+    p.className='cf';
+    const s=5+Math.random()*9;
+    p.style.cssText=`left:${Math.random()*100}vw;top:-8px;width:${s}px;height:${s}px;`+
+      `background:${rnd(cols)};border-radius:${Math.random()>.5?'50%':'3px'};`+
+      `animation-duration:${1.1+Math.random()*1.3}s;animation-delay:${Math.random()*.4}s`;
+    document.body.appendChild(p);
+    setTimeout(()=>p.remove(),3000);
+  }
+}
+
+function mascotReact(emoji){
+  const m=el('mascot');
+  m.textContent=emoji;m.classList.add('react');
+  setTimeout(()=>{m.textContent='🦉';m.classList.remove('react')},1500);
+}
+
+/* ═══════════════════════════════════════
+   WORLD RENDERERS
+═══════════════════════════════════════ */
+
+/* MATH */
+function rMath(q){
+  const icons={comparison:'🤔',addition:'➕',subtraction:'➖',multiplication:'✖️'};
+  setV(`<div class="qemoji">${icons[q.type]}</div>`);
+  if(q.type==='comparison'){
+    el('qtext').textContent='Which is BIGGER?';
+    renderOpts([q.a,q.b],q.answer);
+  } else {
+    const sym={addition:'+',subtraction:'−',multiplication:'×'};
+    el('qtext').textContent=`${q.a} ${sym[q.type]} ${q.b} = ?`;
+    renderOpts(q.opts,q.answer);
+  }
+}
+
+/* SPELLING */
+function rSpell(q){
+  el('qtext').textContent=q.display;
+  setV(`<div class="qimgbox" id="simg">${q.emoji}</div>`);
+  wikiImg(q.keyword,'simg',q.emoji);
+  renderOpts(q.opts,q.answer,true);
+}
+
+/* QURAN */
+function rQuran(q){
+  setV(`<div class="qemoji">📖</div>`);
+  el('qtext').textContent='Which Surah is this?';
+  const a=el('qarabic');a.textContent=q.ayah;a.style.display='block';
+  renderOpts(q.opts,q.answer);
+}
+
+/* ANIMAL */
+function rAnimal(q){
+  el('qtext').textContent='What animal is this? 🤔';
+  setV(`<div class="qimgbox" id="aimg">${q.emoji}</div>`);
+  wikiImg(q.keyword,'aimg',q.emoji);
+  renderOpts(q.opts,q.answer);
+}
+
+/* COLOR */
+function rColor(q){
+  el('qtext').textContent='What color is this? 🎨';
+  setV(`<div class="colordisk" style="background:${q.hex}"></div>`);
+  renderOpts(q.opts,q.answer);
+}
+
+/* COUNT */
+function rCount(q){
+  el('qtext').textContent='How many can you see? 👀';
+  const items=Array(q.count).fill(q.emoji).map(e=>`<span class="citem">${e}</span>`).join('');
+  setV(`<div class="countgrid">${items}</div>`);
+  renderOpts(q.opts,q.answer);
+}
+
+/* helpers */
+function setV(html){el('qvisual').innerHTML=html}
+
+function renderOpts(opts,answer){
+  const g=el('opts');g.innerHTML='';
+  shuffle([...opts]).forEach(o=>{
+    const b=document.createElement('button');
+    b.className='opt';b.textContent=o;b.dataset.v=o;
+    b.onclick=()=>handleAns(b,o,answer);
+    g.appendChild(b);
+  });
+}
+
+/* Wikipedia real-photo loader */
+async function wikiImg(kw,containerId,fallback){
+  try{
+    const res=await fetch(`https://en.wikipedia.org/api/rest_v1/page/summary/${encodeURIComponent(kw)}`);
+    const d=await res.json();
+    const src=d.thumbnail?.source;
+    const box=el(containerId);
+    if(src&&box){
+      box.innerHTML=`<img class="qimg" src="${src}" alt="${kw}" `+
+        `onerror="this.parentElement.textContent='${fallback}'">`;
+    }
+  }catch(_){}
+}
+
+/* ═══════════════════════════════════════
+   QUESTION DATA
+═══════════════════════════════════════ */
+function getPool(w){
+  return{math:MATH,spelling:SPELL,quran:QURAN,animal:ANIMAL,color:COLOR,count:COUNT}[w]||[];
+}
+
+/* ─── MATH ─── */
+const MATH=[
+  // comparisons (2 choices rendered as options)
+  {type:'comparison',a:400, b:500, answer:500},
+  {type:'comparison',a:200, b:300, answer:300},
+  {type:'comparison',a:700, b:600, answer:700},
+  {type:'comparison',a:150, b:250, answer:250},
+  {type:'comparison',a:80,  b:90,  answer:90},
+  {type:'comparison',a:55,  b:45,  answer:55},
+  {type:'comparison',a:999, b:1000,answer:1000},
+  {type:'comparison',a:33,  b:23,  answer:33},
+  {type:'comparison',a:100, b:10,  answer:100},
+  // addition
+  {type:'addition',a:300,b:200,answer:500, opts:[400,500,600,700]},
+  {type:'addition',a:10, b:20, answer:30,  opts:[20,30,40,50]},
+  {type:'addition',a:100,b:200,answer:300, opts:[200,300,400,500]},
+  {type:'addition',a:50, b:50, answer:100, opts:[80,90,100,110]},
+  {type:'addition',a:25, b:25, answer:50,  opts:[40,45,50,55]},
+  {type:'addition',a:40, b:30, answer:70,  opts:[60,70,80,90]},
+  {type:'addition',a:200,b:400,answer:600, opts:[500,600,700,800]},
+  {type:'addition',a:15, b:5,  answer:20,  opts:[15,20,25,30]},
+  {type:'addition',a:60, b:40, answer:100, opts:[80,100,120,140]},
+  {type:'addition',a:500,b:500,answer:1000,opts:[800,900,1000,1100]},
+  {type:'addition',a:7,  b:8,  answer:15,  opts:[13,14,15,16]},
+  {type:'addition',a:9,  b:6,  answer:15,  opts:[14,15,16,17]},
+  {type:'addition',a:4,  b:3,  answer:7,   opts:[5,6,7,8]},
+  // subtraction
+  {type:'subtraction',a:100,b:50, answer:50,  opts:[30,40,50,60]},
+  {type:'subtraction',a:500,b:200,answer:300, opts:[200,300,400,500]},
+  {type:'subtraction',a:80, b:30, answer:50,  opts:[40,50,60,70]},
+  {type:'subtraction',a:20, b:10, answer:10,  opts:[5,10,15,20]},
+  {type:'subtraction',a:90, b:40, answer:50,  opts:[40,50,60,70]},
+  {type:'subtraction',a:30, b:15, answer:15,  opts:[10,15,20,25]},
+  {type:'subtraction',a:10, b:3,  answer:7,   opts:[5,6,7,8]},
+  // multiplication
+  {type:'multiplication',a:5, b:2,  answer:10,  opts:[8,10,12,15]},
+  {type:'multiplication',a:5, b:30, answer:150, opts:[100,150,200,125]},
+  {type:'multiplication',a:2, b:10, answer:20,  opts:[15,20,25,30]},
+  {type:'multiplication',a:3, b:10, answer:30,  opts:[20,30,40,50]},
+  {type:'multiplication',a:4, b:5,  answer:20,  opts:[15,20,25,30]},
+  {type:'multiplication',a:10,b:10, answer:100, opts:[80,90,100,110]},
+  {type:'multiplication',a:2, b:5,  answer:10,  opts:[8,10,12,14]},
+  {type:'multiplication',a:3, b:3,  answer:9,   opts:[6,8,9,12]},
+  {type:'multiplication',a:4, b:4,  answer:16,  opts:[12,14,16,20]},
+  {type:'multiplication',a:2, b:2,  answer:4,   opts:[2,3,4,6]},
+];
+// fix comparison opts
+MATH.filter(q=>q.type==='comparison').forEach(q=>q.opts=[q.a,q.b]);
+
+/* ─── SPELLING ─── */
+const SPELL=[
+  {keyword:'cat',     emoji:'🐱',display:'C _ T',       opts:['A','O','U','E'],answer:'A'},
+  {keyword:'dog',     emoji:'🐶',display:'D _ G',       opts:['A','O','I','U'],answer:'O'},
+  {keyword:'sun',     emoji:'☀️',display:'S _ N',       opts:['O','U','A','I'],answer:'U'},
+  {keyword:'hat',     emoji:'🎩',display:'H _ T',       opts:['A','O','E','I'],answer:'A'},
+  {keyword:'cup',     emoji:'☕',display:'C _ P',       opts:['A','U','O','I'],answer:'U'},
+  {keyword:'bed',     emoji:'🛏️',display:'B _ D',       opts:['A','E','O','I'],answer:'E'},
+  {keyword:'duck',    emoji:'🦆',display:'D U _ K',     opts:['C','K','S','T'],answer:'C'},
+  {keyword:'fish',    emoji:'🐟',display:'F I _ H',     opts:['S','C','T','P'],answer:'S'},
+  {keyword:'frog',    emoji:'🐸',display:'F R _ G',     opts:['O','A','E','U'],answer:'O'},
+  {keyword:'tree',    emoji:'🌳',display:'T R _ E',     opts:['E','A','I','O'],answer:'E'},
+  {keyword:'ant',     emoji:'🐜',display:'A _ T',       opts:['N','M','P','D'],answer:'N'},
+  {keyword:'pen',     emoji:'✏️',display:'P _ N',       opts:['E','A','I','O'],answer:'E'},
+  {keyword:'bus',     emoji:'🚌',display:'B _ S',       opts:['U','A','I','O'],answer:'U'},
+  {keyword:'hen',     emoji:'🐔',display:'H _ N',       opts:['E','A','I','O'],answer:'E'},
+  {keyword:'cow',     emoji:'🐄',display:'C _ W',       opts:['O','A','E','U'],answer:'O'},
+  {keyword:'fox',     emoji:'🦊',display:'F _ X',       opts:['O','A','E','U'],answer:'O'},
+  {keyword:'owl',     emoji:'🦉',display:'_ W L',       opts:['O','A','E','I'],answer:'O'},
+  {keyword:'map',     emoji:'🗺️',display:'M _ P',       opts:['A','E','I','O'],answer:'A'},
+  {keyword:'ball',    emoji:'⚽',display:'B _ L L',     opts:['A','O','E','U'],answer:'A'},
+  {keyword:'milk',    emoji:'🥛',display:'M I L _',     opts:['K','C','G','T'],answer:'K'},
+  {keyword:'ship',    emoji:'🚢',display:'S H I _',     opts:['P','B','T','D'],answer:'P'},
+  {keyword:'rain',    emoji:'🌧️',display:'R _ I N',     opts:['A','O','E','U'],answer:'A'},
+  {keyword:'star',    emoji:'⭐',display:'S T _ R',     opts:['A','O','E','U'],answer:'A'},
+  {keyword:'apple',   emoji:'🍎',display:'_ P P L E',   opts:['A','O','I','U'],answer:'A'},
+  {keyword:'bee',     emoji:'🐝',display:'B _ E',       opts:['E','A','I','O'],answer:'E'},
+  {keyword:'lion',    emoji:'🦁',display:'L I _ N',     opts:['O','A','E','U'],answer:'O'},
+  {keyword:'rose',    emoji:'🌹',display:'R _ S E',     opts:['O','A','E','U'],answer:'O'},
+  {keyword:'cake',    emoji:'🎂',display:'C _ K E',     opts:['A','O','U','I'],answer:'A'},
+  {keyword:'kite',    emoji:'🪁',display:'K I T _',     opts:['E','A','O','U'],answer:'E'},
+  {keyword:'bird',    emoji:'🐦',display:'B I R _',     opts:['D','T','G','P'],answer:'D'},
+];
+
+/* ─── QURAN ─── */
+const QURAN=[
+  {ayah:'قُلْ هُوَ اللَّهُ أَحَدٌ',               answer:'Al-Ikhlas',  opts:['Al-Ikhlas','Al-Falaq','An-Nas','Al-Kawthar']},
+  {ayah:'قُلْ أَعُوذُ بِرَبِّ الْفَلَقِ',          answer:'Al-Falaq',   opts:['Al-Falaq','An-Nas','Al-Ikhlas','Al-Asr']},
+  {ayah:'قُلْ أَعُوذُ بِرَبِّ النَّاسِ',           answer:'An-Nas',     opts:['An-Nas','Al-Falaq','Al-Ikhlas','Al-Kawthar']},
+  {ayah:'إِنَّا أَعْطَيْنَاكَ الْكَوْثَرَ',         answer:'Al-Kawthar', opts:['Al-Kawthar','Al-Maun','Al-Fil','Al-Asr']},
+  {ayah:'وَالْعَصْرِ',                              answer:'Al-Asr',     opts:['Al-Asr','Al-Kawthar','Al-Fil','Al-Maun']},
+  {ayah:'أَلَمْ تَرَ كَيْفَ فَعَلَ رَبُّكَ بِأَصْحَابِ الْفِيلِ', answer:'Al-Fil', opts:['Al-Fil','Al-Maun','Al-Asr','Al-Kawthar']},
+  {ayah:'الْحَمْدُ لِلَّهِ رَبِّ الْعَالَمِينَ',    answer:'Al-Fatiha',  opts:['Al-Fatiha','Al-Ikhlas','Al-Falaq','An-Nas']},
+  {ayah:'أَرَأَيْتَ الَّذِي يُكَذِّبُ بِالدِّينِ',  answer:'Al-Maun',    opts:['Al-Maun','Al-Fil','Al-Asr','Al-Kawthar']},
+  {ayah:'لِإِيلَافِ قُرَيْشٍ',                      answer:'Al-Quraish', opts:['Al-Quraish','Al-Fil','Al-Maun','Al-Asr']},
+  {ayah:'إِذَا جَاءَ نَصْرُ اللَّهِ وَالْفَتْحُ',  answer:'An-Nasr',    opts:['An-Nasr','Al-Kawthar','Al-Fil','Al-Asr']},
+  {ayah:'تَبَّتْ يَدَا أَبِي لَهَبٍ وَتَبَّ',       answer:'Al-Masad',   opts:['Al-Masad','Al-Fil','An-Nasr','Al-Quraish']},
+  {ayah:'قُلْ يَا أَيُّهَا الْكَافِرُونَ',          answer:'Al-Kafirun', opts:['Al-Kafirun','An-Nas','Al-Ikhlas','Al-Falaq']},
+  {ayah:'وَيْلٌ لِّكُلِّ هُمَزَةٍ لُّمَزَةٍ',       answer:'Al-Humazah', opts:['Al-Humazah','Al-Masad','Al-Quraish','Al-Fil']},
+];
+
+/* ─── ANIMAL ─── */
+const ANIMAL=[
+  {keyword:'lion',      emoji:'🦁',answer:'Lion',      opts:['Lion',    'Tiger',    'Leopard', 'Cheetah']},
+  {keyword:'elephant',  emoji:'🐘',answer:'Elephant',  opts:['Elephant','Hippo',    'Rhino',   'Giraffe']},
+  {keyword:'giraffe',   emoji:'🦒',answer:'Giraffe',   opts:['Giraffe', 'Zebra',    'Horse',   'Camel']},
+  {keyword:'zebra',     emoji:'🦓',answer:'Zebra',     opts:['Zebra',   'Horse',    'Donkey',  'Giraffe']},
+  {keyword:'penguin',   emoji:'🐧',answer:'Penguin',   opts:['Penguin', 'Duck',     'Swan',    'Flamingo']},
+  {keyword:'butterfly', emoji:'🦋',answer:'Butterfly', opts:['Butterfly','Moth',    'Bee',     'Dragonfly']},
+  {keyword:'rabbit',    emoji:'🐰',answer:'Rabbit',    opts:['Rabbit',  'Squirrel', 'Mouse',   'Cat']},
+  {keyword:'parrot',    emoji:'🦜',answer:'Parrot',    opts:['Parrot',  'Eagle',    'Crow',    'Pigeon']},
+  {keyword:'camel',     emoji:'🐪',answer:'Camel',     opts:['Camel',   'Horse',    'Donkey',  'Buffalo']},
+  {keyword:'peacock',   emoji:'🦚',answer:'Peacock',   opts:['Peacock', 'Turkey',   'Parrot',  'Eagle']},
+  {keyword:'dolphin',   emoji:'🐬',answer:'Dolphin',   opts:['Dolphin', 'Shark',    'Whale',   'Fish']},
+  {keyword:'owl',       emoji:'🦉',answer:'Owl',       opts:['Owl',     'Eagle',    'Parrot',  'Crow']},
+  {keyword:'crocodile', emoji:'🐊',answer:'Crocodile', opts:['Crocodile','Lizard',  'Snake',   'Turtle']},
+  {keyword:'horse',     emoji:'🐴',answer:'Horse',     opts:['Horse',   'Zebra',    'Donkey',  'Camel']},
+  {keyword:'sheep',     emoji:'🐑',answer:'Sheep',     opts:['Sheep',   'Goat',     'Cow',     'Deer']},
+  {keyword:'tiger',     emoji:'🐯',answer:'Tiger',     opts:['Tiger',   'Lion',     'Leopard', 'Cheetah']},
+  {keyword:'gorilla',   emoji:'🦍',answer:'Gorilla',   opts:['Gorilla', 'Chimpanzee','Bear',   'Monkey']},
+  {keyword:'flamingo',  emoji:'🦩',answer:'Flamingo',  opts:['Flamingo','Parrot',   'Swan',    'Crane']},
+  {keyword:'hedgehog',  emoji:'🦔',answer:'Hedgehog',  opts:['Hedgehog','Porcupine','Squirrel','Rabbit']},
+  {keyword:'kangaroo',  emoji:'🦘',answer:'Kangaroo',  opts:['Kangaroo','Wallaby',  'Rabbit',  'Deer']},
+];
+
+/* ─── COLOR ─── */
+const COLOR=[
+  {hex:'#E62020',answer:'Red',    opts:['Red',   'Blue',  'Pink',  'Orange']},
+  {hex:'#1565C0',answer:'Blue',   opts:['Green', 'Blue',  'Purple','Black']},
+  {hex:'#2E7D32',answer:'Green',  opts:['Yellow','Green', 'Blue',  'Brown']},
+  {hex:'#F9A825',answer:'Yellow', opts:['Yellow','Orange','White', 'Pink']},
+  {hex:'#E65100',answer:'Orange', opts:['Red',   'Yellow','Orange','Pink']},
+  {hex:'#6A1B9A',answer:'Purple', opts:['Purple','Blue',  'Pink',  'Brown']},
+  {hex:'#E91E8C',answer:'Pink',   opts:['Red',   'Pink',  'Purple','Orange']},
+  {hex:'#5D4037',answer:'Brown',  opts:['Black', 'Brown', 'Orange','Red']},
+  {hex:'#111111',answer:'Black',  opts:['Black', 'Brown', 'Blue',  'Purple']},
+  {hex:'#F5F5F5',answer:'White',  opts:['White', 'Yellow','Pink',  'Grey']},
+  {hex:'#757575',answer:'Grey',   opts:['Grey',  'White', 'Black', 'Blue']},
+  {hex:'#00838F',answer:'Teal',   opts:['Teal',  'Blue',  'Green', 'Purple']},
+];
+
+/* ─── COUNT ─── */
+const COUNT=[];
+['⭐','🍎','🌸','🎈','🦋','🍭','🐟','🏀','🌻','🍌'].forEach(em=>{
+  for(let n=2;n<=12;n++){
+    const wrong=shuffle([n-1,n+1,n+2,n-2].filter(x=>x>0&&x!==n)).slice(0,3);
+    COUNT.push({emoji:em,count:n,opts:shuffle([n,...wrong])});
+  }
+});
+
+/* ═══════════════════════════════════════
+   UTILITY
+═══════════════════════════════════════ */
+function shuffle(a){
+  const b=[...a];
+  for(let i=b.length-1;i>0;i--){
+    const j=~~(Math.random()*(i+1));[b[i],b[j]]=[b[j],b[i]];
+  }
+  return b;
+}
+
+/* ═══════════════════════════════════════
+   INIT
+═══════════════════════════════════════ */
+dbLoad();
+</script>
+</body>
+</html>
