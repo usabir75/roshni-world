@@ -141,6 +141,10 @@ body{font-family:'Nunito','Segoe UI',sans-serif;background:#120a2e;min-height:10
       <div class="pa">🐯</div><div class="pn">Muawiyyah</div>
       <div class="ps" id="ps-Muawiyyah">⭐ 0 stars</div>
     </div>
+    <div class="pcard" onclick="pickPlayer('Khadija','🌸')">
+      <div class="pa">🌸</div><div class="pn">Khadija</div>
+      <div class="ps" id="ps-Khadija">⭐ 0 stars</div>
+    </div>
   </div>
 </div>
 
@@ -215,11 +219,11 @@ body{font-family:'Nunito','Segoe UI',sans-serif;background:#120a2e;min-height:10
 /* ── STATE ── */
 const CFG={totalQs:7,maxTries:3};
 const S={player:'',avatar:'',world:'',qs:[],qi:0,tries:0,sStars:0,sCorrect:0,streak:0};
-const DB={Abubakr:{stars:0},Muawiyyah:{stars:0}};
+const DB={Abubakr:{stars:0},Muawiyyah:{stars:0},Khadija:{stars:0}};
 function el(id){return document.getElementById(id)}
-function dbLoad(){try{const d=JSON.parse(localStorage.getItem('rw5')||'{}');if(d.A)DB.Abubakr=d.A;if(d.M)DB.Muawiyyah=d.M;}catch(e){}refreshBadges()}
-function dbSave(){localStorage.setItem('rw5',JSON.stringify({A:DB.Abubakr,M:DB.Muawiyyah}))}
-function refreshBadges(){el('ps-Abubakr').textContent=`⭐ ${DB.Abubakr.stars} stars`;el('ps-Muawiyyah').textContent=`⭐ ${DB.Muawiyyah.stars} stars`}
+function dbLoad(){try{const d=JSON.parse(localStorage.getItem('rw5')||'{}');if(d.A)DB.Abubakr=d.A;if(d.M)DB.Muawiyyah=d.M;if(d.K)DB.Khadija=d.K;}catch(e){}refreshBadges()}
+function dbSave(){localStorage.setItem('rw5',JSON.stringify({A:DB.Abubakr,M:DB.Muawiyyah,K:DB.Khadija}))}
+function refreshBadges(){el('ps-Abubakr').textContent=`⭐ ${DB.Abubakr.stars} stars`;el('ps-Muawiyyah').textContent=`⭐ ${DB.Muawiyyah.stars} stars`;el('ps-Khadija').textContent=`⭐ ${DB.Khadija.stars} stars`}
 
 /* ── AUDIO ── */
 let _ac=null;
