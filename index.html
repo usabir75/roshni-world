@@ -4,149 +4,123 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>Roshni World ✨</title>
-<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@700;800;900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@700;800;900&family=Noto+Nastaliq+Urdu:wght@400;700&display=swap" rel="stylesheet">
 <style>
 :root{--r:22px}
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;user-select:none}
 html,body{width:100%;height:100%;overflow:hidden;touch-action:manipulation}
 body{font-family:'Nunito','Segoe UI',sans-serif;background:#120a2e;min-height:100vh}
-
-/* animated bg */
-#bg{position:fixed;inset:0;z-index:0;background:linear-gradient(135deg,#120a2e,#0d1b4a);animation:bgpulse 10s ease-in-out infinite alternate}
+#bg{position:fixed;inset:0;z-index:0;animation:bgpulse 10s ease-in-out infinite alternate}
 @keyframes bgpulse{0%{background:linear-gradient(135deg,#120a2e,#0d1b4a)}50%{background:linear-gradient(135deg,#1a0533,#0d2e1b)}100%{background:linear-gradient(135deg,#0d1b4a,#120a2e)}}
-
-/* particles */
 #pts{position:fixed;inset:0;pointer-events:none;z-index:1;overflow:hidden}
 .pt{position:absolute;border-radius:50%;animation:ptrise linear infinite}
 @keyframes ptrise{0%{transform:translateY(105vh) scale(0);opacity:0}10%{opacity:.6}90%{opacity:.6}100%{transform:translateY(-5vh) scale(1);opacity:0}}
-
 #app{position:relative;z-index:2;width:100vw;height:100vh}
-
-.screen{display:none;position:absolute;inset:0;flex-direction:column;align-items:center;justify-content:center;padding:14px;gap:12px;overflow-y:auto;overscroll-behavior:contain}
+.screen{display:none;position:absolute;inset:0;flex-direction:column;align-items:center;justify-content:flex-start;padding:14px;gap:10px;overflow-y:auto;overscroll-behavior:contain}
 .screen.active{display:flex}
-
-/* typography */
-.big-title{font-size:clamp(2.2rem,9vw,4rem);font-weight:900;color:#fff;text-align:center;text-shadow:0 0 30px rgba(255,215,0,.7),0 4px 12px rgba(0,0,0,.6);letter-spacing:-1px}
-.sub{font-size:clamp(.95rem,3.2vw,1.4rem);color:rgba(255,255,255,.7);text-align:center;font-weight:700}
-
-/* profile cards */
+.big-title{font-size:clamp(2rem,8vw,3.8rem);font-weight:900;color:#fff;text-align:center;text-shadow:0 0 30px rgba(255,215,0,.7),0 4px 12px rgba(0,0,0,.6)}
+.sub{font-size:clamp(.9rem,3vw,1.3rem);color:rgba(255,255,255,.7);text-align:center;font-weight:700}
+/* profile */
 .profiles{display:flex;gap:18px;flex-wrap:wrap;justify-content:center}
-.pcard{background:rgba(255,255,255,.1);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border:2px solid rgba(255,255,255,.2);border-radius:26px;padding:26px 30px;text-align:center;cursor:pointer;transition:transform .2s,border-color .2s;min-width:138px}
+.pcard{background:rgba(255,255,255,.1);backdrop-filter:blur(14px);border:2px solid rgba(255,255,255,.2);border-radius:26px;padding:24px 28px;text-align:center;cursor:pointer;transition:transform .2s,border-color .2s;min-width:135px}
 .pcard:hover{border-color:rgba(255,215,0,.7);transform:scale(1.06)}
 .pcard:active{transform:scale(.93)}
-.pa{font-size:4rem;margin-bottom:6px}
-.pn{font-size:1.4rem;font-weight:900;color:#fff}
-.ps{font-size:.95rem;color:#FFD700;margin-top:4px;font-weight:700}
-
-/* player badge (world screen) */
-.badge{background:rgba(255,255,255,.13);border-radius:50px;padding:9px 20px;color:#fff;font-size:1.05rem;font-weight:800;display:flex;align-items:center;gap:8px}
+.pa{font-size:3.8rem;margin-bottom:6px}.pn{font-size:1.4rem;font-weight:900;color:#fff}.ps{font-size:.9rem;color:#FFD700;margin-top:4px;font-weight:700}
+/* badge */
+.badge{background:rgba(255,255,255,.13);border-radius:50px;padding:8px 18px;color:#fff;font-size:1rem;font-weight:800;display:flex;align-items:center;gap:8px;flex-shrink:0}
 .badge-stars{color:#FFD700}
-
-/* worlds grid */
-.worlds{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;width:100%;max-width:560px}
-@media(max-width:380px){.worlds{grid-template-columns:1fr 1fr}}
-.wcard{border-radius:20px;padding:20px 10px;text-align:center;cursor:pointer;border:3px solid rgba(255,255,255,.15);background:rgba(255,255,255,.07);transition:transform .18s;display:flex;flex-direction:column;align-items:center;gap:7px}
-.wcard:hover{transform:scale(1.06)}
-.wcard:active{transform:scale(.92)}
-.wicon{font-size:2.6rem}
-.wname{font-size:.9rem;font-weight:900;color:#fff;line-height:1.2}
-.w-math  {border-color:#FF8C00;background:rgba(255,140,0,.13)}
-.w-spell {border-color:#43E97B;background:rgba(67,233,123,.12)}
-.w-quran {border-color:#FFD700;background:rgba(255,215,0,.12)}
-.w-animal{border-color:#FF6B9D;background:rgba(255,107,157,.12)}
-.w-color {border-color:#C471ED;background:rgba(196,113,237,.12)}
-.w-count {border-color:#12C2E9;background:rgba(18,194,233,.12)}
-
+/* world sections */
+.wsections{width:100%;max-width:570px;display:flex;flex-direction:column;gap:12px}
+.wsec-label{color:rgba(255,255,255,.55);font-size:.8rem;font-weight:900;text-transform:uppercase;letter-spacing:2px;margin-bottom:4px;padding-left:2px}
+.worlds{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;width:100%}
+@media(max-width:360px){.worlds{grid-template-columns:1fr 1fr}}
+.wcard{border-radius:18px;padding:16px 8px;text-align:center;cursor:pointer;border:3px solid rgba(255,255,255,.15);background:rgba(255,255,255,.07);transition:transform .18s;display:flex;flex-direction:column;align-items:center;gap:5px}
+.wcard:hover{transform:scale(1.06)}.wcard:active{transform:scale(.92)}
+.wicon{font-size:2.2rem}.wname{font-size:.78rem;font-weight:900;color:#fff;line-height:1.2}
+.w-math{border-color:#FF8C00;background:rgba(255,140,0,.12)}.w-spell{border-color:#43E97B;background:rgba(67,233,123,.12)}
+.w-quran{border-color:#FFD700;background:rgba(255,215,0,.12)}.w-animal{border-color:#FF6B9D;background:rgba(255,107,157,.12)}
+.w-color{border-color:#C471ED;background:rgba(196,113,237,.12)}.w-count{border-color:#12C2E9;background:rgba(18,194,233,.12)}
+.w-pattern{border-color:#A8FF78;background:rgba(168,255,120,.12)}.w-odd{border-color:#FF9A9E;background:rgba(255,154,158,.12)}
+.w-riddle{border-color:#FFECD2;background:rgba(255,236,210,.1)}.w-tf{border-color:#84FAB0;background:rgba(132,250,176,.1)}
+.w-missing{border-color:#F6D365;background:rgba(246,211,101,.1)}.w-gk{border-color:#89F7FE;background:rgba(137,247,254,.1)}
 /* mascot */
-#mascot{position:absolute;top:13px;right:13px;font-size:2rem;z-index:10;transition:transform .3s}
+#mascot{position:absolute;top:13px;right:13px;font-size:2rem;z-index:10}
 #mascot.react{animation:mreact .4s ease}
 @keyframes mreact{0%,100%{transform:scale(1)}50%{transform:scale(1.5) rotate(15deg)}}
-
-/* back button */
-.back{position:absolute;top:12px;left:12px;width:48px;height:48px;border-radius:50%;background:rgba(255,255,255,.15);border:none;font-size:1.4rem;color:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center;z-index:10;touch-action:manipulation;transition:background .2s}
-.back:hover{background:rgba(255,255,255,.28)}
-
-/* score bar */
-.sbar{width:100%;max-width:660px;display:flex;justify-content:space-between;align-items:center;background:rgba(255,255,255,.1);border-radius:50px;padding:9px 16px;gap:8px;flex-shrink:0}
-.sb-name{font-size:clamp(.8rem,2.4vw,.95rem);font-weight:900;color:#fff;white-space:nowrap}
-.sb-stars{font-size:clamp(.85rem,2.4vw,1.05rem);font-weight:900;color:#FFD700;white-space:nowrap}
+.back{position:absolute;top:12px;left:12px;width:48px;height:48px;border-radius:50%;background:rgba(255,255,255,.15);border:none;font-size:1.4rem;color:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center;z-index:10;touch-action:manipulation}
+/* scorebar */
+.sbar{width:100%;max-width:660px;display:flex;justify-content:space-between;align-items:center;background:rgba(255,255,255,.1);border-radius:50px;padding:8px 15px;gap:8px;flex-shrink:0}
+.sb-name{font-size:clamp(.78rem,2.3vw,.92rem);font-weight:900;color:#fff;white-space:nowrap}
+.sb-stars{font-size:clamp(.82rem,2.3vw,1rem);font-weight:900;color:#FFD700;white-space:nowrap}
 .dots{display:flex;gap:5px;align-items:center;flex-wrap:wrap;justify-content:center}
-.dot{width:11px;height:11px;border-radius:50%;background:rgba(255,255,255,.22);flex-shrink:0;transition:background .3s}
-.dot.done{background:#FFD700}
-.dot.cur{background:#fff;transform:scale(1.3)}
-
+.dot{width:10px;height:10px;border-radius:50%;background:rgba(255,255,255,.22);flex-shrink:0;transition:background .3s}
+.dot.done{background:#FFD700}.dot.cur{background:#fff;transform:scale(1.3)}
 /* question card */
-.qcard{background:rgba(255,255,255,.1);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-radius:24px;padding:18px 16px 14px;width:100%;max-width:660px;text-align:center;border:1px solid rgba(255,255,255,.15);flex-shrink:0}
-.qemoji{font-size:clamp(3rem,11vw,5.5rem);line-height:1.1}
-.qimg{width:clamp(90px,28vw,170px);height:clamp(90px,28vw,170px);border-radius:18px;object-fit:cover;display:block;margin:0 auto;background:rgba(0,0,0,.2)}
-.qimgbox{display:flex;align-items:center;justify-content:center;width:clamp(90px,28vw,170px);height:clamp(90px,28vw,170px);border-radius:18px;background:rgba(0,0,0,.2);margin:0 auto;font-size:clamp(3rem,11vw,5rem)}
-.qtext{font-size:clamp(1.3rem,5vw,2.4rem);font-weight:900;color:#fff;margin-top:8px;line-height:1.2}
-.qarabic{font-size:clamp(1.2rem,4vw,2rem);color:#FFD700;direction:rtl;font-family:'Traditional Arabic','Arial Unicode MS',serif;line-height:1.9;margin-top:8px;display:none}
-.colordisk{width:clamp(110px,32vw,200px);height:clamp(110px,32vw,200px);border-radius:50%;margin:0 auto;box-shadow:0 0 40px rgba(255,255,255,.15),0 0 0 6px rgba(255,255,255,.12)}
-.countgrid{display:flex;flex-wrap:wrap;justify-content:center;gap:4px;max-width:280px;margin:0 auto}
-.citem{font-size:clamp(1.6rem,5.5vw,2.4rem);line-height:1.2}
-
-/* try-again bar */
-.trybar{width:100%;max-width:660px;background:rgba(255,70,70,.22);border:2px solid rgba(255,70,70,.4);border-radius:50px;padding:9px 16px;text-align:center;color:#fff;font-size:clamp(.85rem,2.8vw,1.1rem);font-weight:800;display:none;flex-shrink:0}
+.qcard{background:rgba(255,255,255,.1);backdrop-filter:blur(14px);border-radius:22px;padding:14px 14px 10px;width:100%;max-width:660px;text-align:center;border:1px solid rgba(255,255,255,.15);flex-shrink:0;cursor:pointer;position:relative}
+.tap-hint{position:absolute;top:8px;right:10px;font-size:.72rem;color:rgba(255,215,0,.7);font-weight:700}
+.qemoji{font-size:clamp(2.8rem,10vw,5rem);line-height:1.1}
+.qimg{width:clamp(80px,26vw,155px);height:clamp(80px,26vw,155px);border-radius:16px;object-fit:cover;display:block;margin:0 auto;background:rgba(0,0,0,.2)}
+.qimgbox{display:flex;align-items:center;justify-content:center;width:clamp(80px,26vw,155px);height:clamp(80px,26vw,155px);border-radius:16px;background:rgba(0,0,0,.2);margin:0 auto;font-size:clamp(2.8rem,10vw,5rem)}
+.qtext{font-size:clamp(1.1rem,4.5vw,2.2rem);font-weight:900;color:#fff;margin-top:7px;line-height:1.3}
+.qtext.small{font-size:clamp(.88rem,3vw,1.3rem);line-height:1.5;white-space:pre-line}
+.qarabic{font-size:clamp(1.1rem,3.8vw,2rem);color:#FFD700;direction:rtl;font-family:'Noto Nastaliq Urdu','Traditional Arabic',serif;line-height:2;margin-top:6px;display:none}
+.colordisk{width:clamp(100px,30vw,185px);height:clamp(100px,30vw,185px);border-radius:50%;margin:0 auto;box-shadow:0 0 40px rgba(255,255,255,.15),0 0 0 5px rgba(255,255,255,.1)}
+.countgrid{display:flex;flex-wrap:wrap;justify-content:center;gap:4px;max-width:270px;margin:0 auto}
+.citem{font-size:clamp(1.5rem,5vw,2.2rem);line-height:1.2}
+/* pattern */
+.patrow{display:flex;gap:8px;justify-content:center;align-items:center;flex-wrap:wrap;padding:4px}
+.patitem{font-size:clamp(1.3rem,4.5vw,2.2rem);background:rgba(255,255,255,.1);border-radius:12px;padding:6px 10px;min-width:46px;text-align:center;font-weight:900;color:#fff}
+.patitem.patblank{background:rgba(255,215,0,.2);border:2px dashed #FFD700;animation:pulse 1s infinite alternate}
+@keyframes pulse{from{opacity:.7}to{opacity:1}}
+/* missing number */
+.misrow{display:flex;gap:8px;justify-content:center;align-items:center;flex-wrap:wrap}
+.misitem{font-size:clamp(1.3rem,4.5vw,2.2rem);font-weight:900;color:#fff;background:rgba(255,255,255,.1);border-radius:12px;padding:6px 12px;min-width:48px;text-align:center}
+.misitem.misblank{background:rgba(255,215,0,.2);border:2px dashed #FFD700;color:#FFD700}
+.misarrow{font-size:1.1rem;color:rgba(255,255,255,.5)}
+/* urdu tip */
+.urdu-tip{width:100%;max-width:660px;background:rgba(255,215,0,.1);border:1px solid rgba(255,215,0,.3);border-radius:14px;padding:10px 16px;text-align:center;font-family:'Noto Nastaliq Urdu','Traditional Arabic',serif;font-size:clamp(1rem,3.5vw,1.6rem);color:#FFD700;direction:rtl;line-height:2;display:none;flex-shrink:0;animation:fadein .3s ease}
+.urdu-tip.show{display:block}
+/* try bar */
+.trybar{width:100%;max-width:660px;background:rgba(255,70,70,.22);border:2px solid rgba(255,70,70,.4);border-radius:50px;padding:8px 15px;text-align:center;color:#fff;font-size:clamp(.82rem,2.6vw,1.05rem);font-weight:800;display:none;flex-shrink:0}
 .trybar.show{display:block}
-
 /* options */
-.opts{display:grid;grid-template-columns:1fr 1fr;gap:11px;width:100%;max-width:660px;flex-shrink:0}
-.opt{padding:16px 10px;font-size:clamp(1.05rem,3.8vw,1.7rem);font-weight:900;border:3px solid rgba(255,255,255,.2);border-radius:18px;background:rgba(255,255,255,.09);color:#fff;cursor:pointer;min-height:68px;touch-action:manipulation;transition:transform .1s,background .15s;display:flex;align-items:center;justify-content:center;text-align:center;line-height:1.2;font-family:'Nunito',sans-serif}
-.opt:hover{background:rgba(255,255,255,.18);transform:scale(1.03)}
-.opt:active{transform:scale(.93)}
+.opts{display:grid;grid-template-columns:1fr 1fr;gap:10px;width:100%;max-width:660px;flex-shrink:0}
+.opts.tf-opts{grid-template-columns:1fr 1fr}
+.opt{padding:14px 8px;font-size:clamp(1rem,3.6vw,1.65rem);font-weight:900;border:3px solid rgba(255,255,255,.2);border-radius:16px;background:rgba(255,255,255,.09);color:#fff;cursor:pointer;min-height:64px;touch-action:manipulation;transition:transform .1s,background .15s;display:flex;align-items:center;justify-content:center;text-align:center;line-height:1.2;font-family:'Nunito',sans-serif}
+.opt:hover{background:rgba(255,255,255,.18);transform:scale(1.03)}.opt:active{transform:scale(.93)}
 .opt.correct{background:linear-gradient(135deg,#43E97B,#38F9D7)!important;color:#1a2e20;border-color:#43E97B}
 .opt.wrong{background:rgba(255,70,70,.3)!important;color:#fff;border-color:#ff4646;opacity:.55;pointer-events:none}
-
-/* general buttons */
-.btn{padding:15px 28px;font-size:clamp(1rem,3.2vw,1.55rem);font-weight:900;border:none;border-radius:18px;cursor:pointer;min-width:170px;min-height:58px;font-family:'Nunito',sans-serif;touch-action:manipulation;transition:transform .1s;box-shadow:0 6px 18px rgba(0,0,0,.3)}
+.opt.tf-true{border-color:#43E97B;font-size:clamp(1.2rem,4vw,2rem)}
+.opt.tf-false{border-color:#FF5858;font-size:clamp(1.2rem,4vw,2rem)}
+/* buttons */
+.btn{padding:14px 26px;font-size:clamp(1rem,3.2vw,1.5rem);font-weight:900;border:none;border-radius:16px;cursor:pointer;min-width:165px;min-height:56px;font-family:'Nunito',sans-serif;touch-action:manipulation;transition:transform .1s;box-shadow:0 6px 18px rgba(0,0,0,.3)}
 .btn:active{transform:scale(.93)}
 .btn-g{background:linear-gradient(135deg,#43E97B,#38F9D7);color:#1a2e20}
 .btn-b{background:linear-gradient(135deg,#4FACFE,#00F2FE);color:#0d1b4a}
-.btn-p{background:linear-gradient(135deg,#F093FB,#F5576C);color:#fff}
-.btn-o{background:linear-gradient(135deg,#F6D365,#FDA085);color:#2e1a0d}
-
-/* complete screen */
+/* complete */
 .statrow{display:flex;gap:12px;flex-wrap:wrap;justify-content:center}
-.statbox{background:rgba(255,255,255,.1);border-radius:18px;padding:15px 20px;text-align:center;min-width:95px}
-.statval{font-size:clamp(2rem,7vw,3rem);color:#FFD700;font-weight:900}
-.statlbl{font-size:.88rem;color:#bbb;margin-top:3px}
-
+.statbox{background:rgba(255,255,255,.1);border-radius:16px;padding:14px 18px;text-align:center;min-width:90px}
+.statval{font-size:clamp(1.8rem,6vw,2.8rem);color:#FFD700;font-weight:900}
+.statlbl{font-size:.85rem;color:#bbb;margin-top:3px}
 /* overlay */
 #overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.62);z-index:300;flex-direction:column;align-items:center;justify-content:center;gap:12px;pointer-events:none}
 #overlay.on{display:flex}
-.ov-e{font-size:5.5rem;animation:ovbounce .5s infinite alternate}
-.ov-t{font-size:clamp(1.4rem,5vw,2.2rem);font-weight:900;color:#FFD700;text-align:center;padding:0 20px}
-@keyframes ovbounce{from{transform:translateY(0)}to{transform:translateY(-16px)}}
-
-/* confetti */
+.ov-e{font-size:5rem;animation:ovbounce .5s infinite alternate}
+.ov-t{font-size:clamp(1.3rem,5vw,2.1rem);font-weight:900;color:#FFD700;text-align:center;padding:0 20px}
+@keyframes ovbounce{from{transform:translateY(0)}to{transform:translateY(-15px)}}
 .cf{position:fixed;pointer-events:none;z-index:400;animation:cffall linear forwards}
 @keyframes cffall{0%{transform:translateY(-10px) rotate(0);opacity:1}100%{transform:translateY(110vh) rotate(720deg);opacity:0}}
-
-/* streak fire */
-.streak{color:#FF8C00;font-weight:900;font-size:clamp(.8rem,2.2vw,1rem)}
-
-/* animations */
 @keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-9px)}75%{transform:translateX(9px)}}
 @keyframes pop{0%{transform:scale(1)}50%{transform:scale(1.18)}100%{transform:scale(1)}}
-@keyframes fadein{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
-.shake{animation:shake .35s ease!important}
-.pop{animation:pop .28s ease!important}
-.screen.active>*{animation:fadein .32s ease both}
-
-/* mobile safe area */
+@keyframes fadein{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
+.shake{animation:shake .35s ease!important}.pop{animation:pop .28s ease!important}
+.screen.active>*{animation:fadein .3s ease both}
 .screen{padding-top:max(14px,env(safe-area-inset-top));padding-bottom:max(14px,env(safe-area-inset-bottom))}
-
-/* landscape phone tweaks */
-@media(max-height:500px){
-  .big-title{font-size:1.8rem}
-  .pa{font-size:2.5rem}
-  .qcard{padding:10px 14px 8px}
-  .qemoji{font-size:2.4rem}
-  .qimgbox,.qimg{width:80px;height:80px}
-  .colordisk{width:80px;height:80px}
-  .opt{min-height:54px;padding:10px}
-}
+/* center splash vertically */
+#scr-splash{justify-content:center}
+/* world screen needs top padding for back btn */
+#scr-world{padding-top:70px;justify-content:flex-start}
+@media(max-height:500px){.big-title{font-size:1.7rem}.pa{font-size:2.5rem}.qcard{padding:8px 12px 6px}.qemoji{font-size:2.3rem}.qimgbox,.qimg{width:75px;height:75px}.colordisk{width:75px;height:75px}.opt{min-height:50px}}
 </style>
 </head>
 <body>
@@ -154,45 +128,55 @@ body{font-family:'Nunito','Segoe UI',sans-serif;background:#120a2e;min-height:10
 <div id="pts"></div>
 <div id="app">
 
-<!-- ═══ SPLASH ═══ -->
+<!-- SPLASH -->
 <div class="screen active" id="scr-splash">
   <div class="big-title">🌟 Roshni World</div>
   <div class="sub">Who is playing today?</div>
   <div class="profiles">
     <div class="pcard" onclick="pickPlayer('Abubakr','🦁')">
-      <div class="pa">🦁</div>
-      <div class="pn">Abubakr</div>
+      <div class="pa">🦁</div><div class="pn">Abubakr</div>
       <div class="ps" id="ps-Abubakr">⭐ 0 stars</div>
     </div>
     <div class="pcard" onclick="pickPlayer('Muawiyyah','🐯')">
-      <div class="pa">🐯</div>
-      <div class="pn">Muawiyyah</div>
+      <div class="pa">🐯</div><div class="pn">Muawiyyah</div>
       <div class="ps" id="ps-Muawiyyah">⭐ 0 stars</div>
     </div>
   </div>
 </div>
 
-<!-- ═══ WORLD SELECT ═══ -->
+<!-- WORLD SELECT -->
 <div class="screen" id="scr-world">
   <button class="back" onclick="go('scr-splash')">←</button>
   <div id="mascot">🦉</div>
-  <div class="badge">
-    <span id="wb-av"></span>
-    <span id="wb-nm"></span>
-    <span class="badge-stars" id="wb-st">⭐ 0</span>
-  </div>
+  <div class="badge"><span id="wb-av"></span><span id="wb-nm"></span><span class="badge-stars" id="wb-st">⭐ 0</span></div>
   <div class="sub">Choose your adventure!</div>
-  <div class="worlds">
-    <div class="wcard w-math"   onclick="startWorld('math')">  <div class="wicon">🔢</div><div class="wname">Math Island</div></div>
-    <div class="wcard w-spell"  onclick="startWorld('spelling')"><div class="wicon">📝</div><div class="wname">Spelling Jungle</div></div>
-    <div class="wcard w-quran"  onclick="startWorld('quran')"> <div class="wicon">📖</div><div class="wname">Quran Garden</div></div>
-    <div class="wcard w-animal" onclick="startWorld('animal')"><div class="wicon">🦁</div><div class="wname">Animal Kingdom</div></div>
-    <div class="wcard w-color"  onclick="startWorld('color')"> <div class="wicon">🎨</div><div class="wname">Colors World</div></div>
-    <div class="wcard w-count"  onclick="startWorld('count')"> <div class="wicon">🔢</div><div class="wname">Count &amp; Fun</div></div>
+  <div class="wsections">
+    <div>
+      <div class="wsec-label">📚 Learn</div>
+      <div class="worlds">
+        <div class="wcard w-math"   onclick="startWorld('math')">  <div class="wicon">🔢</div><div class="wname">Math Island</div></div>
+        <div class="wcard w-spell"  onclick="startWorld('spelling')"><div class="wicon">📝</div><div class="wname">Spelling</div></div>
+        <div class="wcard w-quran"  onclick="startWorld('quran')"> <div class="wicon">📖</div><div class="wname">Quran</div></div>
+        <div class="wcard w-animal" onclick="startWorld('animal')"><div class="wicon">🦁</div><div class="wname">Animals</div></div>
+        <div class="wcard w-color"  onclick="startWorld('color')"> <div class="wicon">🎨</div><div class="wname">Colors</div></div>
+        <div class="wcard w-count"  onclick="startWorld('count')"> <div class="wicon">🔢</div><div class="wname">Counting</div></div>
+      </div>
+    </div>
+    <div>
+      <div class="wsec-label">🧠 Think</div>
+      <div class="worlds">
+        <div class="wcard w-pattern" onclick="startWorld('pattern')"><div class="wicon">🔷</div><div class="wname">Patterns</div></div>
+        <div class="wcard w-odd"     onclick="startWorld('odd')">    <div class="wicon">🚫</div><div class="wname">Odd One Out</div></div>
+        <div class="wcard w-riddle"  onclick="startWorld('riddle')"> <div class="wicon">🕵️</div><div class="wname">Riddles</div></div>
+        <div class="wcard w-tf"      onclick="startWorld('tf')">     <div class="wicon">✅</div><div class="wname">True / False</div></div>
+        <div class="wcard w-missing" onclick="startWorld('missing')"><div class="wicon">❓</div><div class="wname">Missing №</div></div>
+        <div class="wcard w-gk"      onclick="startWorld('gk')">     <div class="wicon">🌍</div><div class="wname">General Know.</div></div>
+      </div>
+    </div>
   </div>
 </div>
 
-<!-- ═══ GAME ═══ -->
+<!-- GAME -->
 <div class="screen" id="scr-game">
   <button class="back" onclick="confirmBack()">←</button>
   <div class="sbar">
@@ -200,19 +184,21 @@ body{font-family:'Nunito','Segoe UI',sans-serif;background:#120a2e;min-height:10
     <div class="dots" id="g-dots"></div>
     <span class="sb-stars" id="g-stars">⭐ 0</span>
   </div>
-  <div class="qcard" id="qcard">
+  <div class="qcard" id="qcard" onclick="speakUrduQ()">
+    <div class="tap-hint">🔊 Urdu</div>
     <div id="qvisual"></div>
-    <div class="qtext"   id="qtext"></div>
+    <div class="qtext" id="qtext"></div>
     <div class="qarabic" id="qarabic"></div>
   </div>
+  <div class="urdu-tip" id="urdu-tip"></div>
   <div class="trybar" id="trybar">❌ Try again! <span id="tryleft"></span> tries left!</div>
   <div class="opts" id="opts"></div>
 </div>
 
-<!-- ═══ COMPLETE ═══ -->
+<!-- COMPLETE -->
 <div class="screen" id="scr-complete">
-  <div style="font-size:5rem">🎉</div>
-  <div class="big-title" style="font-size:clamp(1.8rem,6vw,3rem)">Amazing!</div>
+  <div style="font-size:4.5rem">🎉</div>
+  <div class="big-title" style="font-size:clamp(1.7rem,6vw,3rem)">Amazing!</div>
   <div class="statrow">
     <div class="statbox"><div class="statval" id="c-cor">0</div><div class="statlbl">Correct ✅</div></div>
     <div class="statbox"><div class="statval" id="c-earn">0</div><div class="statlbl">Stars ⭐</div></div>
@@ -222,505 +208,320 @@ body{font-family:'Nunito','Segoe UI',sans-serif;background:#120a2e;min-height:10
   <button class="btn btn-b" onclick="go('scr-world')">Choose World 🌍</button>
 </div>
 
-</div><!-- #app -->
-
-<!-- ═══ OVERLAY ═══ -->
-<div id="overlay">
-  <div class="ov-e" id="ov-e">⭐</div>
-  <div class="ov-t" id="ov-t">Correct!</div>
 </div>
+<div id="overlay"><div class="ov-e" id="ov-e">⭐</div><div class="ov-t" id="ov-t">Correct!</div></div>
 
 <script>
-/* ═══════════════════════════════════════
-   CONFIG & STATE
-═══════════════════════════════════════ */
-const CFG = { totalQs:7, maxTries:3 };
-
-const S = {
-  player:'', avatar:'', world:'',
-  qs:[], qi:0, tries:0,
-  sStars:0, sCorrect:0, streak:0
-};
-
-const DB = { Abubakr:{stars:0}, Muawiyyah:{stars:0} };
-
-function dbLoad(){
-  try{const d=JSON.parse(localStorage.getItem('rw4')||'{}');
-    if(d.A) DB.Abubakr=d.A;
-    if(d.M) DB.Muawiyyah=d.M;
-  }catch(e){}
-  refreshBadges();
-}
-function dbSave(){
-  localStorage.setItem('rw4',JSON.stringify({A:DB.Abubakr,M:DB.Muawiyyah}));
-}
-function refreshBadges(){
-  el('ps-Abubakr').textContent  =`⭐ ${DB.Abubakr.stars} stars`;
-  el('ps-Muawiyyah').textContent=`⭐ ${DB.Muawiyyah.stars} stars`;
-}
+/* ── STATE ── */
+const CFG={totalQs:7,maxTries:3};
+const S={player:'',avatar:'',world:'',qs:[],qi:0,tries:0,sStars:0,sCorrect:0,streak:0};
+const DB={Abubakr:{stars:0},Muawiyyah:{stars:0}};
 function el(id){return document.getElementById(id)}
+function dbLoad(){try{const d=JSON.parse(localStorage.getItem('rw5')||'{}');if(d.A)DB.Abubakr=d.A;if(d.M)DB.Muawiyyah=d.M;}catch(e){}refreshBadges()}
+function dbSave(){localStorage.setItem('rw5',JSON.stringify({A:DB.Abubakr,M:DB.Muawiyyah}))}
+function refreshBadges(){el('ps-Abubakr').textContent=`⭐ ${DB.Abubakr.stars} stars`;el('ps-Muawiyyah').textContent=`⭐ ${DB.Muawiyyah.stars} stars`}
 
-/* ═══════════════════════════════════════
-   AUDIO  (Web Audio API — no files needed)
-═══════════════════════════════════════ */
+/* ── AUDIO ── */
 let _ac=null;
 function ac(){return _ac||(_ac=new(window.AudioContext||window.webkitAudioContext)())}
-
-function tone(freq,dur,type='sine',vol=0.28,delay=0){
-  const c=ac(),o=c.createOscillator(),g=c.createGain();
-  o.connect(g);g.connect(c.destination);
-  o.type=type;o.frequency.value=freq;
-  g.gain.setValueAtTime(vol,c.currentTime+delay);
-  g.gain.exponentialRampToValueAtTime(0.001,c.currentTime+delay+dur);
-  o.start(c.currentTime+delay);
-  o.stop(c.currentTime+delay+dur+.05);
-}
-
-function sndCorrect(){
-  // happy ascending arpeggio C-E-G-C
-  [[523,0],[659,.11],[784,.22],[1047,.33]].forEach(([f,d])=>tone(f,.3,'sine',.26,d));
-}
-
-function sndWrong(){
-  // buzzer — descending sawtooth
-  const c=ac(),o=c.createOscillator(),g=c.createGain();
-  o.connect(g);g.connect(c.destination);
-  o.type='sawtooth';
-  o.frequency.setValueAtTime(300,c.currentTime);
-  o.frequency.exponentialRampToValueAtTime(80,c.currentTime+.45);
-  g.gain.setValueAtTime(.38,c.currentTime);
-  g.gain.exponentialRampToValueAtTime(.001,c.currentTime+.5);
-  o.start(c.currentTime);o.stop(c.currentTime+.55);
-}
-
+function tone(f,d,type='sine',vol=.26,t=0){const c=ac(),o=c.createOscillator(),g=c.createGain();o.connect(g);g.connect(c.destination);o.type=type;o.frequency.value=f;g.gain.setValueAtTime(vol,c.currentTime+t);g.gain.exponentialRampToValueAtTime(.001,c.currentTime+t+d);o.start(c.currentTime+t);o.stop(c.currentTime+t+d+.05)}
+function sndCorrect(){[[523,0],[659,.11],[784,.22],[1047,.33]].forEach(([f,d])=>tone(f,.3,'sine',.25,d))}
+function sndWrong(){const c=ac(),o=c.createOscillator(),g=c.createGain();o.connect(g);g.connect(c.destination);o.type='sawtooth';o.frequency.setValueAtTime(300,c.currentTime);o.frequency.exponentialRampToValueAtTime(80,c.currentTime+.45);g.gain.setValueAtTime(.38,c.currentTime);g.gain.exponentialRampToValueAtTime(.001,c.currentTime+.5);o.start(c.currentTime);o.stop(c.currentTime+.55)}
 function sndClick(){tone(900,.07,'sine',.12)}
+function sndFanfare(){[[523,0,.12],[523,.1,.08],[523,.2,.08],[659,.3,.25],[587,.55,.08],[523,.63,.25],[784,.9,.5]].forEach(([f,d,l])=>tone(f,l,'sine',.28,d))}
 
-function sndFanfare(){
-  [[523,0,.12],[523,.1,.08],[523,.2,.08],[659,.3,.25],
-   [587,.55,.08],[523,.63,.25],[784,.9,.5]].forEach(([f,d,l])=>tone(f,l,'sine',.28,d));
-}
-
-/* ═══════════════════════════════════════
-   SPEECH — Urdu TTS
-═══════════════════════════════════════ */
+/* ── SPEECH ── */
 let _vx=[];
-speechSynthesis.onvoiceschanged=()=>{_vx=speechSynthesis.getVoices()};
-_vx=speechSynthesis.getVoices();
-
-function speak(txt){
+function loadVoices(){_vx=speechSynthesis.getVoices()}
+speechSynthesis.onvoiceschanged=loadVoices;
+loadVoices();
+function getBestVoice(){
+  const v=_vx;
+  return v.find(x=>x.name.toLowerCase().includes('google')&&x.lang.startsWith('ur'))
+      || v.find(x=>x.lang.startsWith('ur'))
+      || v.find(x=>x.lang==='ur-PK')
+      || v.find(x=>x.lang.startsWith('hi'))  // Hindi fallback — close to Urdu
+      || null;
+}
+function speak(txt,slow=false){
   speechSynthesis.cancel();
   const u=new SpeechSynthesisUtterance(txt);
-  u.lang='ur-PK';u.rate=.88;u.volume=1;
-  const v=_vx.find(x=>x.lang.startsWith('ur'));
-  if(v)u.voice=v;
+  u.lang='ur-PK';u.rate=slow?.72:.86;u.pitch=1.05;u.volume=1;
+  const v=getBestVoice();if(v)u.voice=v;
   speechSynthesis.speak(u);
 }
+const GOOD=['شاباش! بہت اچھا!','واہ! بہت خوب!','زبردست! کمال ہے!','واہ واہ! بہت ذہین ہو!','بہت شاندار!'];
+const BAD=['نہیں نہیں! دوبارہ کوشش کرو!','نہیں! ایک بار اور!','ارے نہیں! پھر سوچو!'];
+const rnd=a=>a[Math.floor(Math.random()*a.length)];
 
-const GOOD =['شاباش! بہت اچھا!','واہ! بہت خوب!','زبردست! کمال ہے!','واہ واہ! بہت ذہین ہو!'];
-const BAD  =['نہیں نہیں! دوبارہ کوشش کرو!','نہیں! ایک بار اور!','ارے نہیں! پھر سوچو!'];
-const rnd  =a=>a[Math.floor(Math.random()*a.length)];
-
-/* ═══════════════════════════════════════
-   PARTICLES (floating dots in bg)
-═══════════════════════════════════════ */
-(function initPts(){
-  const c=el('pts');
-  const cols=['#FFD700','#FF69B4','#7DF9FF','#90EE90','#FFA07A','#DA70D6'];
-  for(let i=0;i<28;i++){
-    const p=document.createElement('div');
-    p.className='pt';
-    const s=3+Math.random()*7;
-    p.style.cssText=`width:${s}px;height:${s}px;left:${Math.random()*100}vw;`+
-      `background:${cols[~~(Math.random()*cols.length)]};`+
-      `animation-duration:${9+Math.random()*13}s;animation-delay:-${Math.random()*18}s`;
-    c.appendChild(p);
-  }
-})();
-
-/* ═══════════════════════════════════════
-   NAVIGATION
-═══════════════════════════════════════ */
-function go(id){
-  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
-  el(id).classList.add('active');
+/* ── URDU Q PROMPT ── */
+function urduPrompt(world,q){
+  const m={
+    math:{comparison:'کون سا نمبر بڑا ہے؟',addition:`${q.a} جمع ${q.b} کتنا ہوتا ہے؟`,subtraction:`${q.a} منہا ${q.b} کتنا ہے؟`,multiplication:`${q.a} ضرب ${q.b} کتنا ہے؟`},
+    spelling:'اس تصویر کے نام میں خالی حرف کیا ہے؟',
+    quran:'یہ کون سی سورت کی آیت ہے؟',
+    animal:'یہ کون سا جانور ہے؟',
+    color:'یہ کون سا رنگ ہے؟',
+    count:'کتنے نظر آ رہے ہیں؟ گنو اور بتاؤ۔',
+  };
+  if(world==='math')return m.math[q.type]||'حساب کا سوال';
+  if(m[world])return m[world];
+  return q.urdu||'سوال کا جواب دو۔';
 }
-
-function pickPlayer(name,avatar){
+function speakUrduQ(){
+  const q=S.qs[S.qi];if(!q)return;
   sndClick();
-  S.player=name;S.avatar=avatar;
-  el('wb-av').textContent=avatar;
-  el('wb-nm').textContent=name;
-  el('wb-st').textContent=`⭐ ${DB[name].stars}`;
-  speak(`${name}! خوش آمدید! چلو کھیلتے ہیں!`);
-  go('scr-world');
+  const txt=urduPrompt(S.world,q);
+  el('urdu-tip').textContent=txt;
+  el('urdu-tip').classList.add('show');
+  speak(txt,true);
+  setTimeout(()=>el('urdu-tip').classList.remove('show'),4000);
 }
 
-function confirmBack(){
-  if(confirm('Go back to worlds? Progress will be lost.')){
-    speechSynthesis.cancel();go('scr-world');
-  }
-}
+/* ── NAV ── */
+function go(id){document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));el(id).classList.add('active')}
+function pickPlayer(name,avatar){sndClick();S.player=name;S.avatar=avatar;el('wb-av').textContent=avatar;el('wb-nm').textContent=name;el('wb-st').textContent=`⭐ ${DB[name].stars}`;speak(`${name}! خوش آمدید! چلو کھیلتے ہیں!`);go('scr-world')}
+function confirmBack(){if(confirm('Go back?')){speechSynthesis.cancel();go('scr-world')}}
 function playAgain(){startWorld(S.world)}
 
-/* ═══════════════════════════════════════
-   GAME ENGINE
-═══════════════════════════════════════ */
-function startWorld(world){
-  sndClick();
-  S.world=world;S.qi=0;S.tries=0;S.sStars=0;S.sCorrect=0;S.streak=0;
-  S.qs=shuffle(getPool(world)).slice(0,CFG.totalQs);
-  go('scr-game');
-  el('g-name').textContent =`${S.avatar} ${S.player}`;
-  el('g-stars').textContent=`⭐ ${DB[S.player].stars}`;
-  renderDots();loadQ();
-}
+/* ── PARTICLES ── */
+(function(){const c=el('pts'),cols=['#FFD700','#FF69B4','#7DF9FF','#90EE90','#FFA07A','#DA70D6'];for(let i=0;i<26;i++){const p=document.createElement('div');p.className='pt';const s=3+Math.random()*7;p.style.cssText=`width:${s}px;height:${s}px;left:${Math.random()*100}vw;background:${cols[~~(Math.random()*cols.length)]};animation-duration:${9+Math.random()*13}s;animation-delay:-${Math.random()*18}s`;c.appendChild(p)}})();
 
-function renderDots(){
-  const c=el('g-dots');c.innerHTML='';
-  for(let i=0;i<CFG.totalQs;i++){
-    const d=document.createElement('div');
-    d.className='dot'+(i<S.qi?' done':i===S.qi?' cur':'');
-    c.appendChild(d);
-  }
-}
-
+/* ── GAME ENGINE ── */
+function startWorld(w){sndClick();S.world=w;S.qi=0;S.tries=0;S.sStars=0;S.sCorrect=0;S.streak=0;S.qs=shuffle(getPool(w)).slice(0,CFG.totalQs);go('scr-game');el('g-name').textContent=`${S.avatar} ${S.player}`;el('g-stars').textContent=`⭐ ${DB[S.player].stars}`;renderDots();loadQ()}
+function renderDots(){const c=el('g-dots');c.innerHTML='';for(let i=0;i<CFG.totalQs;i++){const d=document.createElement('div');d.className='dot'+(i<S.qi?' done':i===S.qi?' cur':'');c.appendChild(d)}}
 function loadQ(){
   if(S.qi>=S.qs.length){endSession();return}
   S.tries=0;
   el('trybar').classList.remove('show');
-  el('qarabic').style.display='none';
-  el('qarabic').textContent='';
+  el('urdu-tip').classList.remove('show');
+  el('qarabic').style.display='none';el('qarabic').textContent='';
+  el('qtext').className='qtext';
   renderDots();
   const q=S.qs[S.qi];
-  ({math:rMath,spelling:rSpell,quran:rQuran,
-    animal:rAnimal,color:rColor,count:rCount})[S.world](q);
+  const renderers={math:rMath,spelling:rSpell,quran:rQuran,animal:rAnimal,color:rColor,count:rCount,pattern:rPattern,odd:rOdd,riddle:rRiddle,tf:rTF,missing:rMissing,gk:rGK};
+  renderers[S.world](q);
 }
-
 function handleAns(btn,chosen,answer){
   const ok=String(chosen).trim()===String(answer).trim();
   if(ok){
-    btn.classList.add('correct','pop');
-    sndCorrect();
-    speak(rnd(GOOD));
-    S.streak++;S.sCorrect++;S.sStars++;
-    DB[S.player].stars++;dbSave();refreshBadges();
-    el('g-stars').textContent=`⭐ ${DB[S.player].stars}`;
-    el('wb-st').textContent  =`⭐ ${DB[S.player].stars}`;
-    mascotReact('🤩');
-    showOv(true);
+    btn.classList.add('correct','pop');sndCorrect();speak(rnd(GOOD));
+    S.streak++;S.sCorrect++;S.sStars++;DB[S.player].stars++;dbSave();refreshBadges();
+    el('g-stars').textContent=`⭐ ${DB[S.player].stars}`;el('wb-st').textContent=`⭐ ${DB[S.player].stars}`;
+    mascotReact('🤩');showOv(true);
     setTimeout(()=>{hideOv();S.qi++;loadQ()},1600);
   } else {
-    S.tries++;S.streak=0;
-    btn.classList.add('wrong','shake');
-    sndWrong();
-    speak(rnd(BAD));
-    mascotReact('😅');
-    if(S.tries>=CFG.maxTries){
-      // max tries reached — move on without revealing answer
-      showOv(false);
-      setTimeout(()=>{hideOv();S.qi++;loadQ()},1700);
-    } else {
-      el('tryleft').textContent=CFG.maxTries-S.tries;
-      el('trybar').classList.add('show');
-    }
+    S.tries++;S.streak=0;btn.classList.add('wrong','shake');sndWrong();speak(rnd(BAD));mascotReact('😅');
+    if(S.tries>=CFG.maxTries){showOv(false);setTimeout(()=>{hideOv();S.qi++;loadQ()},1700)}
+    else{el('tryleft').textContent=CFG.maxTries-S.tries;el('trybar').classList.add('show')}
   }
 }
+function endSession(){sndFanfare();speak('واہ! تم نے سب سوال مکمل کر لیے! بہت اچھے بچے ہو!');spawnConfetti(55);el('c-cor').textContent=`${S.sCorrect}/${CFG.totalQs}`;el('c-earn').textContent=S.sStars;el('c-tot').textContent=DB[S.player].stars;go('scr-complete')}
 
-function endSession(){
-  sndFanfare();
-  speak('واہ! تم نے سب سوال مکمل کر لیے! بہت اچھے بچے ہو!');
-  spawnConfetti(55);
-  el('c-cor').textContent =`${S.sCorrect}/${CFG.totalQs}`;
-  el('c-earn').textContent=S.sStars;
-  el('c-tot').textContent =DB[S.player].stars;
-  go('scr-complete');
-}
-
-/* ═══════════════════════════════════════
-   OVERLAY & CONFETTI
-═══════════════════════════════════════ */
-function showOv(ok){
-  el('ov-e').textContent=ok?(S.streak>=3?'🔥':'⭐'):'💪';
-  el('ov-t').textContent=ok?(S.streak>=3?`🔥 ${S.streak} in a row!`:'Correct!  +1 Star ⭐'):"Let's try the next one! 💪";
-  el('overlay').classList.add('on');
-  if(ok)spawnConfetti(24);
-}
+/* ── OVERLAY & CONFETTI ── */
+function showOv(ok){el('ov-e').textContent=ok?(S.streak>=3?'🔥':'⭐'):'💪';el('ov-t').textContent=ok?(S.streak>=3?`🔥 ${S.streak} in a row!`:'Correct! +1 Star ⭐'):"Let's try next one! 💪";el('overlay').classList.add('on');if(ok)spawnConfetti(22)}
 function hideOv(){el('overlay').classList.remove('on')}
+function spawnConfetti(n=30){const cols=['#FFD700','#FF5858','#43E97B','#4FACFE','#F093FB','#FDA085','#fff'];for(let i=0;i<n;i++){const p=document.createElement('div');p.className='cf';const s=5+Math.random()*9;p.style.cssText=`left:${Math.random()*100}vw;top:-8px;width:${s}px;height:${s}px;background:${rnd(cols)};border-radius:${Math.random()>.5?'50%':'3px'};animation-duration:${1.1+Math.random()*1.3}s;animation-delay:${Math.random()*.4}s`;document.body.appendChild(p);setTimeout(()=>p.remove(),3000)}}
+function mascotReact(e){const m=el('mascot');m.textContent=e;m.classList.add('react');setTimeout(()=>{m.textContent='🦉';m.classList.remove('react')},1500)}
 
-function spawnConfetti(n=30){
-  const cols=['#FFD700','#FF5858','#43E97B','#4FACFE','#F093FB','#FDA085','#fff'];
-  for(let i=0;i<n;i++){
-    const p=document.createElement('div');
-    p.className='cf';
-    const s=5+Math.random()*9;
-    p.style.cssText=`left:${Math.random()*100}vw;top:-8px;width:${s}px;height:${s}px;`+
-      `background:${rnd(cols)};border-radius:${Math.random()>.5?'50%':'3px'};`+
-      `animation-duration:${1.1+Math.random()*1.3}s;animation-delay:${Math.random()*.4}s`;
-    document.body.appendChild(p);
-    setTimeout(()=>p.remove(),3000);
-  }
+/* ── RENDERERS ── */
+function setV(h){el('qvisual').innerHTML=h}
+function renderOpts(opts,answer,cls=''){
+  const g=el('opts');g.innerHTML='';g.className='opts'+(cls?' '+cls:'');
+  shuffle([...opts]).forEach(o=>{const b=document.createElement('button');b.className='opt';b.textContent=o;b.dataset.v=o;b.onclick=()=>handleAns(b,o,answer);g.appendChild(b)});
 }
+function wikiImg(kw,cid,fb){fetch(`https://en.wikipedia.org/api/rest_v1/page/summary/${encodeURIComponent(kw)}`).then(r=>r.json()).then(d=>{const src=d.thumbnail?.source,box=el(cid);if(src&&box)box.innerHTML=`<img class="qimg" src="${src}" alt="${kw}" onerror="this.parentElement.textContent='${fb}'">`}).catch(()=>{})}
 
-function mascotReact(emoji){
-  const m=el('mascot');
-  m.textContent=emoji;m.classList.add('react');
-  setTimeout(()=>{m.textContent='🦉';m.classList.remove('react')},1500);
-}
+function rMath(q){const icons={comparison:'🤔',addition:'➕',subtraction:'➖',multiplication:'✖️'};setV(`<div class="qemoji">${icons[q.type]}</div>`);if(q.type==='comparison'){el('qtext').textContent='Which is BIGGER?';renderOpts([q.a,q.b],q.answer)}else{const sym={addition:'+',subtraction:'−',multiplication:'×'};el('qtext').textContent=`${q.a} ${sym[q.type]} ${q.b} = ?`;renderOpts(q.opts,q.answer)}}
+function rSpell(q){el('qtext').textContent=q.display;setV(`<div class="qimgbox" id="simg">${q.emoji}</div>`);wikiImg(q.keyword,'simg',q.emoji);renderOpts(q.opts,q.answer)}
+function rQuran(q){setV(`<div class="qemoji">📖</div>`);el('qtext').textContent='Which Surah is this?';const a=el('qarabic');a.textContent=q.ayah;a.style.display='block';renderOpts(q.opts,q.answer)}
+function rAnimal(q){el('qtext').textContent='What animal is this? 🤔';setV(`<div class="qimgbox" id="aimg">${q.emoji}</div>`);wikiImg(q.keyword,'aimg',q.emoji);renderOpts(q.opts,q.answer)}
+function rColor(q){el('qtext').textContent='What color is this? 🎨';setV(`<div class="colordisk" style="background:${q.hex}"></div>`);renderOpts(q.opts,q.answer)}
+function rCount(q){el('qtext').textContent='How many can you see? 👀';const items=Array(q.count).fill(q.emoji).map(e=>`<span class="citem">${e}</span>`).join('');setV(`<div class="countgrid">${items}</div>`);renderOpts(q.opts,q.count)}
 
-/* ═══════════════════════════════════════
-   WORLD RENDERERS
-═══════════════════════════════════════ */
-
-/* MATH */
-function rMath(q){
-  const icons={comparison:'🤔',addition:'➕',subtraction:'➖',multiplication:'✖️'};
-  setV(`<div class="qemoji">${icons[q.type]}</div>`);
-  if(q.type==='comparison'){
-    el('qtext').textContent='Which is BIGGER?';
-    renderOpts([q.a,q.b],q.answer);
-  } else {
-    const sym={addition:'+',subtraction:'−',multiplication:'×'};
-    el('qtext').textContent=`${q.a} ${sym[q.type]} ${q.b} = ?`;
-    renderOpts(q.opts,q.answer);
-  }
-}
-
-/* SPELLING */
-function rSpell(q){
-  el('qtext').textContent=q.display;
-  setV(`<div class="qimgbox" id="simg">${q.emoji}</div>`);
-  wikiImg(q.keyword,'simg',q.emoji);
-  renderOpts(q.opts,q.answer,true);
-}
-
-/* QURAN */
-function rQuran(q){
-  setV(`<div class="qemoji">📖</div>`);
-  el('qtext').textContent='Which Surah is this?';
-  const a=el('qarabic');a.textContent=q.ayah;a.style.display='block';
+function rPattern(q){
+  el('qtext').textContent='What comes next?';
+  const items=q.seq.map((x,i)=>`<span class="patitem${x==='?'?' patblank':''}">${x==='?'?'?':x}</span>`).join('');
+  setV(`<div class="patrow">${items}</div>`);
   renderOpts(q.opts,q.answer);
 }
-
-/* ANIMAL */
-function rAnimal(q){
-  el('qtext').textContent='What animal is this? 🤔';
-  setV(`<div class="qimgbox" id="aimg">${q.emoji}</div>`);
-  wikiImg(q.keyword,'aimg',q.emoji);
+function rOdd(q){
+  setV(`<div class="qemoji">🤔</div>`);
+  el('qtext').textContent='Which one does NOT belong?';
+  renderOpts(q.items,q.answer);
+}
+function rRiddle(q){
+  setV(`<div class="qemoji">🕵️</div>`);
+  el('qtext').className='qtext small';
+  el('qtext').textContent=q.q;
   renderOpts(q.opts,q.answer);
 }
-
-/* COLOR */
-function rColor(q){
-  el('qtext').textContent='What color is this? 🎨';
-  setV(`<div class="colordisk" style="background:${q.hex}"></div>`);
-  renderOpts(q.opts,q.answer);
-}
-
-/* COUNT */
-function rCount(q){
-  el('qtext').textContent='How many can you see? 👀';
-  const items=Array(q.count).fill(q.emoji).map(e=>`<span class="citem">${e}</span>`).join('');
-  setV(`<div class="countgrid">${items}</div>`);
-  renderOpts(q.opts,q.count);
-}
-
-/* helpers */
-function setV(html){el('qvisual').innerHTML=html}
-
-function renderOpts(opts,answer){
-  const g=el('opts');g.innerHTML='';
-  shuffle([...opts]).forEach(o=>{
-    const b=document.createElement('button');
-    b.className='opt';b.textContent=o;b.dataset.v=o;
-    b.onclick=()=>handleAns(b,o,answer);
-    g.appendChild(b);
+function rTF(q){
+  setV(`<div class="qemoji">🤔</div>`);
+  el('qtext').textContent=q.stmt;
+  const g=el('opts');g.innerHTML='';g.className='opts tf-opts';
+  [['TRUE ✅','TRUE','tf-true'],['FALSE ❌','FALSE','tf-false']].forEach(([label,val,cls])=>{
+    const b=document.createElement('button');b.className=`opt ${cls}`;b.textContent=label;b.dataset.v=val;b.onclick=()=>handleAns(b,val,q.answer);g.appendChild(b);
   });
 }
-
-/* Wikipedia real-photo loader */
-async function wikiImg(kw,containerId,fallback){
-  try{
-    const res=await fetch(`https://en.wikipedia.org/api/rest_v1/page/summary/${encodeURIComponent(kw)}`);
-    const d=await res.json();
-    const src=d.thumbnail?.source;
-    const box=el(containerId);
-    if(src&&box){
-      box.innerHTML=`<img class="qimg" src="${src}" alt="${kw}" `+
-        `onerror="this.parentElement.textContent='${fallback}'">`;
-    }
-  }catch(_){}
+function rMissing(q){
+  el('qtext').textContent='Fill in the missing number:';
+  const items=q.seq.map(x=>`<span class="misitem${x==='?'?' misblank':''}">${x}</span>${x!==q.seq[q.seq.length-1]?'<span class="misarrow">→</span>':''}`).join('');
+  setV(`<div class="misrow">${items}</div>`);
+  renderOpts(q.opts,q.answer);
+}
+function rGK(q){
+  setV(`<div class="qemoji">🌍</div>`);
+  el('qtext').textContent=q.q;
+  renderOpts(q.opts,q.answer);
 }
 
-/* ═══════════════════════════════════════
-   QUESTION DATA
-═══════════════════════════════════════ */
-function getPool(w){
-  return{math:MATH,spelling:SPELL,quran:QURAN,animal:ANIMAL,color:COLOR,count:COUNT}[w]||[];
-}
+/* ── DATA ── */
+function getPool(w){return{math:MATH,spelling:SPELL,quran:QURAN,animal:ANIMAL,color:COLOR,count:COUNT,pattern:PATTERN,odd:ODD,riddle:RIDDLE,tf:TF,missing:MISSING,gk:GK}[w]||[]}
 
-/* ─── MATH ─── */
 const MATH=[
-  // comparisons (2 choices rendered as options)
-  {type:'comparison',a:400, b:500, answer:500},
-  {type:'comparison',a:200, b:300, answer:300},
-  {type:'comparison',a:700, b:600, answer:700},
-  {type:'comparison',a:150, b:250, answer:250},
-  {type:'comparison',a:80,  b:90,  answer:90},
-  {type:'comparison',a:55,  b:45,  answer:55},
-  {type:'comparison',a:999, b:1000,answer:1000},
-  {type:'comparison',a:33,  b:23,  answer:33},
-  {type:'comparison',a:100, b:10,  answer:100},
-  // addition
-  {type:'addition',a:300,b:200,answer:500, opts:[400,500,600,700]},
-  {type:'addition',a:10, b:20, answer:30,  opts:[20,30,40,50]},
-  {type:'addition',a:100,b:200,answer:300, opts:[200,300,400,500]},
-  {type:'addition',a:50, b:50, answer:100, opts:[80,90,100,110]},
-  {type:'addition',a:25, b:25, answer:50,  opts:[40,45,50,55]},
-  {type:'addition',a:40, b:30, answer:70,  opts:[60,70,80,90]},
-  {type:'addition',a:200,b:400,answer:600, opts:[500,600,700,800]},
-  {type:'addition',a:15, b:5,  answer:20,  opts:[15,20,25,30]},
-  {type:'addition',a:60, b:40, answer:100, opts:[80,100,120,140]},
-  {type:'addition',a:500,b:500,answer:1000,opts:[800,900,1000,1100]},
-  {type:'addition',a:7,  b:8,  answer:15,  opts:[13,14,15,16]},
-  {type:'addition',a:9,  b:6,  answer:15,  opts:[14,15,16,17]},
-  {type:'addition',a:4,  b:3,  answer:7,   opts:[5,6,7,8]},
-  // subtraction
-  {type:'subtraction',a:100,b:50, answer:50,  opts:[30,40,50,60]},
-  {type:'subtraction',a:500,b:200,answer:300, opts:[200,300,400,500]},
-  {type:'subtraction',a:80, b:30, answer:50,  opts:[40,50,60,70]},
-  {type:'subtraction',a:20, b:10, answer:10,  opts:[5,10,15,20]},
-  {type:'subtraction',a:90, b:40, answer:50,  opts:[40,50,60,70]},
-  {type:'subtraction',a:30, b:15, answer:15,  opts:[10,15,20,25]},
-  {type:'subtraction',a:10, b:3,  answer:7,   opts:[5,6,7,8]},
-  // multiplication
-  {type:'multiplication',a:5, b:2,  answer:10,  opts:[8,10,12,15]},
-  {type:'multiplication',a:5, b:30, answer:150, opts:[100,150,200,125]},
-  {type:'multiplication',a:2, b:10, answer:20,  opts:[15,20,25,30]},
-  {type:'multiplication',a:3, b:10, answer:30,  opts:[20,30,40,50]},
-  {type:'multiplication',a:4, b:5,  answer:20,  opts:[15,20,25,30]},
-  {type:'multiplication',a:10,b:10, answer:100, opts:[80,90,100,110]},
-  {type:'multiplication',a:2, b:5,  answer:10,  opts:[8,10,12,14]},
-  {type:'multiplication',a:3, b:3,  answer:9,   opts:[6,8,9,12]},
-  {type:'multiplication',a:4, b:4,  answer:16,  opts:[12,14,16,20]},
-  {type:'multiplication',a:2, b:2,  answer:4,   opts:[2,3,4,6]},
+  {type:'comparison',a:400,b:500,answer:500},{type:'comparison',a:200,b:300,answer:300},{type:'comparison',a:700,b:600,answer:700},{type:'comparison',a:150,b:250,answer:250},{type:'comparison',a:80,b:90,answer:90},{type:'comparison',a:55,b:45,answer:55},{type:'comparison',a:999,b:1000,answer:1000},{type:'comparison',a:33,b:23,answer:33},
+  {type:'addition',a:300,b:200,answer:500,opts:[400,500,600,700]},{type:'addition',a:10,b:20,answer:30,opts:[20,30,40,50]},{type:'addition',a:100,b:200,answer:300,opts:[200,300,400,500]},{type:'addition',a:50,b:50,answer:100,opts:[80,90,100,110]},{type:'addition',a:25,b:25,answer:50,opts:[40,45,50,55]},{type:'addition',a:40,b:30,answer:70,opts:[60,70,80,90]},{type:'addition',a:200,b:400,answer:600,opts:[500,600,700,800]},{type:'addition',a:60,b:40,answer:100,opts:[80,100,120,140]},{type:'addition',a:500,b:500,answer:1000,opts:[800,900,1000,1100]},{type:'addition',a:7,b:8,answer:15,opts:[13,14,15,16]},
+  {type:'subtraction',a:100,b:50,answer:50,opts:[30,40,50,60]},{type:'subtraction',a:500,b:200,answer:300,opts:[200,300,400,500]},{type:'subtraction',a:80,b:30,answer:50,opts:[40,50,60,70]},{type:'subtraction',a:20,b:10,answer:10,opts:[5,10,15,20]},{type:'subtraction',a:90,b:40,answer:50,opts:[40,50,60,70]},{type:'subtraction',a:30,b:15,answer:15,opts:[10,15,20,25]},
+  {type:'multiplication',a:5,b:2,answer:10,opts:[8,10,12,15]},{type:'multiplication',a:5,b:30,answer:150,opts:[100,150,200,125]},{type:'multiplication',a:2,b:10,answer:20,opts:[15,20,25,30]},{type:'multiplication',a:3,b:10,answer:30,opts:[20,30,40,50]},{type:'multiplication',a:4,b:5,answer:20,opts:[15,20,25,30]},{type:'multiplication',a:10,b:10,answer:100,opts:[80,90,100,110]},{type:'multiplication',a:3,b:3,answer:9,opts:[6,8,9,12]},{type:'multiplication',a:4,b:4,answer:16,opts:[12,14,16,20]},
 ];
-// fix comparison opts
 MATH.filter(q=>q.type==='comparison').forEach(q=>q.opts=[q.a,q.b]);
 
-/* ─── SPELLING ─── */
 const SPELL=[
-  {keyword:'cat',     emoji:'🐱',display:'C _ T',       opts:['A','O','U','E'],answer:'A'},
-  {keyword:'dog',     emoji:'🐶',display:'D _ G',       opts:['A','O','I','U'],answer:'O'},
-  {keyword:'sun',     emoji:'☀️',display:'S _ N',       opts:['O','U','A','I'],answer:'U'},
-  {keyword:'hat',     emoji:'🎩',display:'H _ T',       opts:['A','O','E','I'],answer:'A'},
-  {keyword:'cup',     emoji:'☕',display:'C _ P',       opts:['A','U','O','I'],answer:'U'},
-  {keyword:'bed',     emoji:'🛏️',display:'B _ D',       opts:['A','E','O','I'],answer:'E'},
-  {keyword:'duck',    emoji:'🦆',display:'D U _ K',     opts:['C','K','S','T'],answer:'C'},
-  {keyword:'fish',    emoji:'🐟',display:'F I _ H',     opts:['S','C','T','P'],answer:'S'},
-  {keyword:'frog',    emoji:'🐸',display:'F R _ G',     opts:['O','A','E','U'],answer:'O'},
-  {keyword:'tree',    emoji:'🌳',display:'T R _ E',     opts:['E','A','I','O'],answer:'E'},
-  {keyword:'ant',     emoji:'🐜',display:'A _ T',       opts:['N','M','P','D'],answer:'N'},
-  {keyword:'pen',     emoji:'✏️',display:'P _ N',       opts:['E','A','I','O'],answer:'E'},
-  {keyword:'bus',     emoji:'🚌',display:'B _ S',       opts:['U','A','I','O'],answer:'U'},
-  {keyword:'hen',     emoji:'🐔',display:'H _ N',       opts:['E','A','I','O'],answer:'E'},
-  {keyword:'cow',     emoji:'🐄',display:'C _ W',       opts:['O','A','E','U'],answer:'O'},
-  {keyword:'fox',     emoji:'🦊',display:'F _ X',       opts:['O','A','E','U'],answer:'O'},
-  {keyword:'owl',     emoji:'🦉',display:'_ W L',       opts:['O','A','E','I'],answer:'O'},
-  {keyword:'map',     emoji:'🗺️',display:'M _ P',       opts:['A','E','I','O'],answer:'A'},
-  {keyword:'ball',    emoji:'⚽',display:'B _ L L',     opts:['A','O','E','U'],answer:'A'},
-  {keyword:'milk',    emoji:'🥛',display:'M I L _',     opts:['K','C','G','T'],answer:'K'},
-  {keyword:'ship',    emoji:'🚢',display:'S H I _',     opts:['P','B','T','D'],answer:'P'},
-  {keyword:'rain',    emoji:'🌧️',display:'R _ I N',     opts:['A','O','E','U'],answer:'A'},
-  {keyword:'star',    emoji:'⭐',display:'S T _ R',     opts:['A','O','E','U'],answer:'A'},
-  {keyword:'apple',   emoji:'🍎',display:'_ P P L E',   opts:['A','O','I','U'],answer:'A'},
-  {keyword:'bee',     emoji:'🐝',display:'B _ E',       opts:['E','A','I','O'],answer:'E'},
-  {keyword:'lion',    emoji:'🦁',display:'L I _ N',     opts:['O','A','E','U'],answer:'O'},
-  {keyword:'rose',    emoji:'🌹',display:'R _ S E',     opts:['O','A','E','U'],answer:'O'},
-  {keyword:'cake',    emoji:'🎂',display:'C _ K E',     opts:['A','O','U','I'],answer:'A'},
-  {keyword:'kite',    emoji:'🪁',display:'K I T _',     opts:['E','A','O','U'],answer:'E'},
-  {keyword:'bird',    emoji:'🐦',display:'B I R _',     opts:['D','T','G','P'],answer:'D'},
+  {keyword:'cat',emoji:'🐱',display:'C _ T',opts:['A','O','U','E'],answer:'A'},{keyword:'dog',emoji:'🐶',display:'D _ G',opts:['A','O','I','U'],answer:'O'},{keyword:'sun',emoji:'☀️',display:'S _ N',opts:['O','U','A','I'],answer:'U'},{keyword:'hat',emoji:'🎩',display:'H _ T',opts:['A','O','E','I'],answer:'A'},{keyword:'cup',emoji:'☕',display:'C _ P',opts:['A','U','O','I'],answer:'U'},{keyword:'bed',emoji:'🛏️',display:'B _ D',opts:['A','E','O','I'],answer:'E'},{keyword:'duck',emoji:'🦆',display:'D U _ K',opts:['C','K','S','T'],answer:'C'},{keyword:'fish',emoji:'🐟',display:'F I _ H',opts:['S','C','T','P'],answer:'S'},{keyword:'frog',emoji:'🐸',display:'F R _ G',opts:['O','A','E','U'],answer:'O'},{keyword:'tree',emoji:'🌳',display:'T R _ E',opts:['E','A','I','O'],answer:'E'},{keyword:'ant',emoji:'🐜',display:'A _ T',opts:['N','M','P','D'],answer:'N'},{keyword:'pen',emoji:'✏️',display:'P _ N',opts:['E','A','I','O'],answer:'E'},{keyword:'bus',emoji:'🚌',display:'B _ S',opts:['U','A','I','O'],answer:'U'},{keyword:'hen',emoji:'🐔',display:'H _ N',opts:['E','A','I','O'],answer:'E'},{keyword:'cow',emoji:'🐄',display:'C _ W',opts:['O','A','E','U'],answer:'O'},{keyword:'fox',emoji:'🦊',display:'F _ X',opts:['O','A','E','U'],answer:'O'},{keyword:'owl',emoji:'🦉',display:'_ W L',opts:['O','A','E','I'],answer:'O'},{keyword:'ball',emoji:'⚽',display:'B _ L L',opts:['A','O','E','U'],answer:'A'},{keyword:'milk',emoji:'🥛',display:'M I L _',opts:['K','C','G','T'],answer:'K'},{keyword:'ship',emoji:'🚢',display:'S H I _',opts:['P','B','T','D'],answer:'P'},{keyword:'rain',emoji:'🌧️',display:'R _ I N',opts:['A','O','E','U'],answer:'A'},{keyword:'star',emoji:'⭐',display:'S T _ R',opts:['A','O','E','U'],answer:'A'},{keyword:'apple',emoji:'🍎',display:'_ P P L E',opts:['A','O','I','U'],answer:'A'},{keyword:'bee',emoji:'🐝',display:'B _ E',opts:['E','A','I','O'],answer:'E'},{keyword:'lion',emoji:'🦁',display:'L I _ N',opts:['O','A','E','U'],answer:'O'},{keyword:'rose',emoji:'🌹',display:'R _ S E',opts:['O','A','E','U'],answer:'O'},{keyword:'cake',emoji:'🎂',display:'C _ K E',opts:['A','O','U','I'],answer:'A'},{keyword:'bird',emoji:'🐦',display:'B I R _',opts:['D','T','G','P'],answer:'D'},
 ];
 
-/* ─── QURAN ─── */
 const QURAN=[
-  {ayah:'قُلْ هُوَ اللَّهُ أَحَدٌ',               answer:'Al-Ikhlas',  opts:['Al-Ikhlas','Al-Falaq','An-Nas','Al-Kawthar']},
-  {ayah:'قُلْ أَعُوذُ بِرَبِّ الْفَلَقِ',          answer:'Al-Falaq',   opts:['Al-Falaq','An-Nas','Al-Ikhlas','Al-Asr']},
-  {ayah:'قُلْ أَعُوذُ بِرَبِّ النَّاسِ',           answer:'An-Nas',     opts:['An-Nas','Al-Falaq','Al-Ikhlas','Al-Kawthar']},
-  {ayah:'إِنَّا أَعْطَيْنَاكَ الْكَوْثَرَ',         answer:'Al-Kawthar', opts:['Al-Kawthar','Al-Maun','Al-Fil','Al-Asr']},
-  {ayah:'وَالْعَصْرِ',                              answer:'Al-Asr',     opts:['Al-Asr','Al-Kawthar','Al-Fil','Al-Maun']},
-  {ayah:'أَلَمْ تَرَ كَيْفَ فَعَلَ رَبُّكَ بِأَصْحَابِ الْفِيلِ', answer:'Al-Fil', opts:['Al-Fil','Al-Maun','Al-Asr','Al-Kawthar']},
-  {ayah:'الْحَمْدُ لِلَّهِ رَبِّ الْعَالَمِينَ',    answer:'Al-Fatiha',  opts:['Al-Fatiha','Al-Ikhlas','Al-Falaq','An-Nas']},
-  {ayah:'أَرَأَيْتَ الَّذِي يُكَذِّبُ بِالدِّينِ',  answer:'Al-Maun',    opts:['Al-Maun','Al-Fil','Al-Asr','Al-Kawthar']},
-  {ayah:'لِإِيلَافِ قُرَيْشٍ',                      answer:'Al-Quraish', opts:['Al-Quraish','Al-Fil','Al-Maun','Al-Asr']},
-  {ayah:'إِذَا جَاءَ نَصْرُ اللَّهِ وَالْفَتْحُ',  answer:'An-Nasr',    opts:['An-Nasr','Al-Kawthar','Al-Fil','Al-Asr']},
-  {ayah:'تَبَّتْ يَدَا أَبِي لَهَبٍ وَتَبَّ',       answer:'Al-Masad',   opts:['Al-Masad','Al-Fil','An-Nasr','Al-Quraish']},
-  {ayah:'قُلْ يَا أَيُّهَا الْكَافِرُونَ',          answer:'Al-Kafirun', opts:['Al-Kafirun','An-Nas','Al-Ikhlas','Al-Falaq']},
-  {ayah:'وَيْلٌ لِّكُلِّ هُمَزَةٍ لُّمَزَةٍ',       answer:'Al-Humazah', opts:['Al-Humazah','Al-Masad','Al-Quraish','Al-Fil']},
+  {ayah:'قُلْ هُوَ اللَّهُ أَحَدٌ',answer:'Al-Ikhlas',opts:['Al-Ikhlas','Al-Falaq','An-Nas','Al-Kawthar']},{ayah:'قُلْ أَعُوذُ بِرَبِّ الْفَلَقِ',answer:'Al-Falaq',opts:['Al-Falaq','An-Nas','Al-Ikhlas','Al-Asr']},{ayah:'قُلْ أَعُوذُ بِرَبِّ النَّاسِ',answer:'An-Nas',opts:['An-Nas','Al-Falaq','Al-Ikhlas','Al-Kawthar']},{ayah:'إِنَّا أَعْطَيْنَاكَ الْكَوْثَرَ',answer:'Al-Kawthar',opts:['Al-Kawthar','Al-Maun','Al-Fil','Al-Asr']},{ayah:'وَالْعَصْرِ',answer:'Al-Asr',opts:['Al-Asr','Al-Kawthar','Al-Fil','Al-Maun']},{ayah:'أَلَمْ تَرَ كَيْفَ فَعَلَ رَبُّكَ بِأَصْحَابِ الْفِيلِ',answer:'Al-Fil',opts:['Al-Fil','Al-Maun','Al-Asr','Al-Kawthar']},{ayah:'الْحَمْدُ لِلَّهِ رَبِّ الْعَالَمِينَ',answer:'Al-Fatiha',opts:['Al-Fatiha','Al-Ikhlas','Al-Falaq','An-Nas']},{ayah:'أَرَأَيْتَ الَّذِي يُكَذِّبُ بِالدِّينِ',answer:'Al-Maun',opts:['Al-Maun','Al-Fil','Al-Asr','Al-Kawthar']},{ayah:'لِإِيلَافِ قُرَيْشٍ',answer:'Al-Quraish',opts:['Al-Quraish','Al-Fil','Al-Maun','Al-Asr']},{ayah:'إِذَا جَاءَ نَصْرُ اللَّهِ وَالْفَتْحُ',answer:'An-Nasr',opts:['An-Nasr','Al-Kawthar','Al-Fil','Al-Asr']},{ayah:'تَبَّتْ يَدَا أَبِي لَهَبٍ وَتَبَّ',answer:'Al-Masad',opts:['Al-Masad','Al-Fil','An-Nasr','Al-Quraish']},{ayah:'قُلْ يَا أَيُّهَا الْكَافِرُونَ',answer:'Al-Kafirun',opts:['Al-Kafirun','An-Nas','Al-Ikhlas','Al-Falaq']},{ayah:'وَيْلٌ لِّكُلِّ هُمَزَةٍ لُّمَزَةٍ',answer:'Al-Humazah',opts:['Al-Humazah','Al-Masad','Al-Quraish','Al-Fil']},
 ];
 
-/* ─── ANIMAL ─── */
 const ANIMAL=[
-  {keyword:'lion',      emoji:'🦁',answer:'Lion',      opts:['Lion',    'Tiger',    'Leopard', 'Cheetah']},
-  {keyword:'elephant',  emoji:'🐘',answer:'Elephant',  opts:['Elephant','Hippo',    'Rhino',   'Giraffe']},
-  {keyword:'giraffe',   emoji:'🦒',answer:'Giraffe',   opts:['Giraffe', 'Zebra',    'Horse',   'Camel']},
-  {keyword:'zebra',     emoji:'🦓',answer:'Zebra',     opts:['Zebra',   'Horse',    'Donkey',  'Giraffe']},
-  {keyword:'penguin',   emoji:'🐧',answer:'Penguin',   opts:['Penguin', 'Duck',     'Swan',    'Flamingo']},
-  {keyword:'butterfly', emoji:'🦋',answer:'Butterfly', opts:['Butterfly','Moth',    'Bee',     'Dragonfly']},
-  {keyword:'rabbit',    emoji:'🐰',answer:'Rabbit',    opts:['Rabbit',  'Squirrel', 'Mouse',   'Cat']},
-  {keyword:'parrot',    emoji:'🦜',answer:'Parrot',    opts:['Parrot',  'Eagle',    'Crow',    'Pigeon']},
-  {keyword:'camel',     emoji:'🐪',answer:'Camel',     opts:['Camel',   'Horse',    'Donkey',  'Buffalo']},
-  {keyword:'peacock',   emoji:'🦚',answer:'Peacock',   opts:['Peacock', 'Turkey',   'Parrot',  'Eagle']},
-  {keyword:'dolphin',   emoji:'🐬',answer:'Dolphin',   opts:['Dolphin', 'Shark',    'Whale',   'Fish']},
-  {keyword:'owl',       emoji:'🦉',answer:'Owl',       opts:['Owl',     'Eagle',    'Parrot',  'Crow']},
-  {keyword:'crocodile', emoji:'🐊',answer:'Crocodile', opts:['Crocodile','Lizard',  'Snake',   'Turtle']},
-  {keyword:'horse',     emoji:'🐴',answer:'Horse',     opts:['Horse',   'Zebra',    'Donkey',  'Camel']},
-  {keyword:'sheep',     emoji:'🐑',answer:'Sheep',     opts:['Sheep',   'Goat',     'Cow',     'Deer']},
-  {keyword:'tiger',     emoji:'🐯',answer:'Tiger',     opts:['Tiger',   'Lion',     'Leopard', 'Cheetah']},
-  {keyword:'gorilla',   emoji:'🦍',answer:'Gorilla',   opts:['Gorilla', 'Chimpanzee','Bear',   'Monkey']},
-  {keyword:'flamingo',  emoji:'🦩',answer:'Flamingo',  opts:['Flamingo','Parrot',   'Swan',    'Crane']},
-  {keyword:'hedgehog',  emoji:'🦔',answer:'Hedgehog',  opts:['Hedgehog','Porcupine','Squirrel','Rabbit']},
-  {keyword:'kangaroo',  emoji:'🦘',answer:'Kangaroo',  opts:['Kangaroo','Wallaby',  'Rabbit',  'Deer']},
+  {keyword:'lion',emoji:'🦁',answer:'Lion',opts:['Lion','Tiger','Leopard','Cheetah']},{keyword:'elephant',emoji:'🐘',answer:'Elephant',opts:['Elephant','Hippo','Rhino','Giraffe']},{keyword:'giraffe',emoji:'🦒',answer:'Giraffe',opts:['Giraffe','Zebra','Horse','Camel']},{keyword:'zebra',emoji:'🦓',answer:'Zebra',opts:['Zebra','Horse','Donkey','Giraffe']},{keyword:'penguin',emoji:'🐧',answer:'Penguin',opts:['Penguin','Duck','Swan','Flamingo']},{keyword:'butterfly',emoji:'🦋',answer:'Butterfly',opts:['Butterfly','Moth','Bee','Dragonfly']},{keyword:'rabbit',emoji:'🐰',answer:'Rabbit',opts:['Rabbit','Squirrel','Mouse','Cat']},{keyword:'parrot',emoji:'🦜',answer:'Parrot',opts:['Parrot','Eagle','Crow','Pigeon']},{keyword:'camel',emoji:'🐪',answer:'Camel',opts:['Camel','Horse','Donkey','Buffalo']},{keyword:'peacock',emoji:'🦚',answer:'Peacock',opts:['Peacock','Turkey','Parrot','Eagle']},{keyword:'dolphin',emoji:'🐬',answer:'Dolphin',opts:['Dolphin','Shark','Whale','Fish']},{keyword:'owl',emoji:'🦉',answer:'Owl',opts:['Owl','Eagle','Parrot','Crow']},{keyword:'crocodile',emoji:'🐊',answer:'Crocodile',opts:['Crocodile','Lizard','Snake','Turtle']},{keyword:'horse',emoji:'🐴',answer:'Horse',opts:['Horse','Zebra','Donkey','Camel']},{keyword:'sheep',emoji:'🐑',answer:'Sheep',opts:['Sheep','Goat','Cow','Deer']},{keyword:'tiger',emoji:'🐯',answer:'Tiger',opts:['Tiger','Lion','Leopard','Cheetah']},{keyword:'flamingo',emoji:'🦩',answer:'Flamingo',opts:['Flamingo','Parrot','Swan','Crane']},{keyword:'kangaroo',emoji:'🦘',answer:'Kangaroo',opts:['Kangaroo','Wallaby','Rabbit','Deer']},
 ];
 
-/* ─── COLOR ─── */
 const COLOR=[
-  {hex:'#E62020',answer:'Red',    opts:['Red',   'Blue',  'Pink',  'Orange']},
-  {hex:'#1565C0',answer:'Blue',   opts:['Green', 'Blue',  'Purple','Black']},
-  {hex:'#2E7D32',answer:'Green',  opts:['Yellow','Green', 'Blue',  'Brown']},
-  {hex:'#F9A825',answer:'Yellow', opts:['Yellow','Orange','White', 'Pink']},
-  {hex:'#E65100',answer:'Orange', opts:['Red',   'Yellow','Orange','Pink']},
-  {hex:'#6A1B9A',answer:'Purple', opts:['Purple','Blue',  'Pink',  'Brown']},
-  {hex:'#E91E8C',answer:'Pink',   opts:['Red',   'Pink',  'Purple','Orange']},
-  {hex:'#5D4037',answer:'Brown',  opts:['Black', 'Brown', 'Orange','Red']},
-  {hex:'#111111',answer:'Black',  opts:['Black', 'Brown', 'Blue',  'Purple']},
-  {hex:'#F5F5F5',answer:'White',  opts:['White', 'Yellow','Pink',  'Grey']},
-  {hex:'#757575',answer:'Grey',   opts:['Grey',  'White', 'Black', 'Blue']},
-  {hex:'#00838F',answer:'Teal',   opts:['Teal',  'Blue',  'Green', 'Purple']},
+  {hex:'#E62020',answer:'Red',opts:['Red','Blue','Pink','Orange']},{hex:'#1565C0',answer:'Blue',opts:['Green','Blue','Purple','Black']},{hex:'#2E7D32',answer:'Green',opts:['Yellow','Green','Blue','Brown']},{hex:'#F9A825',answer:'Yellow',opts:['Yellow','Orange','White','Pink']},{hex:'#E65100',answer:'Orange',opts:['Red','Yellow','Orange','Pink']},{hex:'#6A1B9A',answer:'Purple',opts:['Purple','Blue','Pink','Brown']},{hex:'#E91E8C',answer:'Pink',opts:['Red','Pink','Purple','Orange']},{hex:'#5D4037',answer:'Brown',opts:['Black','Brown','Orange','Red']},{hex:'#111111',answer:'Black',opts:['Black','Brown','Blue','Purple']},{hex:'#F5F5F5',answer:'White',opts:['White','Yellow','Pink','Grey']},{hex:'#757575',answer:'Grey',opts:['Grey','White','Black','Blue']},{hex:'#00838F',answer:'Teal',opts:['Teal','Blue','Green','Purple']},
 ];
 
-/* ─── COUNT ─── */
 const COUNT=[];
-['⭐','🍎','🌸','🎈','🦋','🍭','🐟','🏀','🌻','🍌'].forEach(em=>{
-  for(let n=2;n<=12;n++){
-    const wrong=shuffle([n-1,n+1,n+2,n-2].filter(x=>x>0&&x!==n)).slice(0,3);
-    COUNT.push({emoji:em,count:n,opts:shuffle([n,...wrong])});
-  }
-});
+['⭐','🍎','🌸','🎈','🦋','🍭','🐟','🏀','🌻','🍌'].forEach(em=>{for(let n=2;n<=12;n++){const w=shuffle([n-1,n+1,n+2,n-2].filter(x=>x>0&&x!==n)).slice(0,3);COUNT.push({emoji:em,count:n,opts:shuffle([n,...w])})}});
 
-/* ═══════════════════════════════════════
-   UTILITY
-═══════════════════════════════════════ */
-function shuffle(a){
-  const b=[...a];
-  for(let i=b.length-1;i>0;i--){
-    const j=~~(Math.random()*(i+1));[b[i],b[j]]=[b[j],b[i]];
-  }
-  return b;
-}
+const PATTERN=[
+  {seq:['🔴','🔵','🔴','🔵','🔴','?'],answer:'🔵',opts:['🔵','🟢','🟡','🔴'],urdu:'اگلا رنگ کیا آئے گا؟'},
+  {seq:['🟡','🟢','🟡','🟢','🟡','?'],answer:'🟢',opts:['🟡','🟢','🔴','🔵'],urdu:'اگلا کیا ہے؟'},
+  {seq:['⭐','🌙','⭐','🌙','⭐','?'],answer:'🌙',opts:['⭐','🌙','☀️','🌟'],urdu:'اگلا کیا آئے گا؟'},
+  {seq:['🐱','🐶','🐱','🐶','🐱','?'],answer:'🐶',opts:['🐱','🐶','🐸','🐰'],urdu:'اگلا کیا ہے؟'},
+  {seq:['🍎','🍌','🍎','🍌','🍎','?'],answer:'🍌',opts:['🍎','🍌','🍊','🍇'],urdu:'اگلا کیا آئے گا؟'},
+  {seq:['🔴','🔵','🟢','🔴','🔵','?'],answer:'🟢',opts:['🔴','🔵','🟢','🟡'],urdu:'تین کا پیٹرن ہے۔ اگلا کیا ہے؟'},
+  {seq:['2','4','6','8','?'],answer:'10',opts:['9','10','11','12'],urdu:'جوڑے والے نمبر۔ اگلا کیا ہے؟'},
+  {seq:['5','10','15','20','?'],answer:'25',opts:['22','23','24','25'],urdu:'پانچ پانچ بڑھ رہے ہیں۔ اگلا کیا ہے؟'},
+  {seq:['1','3','5','7','?'],answer:'9',opts:['8','9','10','11'],urdu:'طاق نمبر۔ اگلا کیا ہے؟'},
+  {seq:['10','20','30','40','?'],answer:'50',opts:['45','50','55','60'],urdu:'دس دس بڑھ رہے ہیں۔ اگلا کیا ہے؟'},
+  {seq:['100','200','300','400','?'],answer:'500',opts:['400','450','500','600'],urdu:'سو سو بڑھ رہے ہیں۔ اگلا کیا ہے؟'},
+  {seq:['3','6','9','12','?'],answer:'15',opts:['13','14','15','16'],urdu:'تین کا پہاڑہ۔ اگلا کیا ہے؟'},
+  {seq:['2','4','8','16','?'],answer:'32',opts:['24','30','32','34'],urdu:'دوگنا ہو رہا ہے۔ اگلا کیا ہے؟'},
+  {seq:['30','25','20','15','?'],answer:'10',opts:['8','10','12','13'],urdu:'پانچ پانچ کم ہو رہے ہیں۔ اگلا کیا ہے؟'},
+  {seq:['🔺','🔷','🔺','🔷','?'],answer:'🔺',opts:['🔺','🔷','⭐','🔴'],urdu:'اگلا کیا آئے گا؟'},
+];
 
-/* ═══════════════════════════════════════
-   INIT
-═══════════════════════════════════════ */
+const ODD=[
+  {items:['Cat','Dog','Car','Fish'],answer:'Car',urdu:'کون سا الگ ہے؟ تین جانور ہیں اور ایک نہیں۔'},
+  {items:['Apple','Banana','Mango','Carrot'],answer:'Carrot',urdu:'تین پھل ہیں اور ایک سبزی۔ کون سی سبزی ہے؟'},
+  {items:['Bus','Car','Truck','Horse'],answer:'Horse',urdu:'تین گاڑیاں ہیں اور ایک جانور۔ کون سا جانور ہے؟'},
+  {items:['Red','Blue','Happy','Green'],answer:'Happy',urdu:'تین رنگ ہیں اور ایک احساس۔ کون سا الگ ہے؟'},
+  {items:['2','4','5','8'],answer:'5',urdu:'تین جوڑے والے نمبر ہیں اور ایک طاق۔ کون سا طاق ہے؟'},
+  {items:['Cow','Goat','Sheep','Eagle'],answer:'Eagle',urdu:'تین چلنے والے جانور اور ایک اڑنے والا۔ کون سا اڑتا ہے؟'},
+  {items:['Rose','Tulip','Daisy','Mango'],answer:'Mango',urdu:'تین پھول اور ایک پھل۔ کون سا پھل ہے؟'},
+  {items:['Eye','Ear','Nose','Book'],answer:'Book',urdu:'تین جسم کے حصے اور ایک چیز۔ کون سی چیز ہے؟'},
+  {items:['10','20','30','35'],answer:'35',urdu:'تین دس کے گنتی کے نمبر اور ایک الگ۔ کون سا الگ ہے؟'},
+  {items:['Piano','Guitar','Drum','Pencil'],answer:'Pencil',urdu:'تین ساز اور ایک لکھنے کی چیز۔ کون سی ہے؟'},
+  {items:['Swim','Run','Jump','Book'],answer:'Book',urdu:'تین حرکات اور ایک چیز۔ کون سی ہے؟'},
+  {items:['Tiger','Lion','Elephant','Pigeon'],answer:'Pigeon',urdu:'تین زمین کے جانور اور ایک پرندہ۔ کون سا اڑتا ہے؟'},
+  {items:['Square','Circle','Triangle','Milk'],answer:'Milk',urdu:'تین شکلیں اور ایک مشروب۔ کون سا الگ ہے؟'},
+  {items:['Sun','Moon','Cloud','Chair'],answer:'Chair',urdu:'تین آسمانی چیزیں اور ایک فرنیچر۔ کون سا ہے؟'},
+  {items:['Pen','Pencil','Ruler','Mango'],answer:'Mango',urdu:'تین سکول کی چیزیں اور ایک پھل۔ کون سا پھل ہے؟'},
+];
+
+const RIDDLE=[
+  {q:'I have wings but I am not a bird.\nI fly but I am not a plane.\nWhat am I?',answer:'Butterfly',opts:['Butterfly','Bee','Dragonfly','Eagle'],urdu:'میرے پر ہیں لیکن میں پرندہ نہیں۔ میں اڑتا ہوں لیکن جہاز نہیں۔ میں کیا ہوں؟'},
+  {q:'I am yellow and shine in the sky.\nI give light and warmth.\nWhat am I?',answer:'Sun',opts:['Sun','Moon','Star','Fire'],urdu:'میں پیلا ہوں اور آسمان میں چمکتا ہوں۔ میں روشنی اور گرمی دیتا ہوں۔ میں کیا ہوں؟'},
+  {q:'I have four legs but cannot walk.\nYou sit on me every day.\nWhat am I?',answer:'Chair',opts:['Chair','Table','Bed','Dog'],urdu:'میرے چار ٹانگیں ہیں لیکن چل نہیں سکتا۔ تم روز مجھ پر بیٹھتے ہو۔ میں کیا ہوں؟'},
+  {q:'I have teeth but cannot eat.\nWhat am I?',answer:'Comb',opts:['Comb','Saw','Fork','Zipper'],urdu:'میرے دانت ہیں لیکن کھا نہیں سکتا۔ میں کیا ہوں؟'},
+  {q:'I get bigger when I eat\nand smaller when I drink.\nWhat am I?',answer:'Fire',opts:['Fire','Balloon','Stomach','Cloud'],urdu:'کھانے سے بڑا اور پانی سے چھوٹا ہوتا ہوں۔ میں کیا ہوں؟'},
+  {q:'I have hands but no arms.\nI tell you the time.\nWhat am I?',answer:'Clock',opts:['Clock','Robot','Book','Compass'],urdu:'میرے ہاتھ ہیں لیکن بازو نہیں۔ میں وقت بتاتا ہوں۔ میں کیا ہوں؟'},
+  {q:'I fall down but never get hurt.\nWhat am I?',answer:'Rain',opts:['Rain','Leaf','Ball','Snow'],urdu:'میں گرتا ہوں لیکن مجھے چوٹ نہیں لگتی۔ میں کیا ہوں؟'},
+  {q:'I have a head and tail\nbut no body.\nWhat am I?',answer:'Coin',opts:['Coin','Snake','Arrow','Needle'],urdu:'میرا سر اور دم ہے لیکن جسم نہیں۔ میں کیا ہوں؟'},
+  {q:'I live in water but I am not a fish.\nI carry my home on my back.\nWhat am I?',answer:'Turtle',opts:['Turtle','Crab','Snail','Frog'],urdu:'میں پانی میں رہتا ہوں پر مچھلی نہیں۔ گھر پیٹھ پر ہے۔ میں کیا ہوں؟'},
+  {q:'The more you take of me,\nthe more you leave behind.\nWhat am I?',answer:'Footsteps',opts:['Footsteps','Water','Time','Sand'],urdu:'جتنا لو اتنا پیچھے چھوڑو۔ میں کیا ہوں؟'},
+  {q:'I am always in front of you\nbut cannot be seen.\nWhat am I?',answer:'Future',opts:['Future','Mirror','Shadow','Wind'],urdu:'میں ہمیشہ تمہارے سامنے ہوں لیکن دکھتا نہیں۔ میں کیا ہوں؟'},
+  {q:'I am full of holes\nbut I can hold water.\nWhat am I?',answer:'Sponge',opts:['Sponge','Basket','Net','Cloth'],urdu:'میں سوراخوں سے بھرا ہوں لیکن پانی رکھ سکتا ہوں۔ میں کیا ہوں؟'},
+];
+
+const TF=[
+  {stmt:'Fish live in water',answer:'TRUE',urdu:'مچھلی پانی میں رہتی ہے — سچ ہے یا جھوٹ؟'},
+  {stmt:'The sun rises in the WEST',answer:'FALSE',urdu:'سورج مغرب میں طلوع ہوتا ہے — سچ ہے یا جھوٹ؟'},
+  {stmt:'5 + 3 = 8',answer:'TRUE',urdu:'پانچ جمع تین آٹھ ہے — سچ ہے یا جھوٹ؟'},
+  {stmt:'A cow gives us milk',answer:'TRUE',urdu:'گائے دودھ دیتی ہے — سچ ہے یا جھوٹ؟'},
+  {stmt:'A bird has 4 legs',answer:'FALSE',urdu:'پرندے کی چار ٹانگیں ہوتی ہیں — سچ ہے یا جھوٹ؟'},
+  {stmt:'Pakistan is in Asia',answer:'TRUE',urdu:'پاکستان ایشیا میں ہے — سچ ہے یا جھوٹ؟'},
+  {stmt:'10 × 10 = 1000',answer:'FALSE',urdu:'دس ضرب دس ایک ہزار ہے — سچ ہے یا جھوٹ؟'},
+  {stmt:'Ice is frozen water',answer:'TRUE',urdu:'برف جمی ہوئی پانی ہے — سچ ہے یا جھوٹ؟'},
+  {stmt:'The moon is a star',answer:'FALSE',urdu:'چاند ایک ستارہ ہے — سچ ہے یا جھوٹ؟'},
+  {stmt:'Cats can fly',answer:'FALSE',urdu:'بلی اڑ سکتی ہے — سچ ہے یا جھوٹ؟'},
+  {stmt:'7 is an odd number',answer:'TRUE',urdu:'سات طاق نمبر ہے — سچ ہے یا جھوٹ؟'},
+  {stmt:'A triangle has 4 sides',answer:'FALSE',urdu:'مثلث کے چار اطراف ہیں — سچ ہے یا جھوٹ؟'},
+  {stmt:'Honey is made by bees',answer:'TRUE',urdu:'شہد مکھیاں بناتی ہیں — سچ ہے یا جھوٹ؟'},
+  {stmt:'100 − 50 = 60',answer:'FALSE',urdu:'ایک سو منہا پچاس ساٹھ ہے — سچ ہے یا جھوٹ؟'},
+  {stmt:'The sun is a star',answer:'TRUE',urdu:'سورج ایک ستارہ ہے — سچ ہے یا جھوٹ؟'},
+  {stmt:'Snakes have legs',answer:'FALSE',urdu:'سانپ کی ٹانگیں ہوتی ہیں — سچ ہے یا جھوٹ؟'},
+  {stmt:'Quran has 114 Surahs',answer:'TRUE',urdu:'قرآن میں ایک سو چودہ سورتیں ہیں — سچ ہے یا جھوٹ؟'},
+  {stmt:'We have 5 fingers on one hand',answer:'TRUE',urdu:'ایک ہاتھ میں پانچ انگلیاں ہیں — سچ ہے یا جھوٹ؟'},
+  {stmt:'50 + 50 = 90',answer:'FALSE',urdu:'پچاس جمع پچاس نوے ہے — سچ ہے یا جھوٹ؟'},
+  {stmt:'A week has 7 days',answer:'TRUE',urdu:'ہفتے میں سات دن ہوتے ہیں — سچ ہے یا جھوٹ؟'},
+];
+
+const MISSING=[
+  {seq:['1','2','?','4','5'],answer:3,opts:[2,3,4,6],urdu:'خالی جگہ پر کیا نمبر آئے گا؟'},
+  {seq:['5','10','?','20'],answer:15,opts:[12,14,15,16],urdu:'خالی جگہ کیا ہے؟'},
+  {seq:['2','4','?','8'],answer:6,opts:[5,6,7,9],urdu:'خالی جگہ کیا ہے؟'},
+  {seq:['10','20','?','40'],answer:30,opts:[25,28,30,35],urdu:'خالی جگہ کیا ہے؟'},
+  {seq:['3','6','?','12'],answer:9,opts:[7,8,9,10],urdu:'خالی جگہ کیا ہے؟'},
+  {seq:['100','200','?','400'],answer:300,opts:[250,300,350,250],urdu:'خالی جگہ کیا ہے؟'},
+  {seq:['?','4','6','8'],answer:2,opts:[1,2,3,4],urdu:'شروع میں کیا تھا؟'},
+  {seq:['50','?','150','200'],answer:100,opts:[75,90,100,125],urdu:'خالی جگہ کیا ہے؟'},
+  {seq:['2','?','8','16'],answer:4,opts:[3,4,5,6],urdu:'دوگنا ہو رہا ہے۔ خالی جگہ کیا ہے؟'},
+  {seq:['30','25','20','?'],answer:15,opts:[12,14,15,16],urdu:'کم ہو رہا ہے۔ اگلا کیا ہے؟'},
+  {seq:['1','1','2','3','?'],answer:5,opts:[4,5,6,7],urdu:'پہلے دو نمبر جوڑو۔ خالی جگہ کیا ہے؟'},
+  {seq:['4','8','?','16','20'],answer:12,opts:[10,11,12,13],urdu:'چار چار بڑھ رہے ہیں۔ خالی جگہ کیا ہے؟'},
+  {seq:['90','?','70','60'],answer:80,opts:[75,78,80,85],urdu:'دس دس کم ہو رہے ہیں۔ خالی جگہ کیا ہے؟'},
+  {seq:['1','4','9','?'],answer:16,opts:[12,14,16,18],urdu:'مربع نمبر ہیں۔ خالی جگہ کیا ہے؟'},
+];
+
+const GK=[
+  {q:'What do bees make?',answer:'Honey',opts:['Honey','Milk','Sugar','Butter'],urdu:'شہد کی مکھیاں کیا بناتی ہیں؟'},
+  {q:'How many days in a week?',answer:'7',opts:['5','6','7','8'],urdu:'ہفتے میں کتنے دن ہوتے ہیں؟'},
+  {q:"Pakistan's national language?",answer:'Urdu',opts:['Urdu','English','Punjabi','Sindhi'],urdu:'پاکستان کی قومی زبان کیا ہے؟'},
+  {q:'Capital of Pakistan?',answer:'Islamabad',opts:['Karachi','Lahore','Islamabad','Peshawar'],urdu:'پاکستان کا دارالحکومت کیا ہے؟'},
+  {q:'How many colors in a rainbow?',answer:'7',opts:['5','6','7','8'],urdu:'قوس قزح میں کتنے رنگ ہوتے ہیں؟'},
+  {q:'What do plants need to grow?',answer:'Water & Sun',opts:['Water & Sun','Milk & Sugar','Sand & Stone','Ice & Wind'],urdu:'پودوں کو بڑھنے کے لیے کیا چاہیے؟'},
+  {q:'Which is the largest animal on Earth?',answer:'Blue Whale',opts:['Elephant','Giraffe','Blue Whale','Rhino'],urdu:'دنیا کا سب سے بڑا جانور کون سا ہے؟'},
+  {q:'How many legs does a spider have?',answer:'8',opts:['4','6','8','10'],urdu:'مکڑی کی کتنی ٹانگیں ہوتی ہیں؟'},
+  {q:'From which animal do we get wool?',answer:'Sheep',opts:['Cow','Goat','Sheep','Camel'],urdu:'اون کس جانور سے ملتی ہے؟'},
+  {q:'How many months in a year?',answer:'12',opts:['10','11','12','13'],urdu:'ایک سال میں کتنے مہینے ہوتے ہیں؟'},
+  {q:'How many players in a cricket team?',answer:'11',opts:['9','10','11','12'],urdu:'کرکٹ ٹیم میں کتنے کھلاڑی ہوتے ہیں؟'},
+  {q:'Holy book of Muslims?',answer:'Quran',opts:['Quran','Bible','Torah','Vedas'],urdu:'مسلمانوں کی مقدس کتاب کون سی ہے؟'},
+  {q:'The Prophet of Islam?',answer:'Muhammad ﷺ',opts:['Muhammad ﷺ','Ibrahim ع','Musa ع','Isa ع'],urdu:'اسلام کے نبی کون ہیں؟'},
+  {q:'Which direction do Muslims face to pray?',answer:'Qibla',opts:['Qibla','North','South','East'],urdu:'مسلمان کس سمت نماز پڑھتے ہیں؟'},
+  {q:'What is water made of?',answer:'H₂O',opts:['H₂O','CO₂','O₂','NaCl'],urdu:'پانی کس چیز سے بنا ہے؟'},
+  {q:'How many sides does a hexagon have?',answer:'6',opts:['4','5','6','8'],urdu:'ہیکسا گون کے کتنے اطراف ہوتے ہیں؟'},
+  {q:'Largest planet in our solar system?',answer:'Jupiter',opts:['Jupiter','Saturn','Earth','Mars'],urdu:'ہمارے نظام شمسی کا سب سے بڑا سیارہ کون سا ہے؟'},
+  {q:'What do we call a baby cat?',answer:'Kitten',opts:['Kitten','Puppy','Cub','Calf'],urdu:'بلی کے بچے کو کیا کہتے ہیں؟'},
+];
+
+/* ── UTILS ── */
+function shuffle(a){const b=[...a];for(let i=b.length-1;i>0;i--){const j=~~(Math.random()*(i+1));[b[i],b[j]]=[b[j],b[i]]}return b}
+
+/* ── INIT ── */
 dbLoad();
 </script>
 </body>
