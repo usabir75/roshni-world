@@ -153,6 +153,7 @@ body{font-family:'Nunito','Segoe UI',sans-serif;background:#120a2e;min-height:10
   <button class="back" onclick="go('scr-splash')">←</button>
   <div id="mascot">🦉</div>
   <div class="badge"><span id="wb-av"></span><span id="wb-nm"></span><span class="badge-stars" id="wb-st">⭐ 0</span></div>
+  <div id="diff-badge" onclick="toggleDiff()" style="cursor:pointer;border:2px solid rgba(67,233,123,.5);border-radius:50px;padding:6px 16px;font-size:.85rem;font-weight:900;color:#fff;background:rgba(67,233,123,.2);flex-shrink:0">🟢 Easy Mode</div>
   <div class="sub">Choose your adventure!</div>
   <div class="wsections">
     <div>
@@ -218,7 +219,7 @@ body{font-family:'Nunito','Segoe UI',sans-serif;background:#120a2e;min-height:10
 <script>
 /* ── STATE ── */
 const CFG={totalQs:7,maxTries:3};
-const S={player:'',avatar:'',world:'',qs:[],qi:0,tries:0,sStars:0,sCorrect:0,streak:0};
+const S={player:'',avatar:'',world:'',qs:[],qi:0,tries:0,sStars:0,sCorrect:0,streak:0,easy:false};
 const DB={Abubakr:{stars:0},Muawiyyah:{stars:0},Khadija:{stars:0}};
 function el(id){return document.getElementById(id)}
 function dbLoad(){try{const d=JSON.parse(localStorage.getItem('rw5')||'{}');if(d.A)DB.Abubakr=d.A;if(d.M)DB.Muawiyyah=d.M;if(d.K)DB.Khadija=d.K;}catch(e){}refreshBadges()}
@@ -284,7 +285,15 @@ function speakUrduQ(){
 
 /* ── NAV ── */
 function go(id){document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));el(id).classList.add('active')}
-function pickPlayer(name,avatar){sndClick();S.player=name;S.avatar=avatar;el('wb-av').textContent=avatar;el('wb-nm').textContent=name;el('wb-st').textContent=`⭐ ${DB[name].stars}`;speak(`${name}! خوش آمدید! چلو کھیلتے ہیں!`);go('scr-world')}
+function pickPlayer(name,avatar){
+  sndClick();S.player=name;S.avatar=avatar;
+  S.easy=(name==='Khadija');
+  el('wb-av').textContent=avatar;el('wb-nm').textContent=name;el('wb-st').textContent=`⭐ ${DB[name].stars}`;
+  updateDiffBadge();
+  speak(`${name}! خوش آمدید! چلو کھیلتے ہیں!`);go('scr-world');
+}
+function toggleDiff(){S.easy=!S.easy;updateDiffBadge();sndClick();speak(S.easy?'آسان طریقہ':'مشکل طریقہ')}
+function updateDiffBadge(){el('diff-badge').textContent=S.easy?'🟢 Easy Mode':'🔵 Normal Mode';el('diff-badge').style.background=S.easy?'rgba(67,233,123,.2)':'rgba(79,172,254,.2)';el('diff-badge').style.borderColor=S.easy?'rgba(67,233,123,.5)':'rgba(79,172,254,.4)'}
 function confirmBack(){if(confirm('Go back?')){speechSynthesis.cancel();go('scr-world')}}
 function playAgain(){startWorld(S.world)}
 
@@ -381,7 +390,13 @@ function rGK(q){
 }
 
 /* ── DATA ── */
-function getPool(w){return{math:MATH,spelling:SPELL,quran:QURAN,animal:ANIMAL,color:COLOR,count:COUNT,pattern:PATTERN,odd:ODD,riddle:RIDDLE,tf:TF,missing:MISSING,gk:GK}[w]||[]}
+function getPool(w){
+  if(S.easy){
+    const e={math:MATH_E,spelling:SPELL_E,quran:QURAN,animal:ANIMAL,color:COLOR,count:COUNT_E,pattern:PATTERN_E,odd:ODD_E,riddle:RIDDLE_E,tf:TF_E,missing:MISSING_E,gk:GK_E};
+    return e[w]||[];
+  }
+  return{math:MATH,spelling:SPELL,quran:QURAN,animal:ANIMAL,color:COLOR,count:COUNT,pattern:PATTERN,odd:ODD,riddle:RIDDLE,tf:TF,missing:MISSING,gk:GK}[w]||[];
+}
 
 const MATH=[
   {type:'comparison',a:400,b:500,answer:500},{type:'comparison',a:200,b:300,answer:300},{type:'comparison',a:700,b:600,answer:700},{type:'comparison',a:150,b:250,answer:250},{type:'comparison',a:80,b:90,answer:90},{type:'comparison',a:55,b:45,answer:55},{type:'comparison',a:999,b:1000,answer:1000},{type:'comparison',a:33,b:23,answer:33},
@@ -520,6 +535,105 @@ const GK=[
   {q:'How many sides does a hexagon have?',answer:'6',opts:['4','5','6','8'],urdu:'ہیکسا گون کے کتنے اطراف ہوتے ہیں؟'},
   {q:'Largest planet in our solar system?',answer:'Jupiter',opts:['Jupiter','Saturn','Earth','Mars'],urdu:'ہمارے نظام شمسی کا سب سے بڑا سیارہ کون سا ہے؟'},
   {q:'What do we call a baby cat?',answer:'Kitten',opts:['Kitten','Puppy','Cub','Calf'],urdu:'بلی کے بچے کو کیا کہتے ہیں؟'},
+];
+
+/* ── EASY MODE DATA ── */
+const MATH_E=[
+  {type:'comparison',a:3,b:5,answer:5,opts:[3,5]},{type:'comparison',a:8,b:4,answer:8,opts:[8,4]},{type:'comparison',a:2,b:7,answer:7,opts:[2,7]},{type:'comparison',a:10,b:6,answer:10,opts:[10,6]},{type:'comparison',a:1,b:9,answer:9,opts:[1,9]},{type:'comparison',a:4,b:2,answer:4,opts:[4,2]},{type:'comparison',a:6,b:3,answer:6,opts:[6,3]},
+  {type:'addition',a:1,b:2,answer:3,opts:[2,3,4,5]},{type:'addition',a:2,b:3,answer:5,opts:[4,5,6,7]},{type:'addition',a:3,b:3,answer:6,opts:[5,6,7,8]},{type:'addition',a:4,b:2,answer:6,opts:[5,6,7,8]},{type:'addition',a:5,b:5,answer:10,opts:[8,9,10,11]},{type:'addition',a:2,b:2,answer:4,opts:[3,4,5,6]},{type:'addition',a:1,b:4,answer:5,opts:[4,5,6,7]},{type:'addition',a:3,b:4,answer:7,opts:[6,7,8,9]},{type:'addition',a:2,b:5,answer:7,opts:[6,7,8,9]},{type:'addition',a:1,b:1,answer:2,opts:[1,2,3,4]},{type:'addition',a:4,b:4,answer:8,opts:[7,8,9,10]},
+];
+MATH_E.filter(q=>q.type==='comparison').forEach(q=>q.opts=[q.a,q.b]);
+
+const SPELL_E=[
+  {keyword:'cat',emoji:'🐱',display:'C _ T',opts:['A','O','U','E'],answer:'A'},{keyword:'dog',emoji:'🐶',display:'D _ G',opts:['A','O','I','U'],answer:'O'},{keyword:'sun',emoji:'☀️',display:'S _ N',opts:['O','U','A','I'],answer:'U'},{keyword:'hat',emoji:'🎩',display:'H _ T',opts:['A','O','E','I'],answer:'A'},{keyword:'bed',emoji:'🛏️',display:'B _ D',opts:['A','E','O','I'],answer:'E'},{keyword:'cup',emoji:'☕',display:'C _ P',opts:['A','U','O','I'],answer:'U'},{keyword:'hen',emoji:'🐔',display:'H _ N',opts:['E','A','I','O'],answer:'E'},{keyword:'cow',emoji:'🐄',display:'C _ W',opts:['O','A','E','U'],answer:'O'},{keyword:'fox',emoji:'🦊',display:'F _ X',opts:['O','A','E','U'],answer:'O'},{keyword:'bus',emoji:'🚌',display:'B _ S',opts:['U','A','I','O'],answer:'U'},{keyword:'ant',emoji:'🐜',display:'A _ T',opts:['N','M','P','D'],answer:'N'},{keyword:'pen',emoji:'✏️',display:'P _ N',opts:['E','A','I','O'],answer:'E'},{keyword:'fan',emoji:'🌀',display:'F _ N',opts:['A','E','I','O'],answer:'A'},{keyword:'map',emoji:'🗺️',display:'M _ P',opts:['A','E','I','O'],answer:'A'},
+];
+
+const COUNT_E=COUNT.filter(q=>q.count<=5);
+
+const PATTERN_E=[
+  {seq:['🔴','🔵','🔴','🔵','?'],answer:'🔴',opts:['🔴','🔵','🟢','🟡'],urdu:'اگلا کیا آئے گا؟'},
+  {seq:['⭐','🌙','⭐','🌙','?'],answer:'⭐',opts:['⭐','🌙','☀️','🌟'],urdu:'اگلا کیا آئے گا؟'},
+  {seq:['🐱','🐶','🐱','🐶','?'],answer:'🐱',opts:['🐱','🐶','🐸','🐰'],urdu:'اگلا کیا آئے گا؟'},
+  {seq:['🍎','🍌','🍎','🍌','?'],answer:'🍎',opts:['🍎','🍌','🍊','🍇'],urdu:'اگلا کیا آئے گا؟'},
+  {seq:['🟡','🟢','🟡','🟢','?'],answer:'🟡',opts:['🟡','🟢','🔴','🔵'],urdu:'اگلا کیا آئے گا؟'},
+  {seq:['🌸','🌼','🌸','🌼','?'],answer:'🌸',opts:['🌸','🌼','🌺','🌻'],urdu:'اگلا کیا آئے گا؟'},
+  {seq:['🔺','🔷','🔺','🔷','?'],answer:'🔺',opts:['🔺','🔷','⭐','🔴'],urdu:'اگلا کیا آئے گا؟'},
+  {seq:['🐠','🐸','🐠','🐸','?'],answer:'🐠',opts:['🐠','🐸','🐱','🐶'],urdu:'اگلا کیا آئے گا؟'},
+  {seq:['1','2','1','2','?'],answer:'1',opts:['1','2','3','4'],urdu:'اگلا نمبر کیا ہے؟'},
+  {seq:['🍭','🎈','🍭','🎈','?'],answer:'🍭',opts:['🍭','🎈','⭐','🌸'],urdu:'اگلا کیا آئے گا؟'},
+];
+
+const ODD_E=[
+  {items:['Cat','Dog','Fish','Car'],answer:'Car',urdu:'کون سا جانور نہیں ہے؟'},
+  {items:['Apple','Mango','Banana','Chair'],answer:'Chair',urdu:'کون سا پھل نہیں ہے؟'},
+  {items:['Red','Blue','Green','Mango'],answer:'Mango',urdu:'رنگ کون سے ہیں؟ پھل کون سا ہے؟'},
+  {items:['1','2','3','Cat'],answer:'Cat',urdu:'نمبر کون سے ہیں؟'},
+  {items:['Eye','Ear','Nose','Ball'],answer:'Ball',urdu:'جسم کے حصے کون سے ہیں؟'},
+  {items:['Rose','Tulip','Daisy','Car'],answer:'Car',urdu:'پھول کون سے ہیں؟'},
+  {items:['Cow','Goat','Sheep','Airplane'],answer:'Airplane',urdu:'جانور کون سے ہیں؟'},
+  {items:['Sun','Moon','Star','Book'],answer:'Book',urdu:'آسمانی چیزیں کون سی ہیں؟'},
+  {items:['Pen','Pencil','Eraser','Lion'],answer:'Lion',urdu:'پڑھنے کی چیزیں کون سی ہیں؟'},
+  {items:['Cup','Plate','Spoon','Dog'],answer:'Dog',urdu:'کھانے کی چیزیں کون سی ہیں؟'},
+];
+
+const RIDDLE_E=[
+  {q:'I am round and bouncy.\nYou play with me.\nWhat am I?',answer:'Ball',opts:['Ball','Apple','Sun','Stone'],urdu:'میں گول اور اچھلتا ہوں۔ تم مجھ سے کھیلتے ہو۔ میں کیا ہوں؟'},
+  {q:'I have wheels.\nI take you to school.\nWhat am I?',answer:'Bus',opts:['Bus','Car','Bicycle','Train'],urdu:'میرے پہیے ہیں۔ میں تمہیں اسکول لے جاتا ہوں۔ میں کیا ہوں؟'},
+  {q:'I am yellow.\nMonkeys love to eat me.\nWhat am I?',answer:'Banana',opts:['Banana','Apple','Mango','Orange'],urdu:'میں پیلا ہوں۔ بندر مجھے کھانا پسند کرتے ہیں۔ میں کیا ہوں؟'},
+  {q:'I shine at night.\nI am round and bright.\nWhat am I?',answer:'Moon',opts:['Moon','Sun','Star','Lamp'],urdu:'میں رات کو چمکتا ہوں۔ میں گول اور چمکدار ہوں۔ میں کیا ہوں؟'},
+  {q:'I say Meow.\nI like to drink milk.\nWhat am I?',answer:'Cat',opts:['Cat','Dog','Cow','Lion'],urdu:'میں میاؤں کرتا ہوں اور دودھ پیتا ہوں۔ میں کیا ہوں؟'},
+  {q:'I have a long neck.\nI am very tall.\nWhat am I?',answer:'Giraffe',opts:['Giraffe','Elephant','Horse','Camel'],urdu:'میری گردن لمبی ہے اور میں بہت اونچا ہوں۔ میں کیا ہوں؟'},
+  {q:'You wear me on your feet.\nWhat am I?',answer:'Shoes',opts:['Shoes','Hat','Gloves','Shirt'],urdu:'مجھے پاؤں میں پہنتے ہیں۔ میں کیا ہوں؟'},
+  {q:'I am red and sweet.\nI grow on a tree.\nWhat am I?',answer:'Apple',opts:['Apple','Tomato','Ball','Cherry'],urdu:'میں لال اور میٹھا ہوں۔ درخت پر اگتا ہوں۔ میں کیا ہوں؟'},
+  {q:'I give light at night.\nYou turn me on and off.\nWhat am I?',answer:'Lamp',opts:['Lamp','Sun','Moon','Fire'],urdu:'میں رات کو روشنی دیتا ہوں۔ تم مجھے آن آف کرتے ہو۔ میں کیا ہوں؟'},
+  {q:'I live in water.\nI swim and have fins.\nWhat am I?',answer:'Fish',opts:['Fish','Duck','Frog','Crab'],urdu:'میں پانی میں رہتا ہوں اور تیرتا ہوں۔ میں کیا ہوں؟'},
+];
+
+const TF_E=[
+  {stmt:'A cat says Meow',answer:'TRUE',urdu:'بلی میاؤں کرتی ہے — سچ یا جھوٹ؟'},
+  {stmt:'Fish live on land',answer:'FALSE',urdu:'مچھلی زمین پر رہتی ہے — سچ یا جھوٹ؟'},
+  {stmt:'1 + 1 = 2',answer:'TRUE',urdu:'ایک جمع ایک دو ہے — سچ یا جھوٹ؟'},
+  {stmt:'The sky is green',answer:'FALSE',urdu:'آسمان سبز ہے — سچ یا جھوٹ؟'},
+  {stmt:'A dog has 4 legs',answer:'TRUE',urdu:'کتے کی چار ٹانگیں ہیں — سچ یا جھوٹ؟'},
+  {stmt:'We drink milk',answer:'TRUE',urdu:'ہم دودھ پیتے ہیں — سچ یا جھوٹ؟'},
+  {stmt:'2 + 2 = 5',answer:'FALSE',urdu:'دو جمع دو پانچ ہے — سچ یا جھوٹ؟'},
+  {stmt:'The sun is hot',answer:'TRUE',urdu:'سورج گرم ہے — سچ یا جھوٹ؟'},
+  {stmt:'Birds can fly',answer:'TRUE',urdu:'پرندے اڑ سکتے ہیں — سچ یا جھوٹ؟'},
+  {stmt:'A fish can walk',answer:'FALSE',urdu:'مچھلی چل سکتی ہے — سچ یا جھوٹ؟'},
+  {stmt:'3 is bigger than 1',answer:'TRUE',urdu:'تین ایک سے بڑا ہے — سچ یا جھوٹ؟'},
+  {stmt:'Cats live in water',answer:'FALSE',urdu:'بلی پانی میں رہتی ہے — سچ یا جھوٹ؟'},
+  {stmt:'Grass is green',answer:'TRUE',urdu:'گھاس سبز ہے — سچ یا جھوٹ؟'},
+  {stmt:'A bird has 6 legs',answer:'FALSE',urdu:'پرندے کی چھ ٹانگیں ہیں — سچ یا جھوٹ؟'},
+];
+
+const MISSING_E=[
+  {seq:['1','2','?','4'],answer:3,opts:[2,3,4,5],urdu:'خالی جگہ کیا ہے؟'},
+  {seq:['1','?','3','4'],answer:2,opts:[1,2,3,4],urdu:'خالی جگہ کیا ہے؟'},
+  {seq:['3','?','5','6'],answer:4,opts:[3,4,5,6],urdu:'خالی جگہ کیا ہے؟'},
+  {seq:['?','2','3','4'],answer:1,opts:[1,2,3,4],urdu:'شروع میں کیا تھا؟'},
+  {seq:['1','2','3','?'],answer:4,opts:[3,4,5,6],urdu:'اگلا نمبر کیا ہے؟'},
+  {seq:['2','4','?','8'],answer:6,opts:[5,6,7,8],urdu:'دو دو بڑھ رہے ہیں'},
+  {seq:['5','6','7','?'],answer:8,opts:[7,8,9,10],urdu:'اگلا نمبر کیا ہے؟'},
+  {seq:['?','3','4','5'],answer:2,opts:[1,2,3,4],urdu:'شروع میں کیا تھا؟'},
+  {seq:['4','5','?','7'],answer:6,opts:[5,6,7,8],urdu:'خالی جگہ کیا ہے؟'},
+  {seq:['1','2','3','4','?'],answer:5,opts:[4,5,6,7],urdu:'گنتی میں اگلا نمبر؟'},
+];
+
+const GK_E=[
+  {q:'What sound does a cat make?',answer:'Meow',opts:['Meow','Woof','Moo','Baa'],urdu:'بلی کیا آواز نکالتی ہے؟'},
+  {q:'What color is the sky?',answer:'Blue',opts:['Blue','Red','Green','Yellow'],urdu:'آسمان کا رنگ کیا ہے؟'},
+  {q:'How many fingers on one hand?',answer:'5',opts:['3','4','5','6'],urdu:'ایک ہاتھ میں کتنی انگلیاں ہیں؟'},
+  {q:'What do cows give us?',answer:'Milk',opts:['Milk','Honey','Eggs','Wool'],urdu:'گائے ہمیں کیا دیتی ہے؟'},
+  {q:'What color is grass?',answer:'Green',opts:['Green','Blue','Red','Yellow'],urdu:'گھاس کا رنگ کیا ہے؟'},
+  {q:'How many eyes do we have?',answer:'2',opts:['1','2','3','4'],urdu:'ہماری کتنی آنکھیں ہیں؟'},
+  {q:'What animal says Woof?',answer:'Dog',opts:['Dog','Cat','Cow','Duck'],urdu:'کون سا جانور وف وف کرتا ہے؟'},
+  {q:'What color is the sun?',answer:'Yellow',opts:['Yellow','Blue','Red','Green'],urdu:'سورج کا رنگ کیا ہے؟'},
+  {q:'Where do fish live?',answer:'Water',opts:['Water','Sky','Tree','Desert'],urdu:'مچھلی کہاں رہتی ہے؟'},
+  {q:'What do birds use to fly?',answer:'Wings',opts:['Wings','Legs','Tail','Beak'],urdu:'پرندے کس سے اڑتے ہیں؟'},
+  {q:'How many legs does a cow have?',answer:'4',opts:['2','4','6','8'],urdu:'گائے کی کتنی ٹانگیں ہیں؟'},
+  {q:'What do we use to see?',answer:'Eyes',opts:['Eyes','Ears','Nose','Hands'],urdu:'ہم دیکھنے کے لیے کیا استعمال کرتے ہیں؟'},
+  {q:'What color is a banana?',answer:'Yellow',opts:['Yellow','Red','Green','Blue'],urdu:'کیلے کا رنگ کیا ہے؟'},
+  {q:'What sound does a dog make?',answer:'Woof',opts:['Woof','Meow','Moo','Baa'],urdu:'کتا کیا آواز نکالتا ہے؟'},
 ];
 
 /* ── UTILS ── */
