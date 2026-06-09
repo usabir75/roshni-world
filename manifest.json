@@ -1,0 +1,19 @@
+{
+  "name": "Roshni World",
+  "short_name": "Roshni 🌟",
+  "description": "Fun learning app for kids — Math, Spelling, Quran, Animals and more!",
+  "start_url": "/roshni-world/",
+  "scope": "/roshni-world/",
+  "display": "standalone",
+  "background_color": "#120a2e",
+  "theme_color": "#120a2e",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}

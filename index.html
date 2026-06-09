@@ -4,6 +4,12 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>Roshni World ✨</title>
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="icon.svg">
+<meta name="theme-color" content="#120a2e">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Roshni World">
 <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@700;800;900&family=Noto+Nastaliq+Urdu:wght@400;700&display=swap" rel="stylesheet">
 <style>
 :root{--r:22px}
@@ -641,6 +647,7 @@ function shuffle(a){const b=[...a];for(let i=b.length-1;i>0;i--){const j=~~(Math
 
 /* ── INIT ── */
 dbLoad();
+if('serviceWorker' in navigator) navigator.serviceWorker.register('/roshni-world/sw.js');
 </script>
 </body>
 </html>
