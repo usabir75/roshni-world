@@ -12,7 +12,6 @@
 <meta name="apple-mobile-web-app-title" content="Roshni World">
 <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@700;800;900&family=Noto+Nastaliq+Urdu:wght@400;700&display=swap" rel="stylesheet">
 <style>
-:root{--r:22px}
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;user-select:none}
 html,body{width:100%;height:100%;overflow:hidden;touch-action:manipulation}
 body{font-family:'Nunito','Segoe UI',sans-serif;background:#120a2e;min-height:100vh}
@@ -24,109 +23,133 @@ body{font-family:'Nunito','Segoe UI',sans-serif;background:#120a2e;min-height:10
 #app{position:relative;z-index:2;width:100vw;height:100vh}
 .screen{display:none;position:absolute;inset:0;flex-direction:column;align-items:center;justify-content:flex-start;padding:14px;gap:10px;overflow-y:auto;overscroll-behavior:contain}
 .screen.active{display:flex}
+#scr-splash{justify-content:center}
+#scr-world{padding-top:68px;justify-content:flex-start}
 .big-title{font-size:clamp(2rem,8vw,3.8rem);font-weight:900;color:#fff;text-align:center;text-shadow:0 0 30px rgba(255,215,0,.7),0 4px 12px rgba(0,0,0,.6)}
 .sub{font-size:clamp(.9rem,3vw,1.3rem);color:rgba(255,255,255,.7);text-align:center;font-weight:700}
-/* profile */
-.profiles{display:flex;gap:18px;flex-wrap:wrap;justify-content:center}
-.pcard{background:rgba(255,255,255,.1);backdrop-filter:blur(14px);border:2px solid rgba(255,255,255,.2);border-radius:26px;padding:24px 28px;text-align:center;cursor:pointer;transition:transform .2s,border-color .2s;min-width:135px}
-.pcard:hover{border-color:rgba(255,215,0,.7);transform:scale(1.06)}
-.pcard:active{transform:scale(.93)}
-.pa{font-size:3.8rem;margin-bottom:6px}.pn{font-size:1.4rem;font-weight:900;color:#fff}.ps{font-size:.9rem;color:#FFD700;margin-top:4px;font-weight:700}
+/* profiles */
+.profiles{display:flex;gap:14px;flex-wrap:wrap;justify-content:center;max-width:600px}
+.pcard{background:rgba(255,255,255,.1);backdrop-filter:blur(14px);border:2px solid rgba(255,255,255,.2);border-radius:24px;padding:20px 22px;text-align:center;cursor:pointer;transition:transform .2s,border-color .2s;min-width:120px;max-width:150px}
+.pcard:hover{border-color:rgba(255,215,0,.7);transform:scale(1.06)}.pcard:active{transform:scale(.93)}
+.pcard.add-card{border-style:dashed;border-color:rgba(255,255,255,.35);background:rgba(255,255,255,.05)}
+.pa{font-size:3.2rem;margin-bottom:5px}.pn{font-size:1.15rem;font-weight:900;color:#fff}.ps{font-size:.82rem;color:#FFD700;margin-top:3px;font-weight:700}
+/* add-profile screen */
+.add-form{display:flex;flex-direction:column;align-items:center;gap:16px;width:100%;max-width:380px}
+.name-input{font-size:1.5rem;padding:14px 20px;border-radius:18px;border:3px solid rgba(255,255,255,.25);width:100%;text-align:center;font-family:'Nunito',sans-serif;font-weight:800;background:rgba(255,255,255,.12);color:#fff;outline:none;caret-color:#FFD700}
+.name-input::placeholder{color:rgba(255,255,255,.4)}
+.name-input:focus{border-color:rgba(255,215,0,.6)}
+.gender-row{display:flex;gap:16px;justify-content:center}
+.gcard{background:rgba(255,255,255,.08);border:3px solid rgba(255,255,255,.2);border-radius:22px;padding:22px 28px;text-align:center;cursor:pointer;transition:transform .2s,border-color .2s,background .2s;min-width:120px}
+.gcard:hover{transform:scale(1.05)}.gcard:active{transform:scale(.93)}
+.gcard.selected{border-color:#FFD700;background:rgba(255,215,0,.18)}
+.gicon{font-size:3.5rem;margin-bottom:6px}.glabel{font-size:1.1rem;font-weight:900;color:#fff}
 /* badge */
-.badge{background:rgba(255,255,255,.13);border-radius:50px;padding:8px 18px;color:#fff;font-size:1rem;font-weight:800;display:flex;align-items:center;gap:8px;flex-shrink:0}
+.badge{background:rgba(255,255,255,.13);border-radius:50px;padding:8px 16px;color:#fff;font-size:.95rem;font-weight:800;display:flex;align-items:center;gap:8px;flex-shrink:0}
 .badge-stars{color:#FFD700}
+/* diff badge */
+.diff-badge{cursor:pointer;border:2px solid rgba(67,233,123,.5);border-radius:50px;padding:6px 14px;font-size:.82rem;font-weight:900;color:#fff;background:rgba(67,233,123,.2);flex-shrink:0}
 /* world sections */
 .wsections{width:100%;max-width:570px;display:flex;flex-direction:column;gap:12px}
-.wsec-label{color:rgba(255,255,255,.55);font-size:.8rem;font-weight:900;text-transform:uppercase;letter-spacing:2px;margin-bottom:4px;padding-left:2px}
-.worlds{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;width:100%}
+.wsec-label{color:rgba(255,255,255,.5);font-size:.78rem;font-weight:900;text-transform:uppercase;letter-spacing:2px;margin-bottom:4px;padding-left:2px}
+.worlds{display:grid;grid-template-columns:repeat(3,1fr);gap:9px;width:100%}
 @media(max-width:360px){.worlds{grid-template-columns:1fr 1fr}}
-.wcard{border-radius:18px;padding:16px 8px;text-align:center;cursor:pointer;border:3px solid rgba(255,255,255,.15);background:rgba(255,255,255,.07);transition:transform .18s;display:flex;flex-direction:column;align-items:center;gap:5px}
+.wcard{border-radius:16px;padding:14px 7px;text-align:center;cursor:pointer;border:3px solid rgba(255,255,255,.14);background:rgba(255,255,255,.07);transition:transform .18s;display:flex;flex-direction:column;align-items:center;gap:4px}
 .wcard:hover{transform:scale(1.06)}.wcard:active{transform:scale(.92)}
-.wicon{font-size:2.2rem}.wname{font-size:.78rem;font-weight:900;color:#fff;line-height:1.2}
+.wicon{font-size:2rem}.wname{font-size:.72rem;font-weight:900;color:#fff;line-height:1.2}
 .w-math{border-color:#FF8C00;background:rgba(255,140,0,.12)}.w-spell{border-color:#43E97B;background:rgba(67,233,123,.12)}
 .w-quran{border-color:#FFD700;background:rgba(255,215,0,.12)}.w-animal{border-color:#FF6B9D;background:rgba(255,107,157,.12)}
 .w-color{border-color:#C471ED;background:rgba(196,113,237,.12)}.w-count{border-color:#12C2E9;background:rgba(18,194,233,.12)}
 .w-pattern{border-color:#A8FF78;background:rgba(168,255,120,.12)}.w-odd{border-color:#FF9A9E;background:rgba(255,154,158,.12)}
 .w-riddle{border-color:#FFECD2;background:rgba(255,236,210,.1)}.w-tf{border-color:#84FAB0;background:rgba(132,250,176,.1)}
 .w-missing{border-color:#F6D365;background:rgba(246,211,101,.1)}.w-gk{border-color:#89F7FE;background:rgba(137,247,254,.1)}
+.w-scramble{border-color:#FFA07A;background:rgba(255,160,122,.1)}.w-flags{border-color:#87CEEB;background:rgba(135,206,235,.1)}
+.w-shapes{border-color:#DDA0DD;background:rgba(221,160,221,.1)}.w-memory{border-color:#98FB98;background:rgba(152,251,152,.1)}
 /* mascot */
 #mascot{position:absolute;top:13px;right:13px;font-size:2rem;z-index:10}
 #mascot.react{animation:mreact .4s ease}
 @keyframes mreact{0%,100%{transform:scale(1)}50%{transform:scale(1.5) rotate(15deg)}}
-.back{position:absolute;top:12px;left:12px;width:48px;height:48px;border-radius:50%;background:rgba(255,255,255,.15);border:none;font-size:1.4rem;color:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center;z-index:10;touch-action:manipulation}
-/* scorebar */
-.sbar{width:100%;max-width:660px;display:flex;justify-content:space-between;align-items:center;background:rgba(255,255,255,.1);border-radius:50px;padding:8px 15px;gap:8px;flex-shrink:0}
-.sb-name{font-size:clamp(.78rem,2.3vw,.92rem);font-weight:900;color:#fff;white-space:nowrap}
-.sb-stars{font-size:clamp(.82rem,2.3vw,1rem);font-weight:900;color:#FFD700;white-space:nowrap}
+.back{position:absolute;top:12px;left:12px;width:46px;height:46px;border-radius:50%;background:rgba(255,255,255,.15);border:none;font-size:1.3rem;color:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center;z-index:10;touch-action:manipulation}
+/* score bar */
+.sbar{width:100%;max-width:660px;display:flex;justify-content:space-between;align-items:center;background:rgba(255,255,255,.1);border-radius:50px;padding:8px 14px;gap:8px;flex-shrink:0}
+.sb-name{font-size:clamp(.75rem,2.2vw,.9rem);font-weight:900;color:#fff;white-space:nowrap}
+.sb-stars{font-size:clamp(.8rem,2.2vw,1rem);font-weight:900;color:#FFD700;white-space:nowrap}
 .dots{display:flex;gap:5px;align-items:center;flex-wrap:wrap;justify-content:center}
 .dot{width:10px;height:10px;border-radius:50%;background:rgba(255,255,255,.22);flex-shrink:0;transition:background .3s}
 .dot.done{background:#FFD700}.dot.cur{background:#fff;transform:scale(1.3)}
 /* question card */
-.qcard{background:rgba(255,255,255,.1);backdrop-filter:blur(14px);border-radius:22px;padding:14px 14px 10px;width:100%;max-width:660px;text-align:center;border:1px solid rgba(255,255,255,.15);flex-shrink:0;cursor:pointer;position:relative}
-.tap-hint{position:absolute;top:8px;right:10px;font-size:.72rem;color:rgba(255,215,0,.7);font-weight:700}
-.qemoji{font-size:clamp(2.8rem,10vw,5rem);line-height:1.1}
-.qimg{width:clamp(80px,26vw,155px);height:clamp(80px,26vw,155px);border-radius:16px;object-fit:cover;display:block;margin:0 auto;background:rgba(0,0,0,.2)}
-.qimgbox{display:flex;align-items:center;justify-content:center;width:clamp(80px,26vw,155px);height:clamp(80px,26vw,155px);border-radius:16px;background:rgba(0,0,0,.2);margin:0 auto;font-size:clamp(2.8rem,10vw,5rem)}
-.qtext{font-size:clamp(1.1rem,4.5vw,2.2rem);font-weight:900;color:#fff;margin-top:7px;line-height:1.3}
-.qtext.small{font-size:clamp(.88rem,3vw,1.3rem);line-height:1.5;white-space:pre-line}
+.qcard{background:rgba(255,255,255,.1);backdrop-filter:blur(14px);border-radius:22px;padding:13px 13px 9px;width:100%;max-width:660px;text-align:center;border:1px solid rgba(255,255,255,.15);flex-shrink:0;cursor:pointer;position:relative}
+.tap-hint{position:absolute;top:7px;right:9px;font-size:.68rem;color:rgba(255,215,0,.65);font-weight:700}
+.qemoji{font-size:clamp(2.6rem,10vw,4.8rem);line-height:1.1}
+.qimg{width:clamp(80px,26vw,150px);height:clamp(80px,26vw,150px);border-radius:16px;object-fit:cover;display:block;margin:0 auto;background:rgba(0,0,0,.2)}
+.qimgbox{display:flex;align-items:center;justify-content:center;width:clamp(80px,26vw,150px);height:clamp(80px,26vw,150px);border-radius:16px;background:rgba(0,0,0,.2);margin:0 auto;font-size:clamp(2.6rem,10vw,4.8rem)}
+.qtext{font-size:clamp(1.05rem,4.2vw,2.1rem);font-weight:900;color:#fff;margin-top:7px;line-height:1.3}
+.qtext.small{font-size:clamp(.85rem,2.9vw,1.3rem);line-height:1.5;white-space:pre-line}
 .qarabic{font-size:clamp(1.1rem,3.8vw,2rem);color:#FFD700;direction:rtl;font-family:'Noto Nastaliq Urdu','Traditional Arabic',serif;line-height:2;margin-top:6px;display:none}
-.colordisk{width:clamp(100px,30vw,185px);height:clamp(100px,30vw,185px);border-radius:50%;margin:0 auto;box-shadow:0 0 40px rgba(255,255,255,.15),0 0 0 5px rgba(255,255,255,.1)}
-.countgrid{display:flex;flex-wrap:wrap;justify-content:center;gap:4px;max-width:270px;margin:0 auto}
+.colordisk{width:clamp(100px,28vw,180px);height:clamp(100px,28vw,180px);border-radius:50%;margin:0 auto;box-shadow:0 0 40px rgba(255,255,255,.15),0 0 0 5px rgba(255,255,255,.1)}
+.countgrid{display:flex;flex-wrap:wrap;justify-content:center;gap:4px;max-width:260px;margin:0 auto}
 .citem{font-size:clamp(1.5rem,5vw,2.2rem);line-height:1.2}
 /* pattern */
-.patrow{display:flex;gap:8px;justify-content:center;align-items:center;flex-wrap:wrap;padding:4px}
-.patitem{font-size:clamp(1.3rem,4.5vw,2.2rem);background:rgba(255,255,255,.1);border-radius:12px;padding:6px 10px;min-width:46px;text-align:center;font-weight:900;color:#fff}
+.patrow{display:flex;gap:7px;justify-content:center;align-items:center;flex-wrap:wrap;padding:4px}
+.patitem{font-size:clamp(1.2rem,4.2vw,2rem);background:rgba(255,255,255,.1);border-radius:10px;padding:5px 8px;min-width:42px;text-align:center;font-weight:900;color:#fff}
 .patitem.patblank{background:rgba(255,215,0,.2);border:2px dashed #FFD700;animation:pulse 1s infinite alternate}
 @keyframes pulse{from{opacity:.7}to{opacity:1}}
-/* missing number */
-.misrow{display:flex;gap:8px;justify-content:center;align-items:center;flex-wrap:wrap}
-.misitem{font-size:clamp(1.3rem,4.5vw,2.2rem);font-weight:900;color:#fff;background:rgba(255,255,255,.1);border-radius:12px;padding:6px 12px;min-width:48px;text-align:center}
+/* missing */
+.misrow{display:flex;gap:7px;justify-content:center;align-items:center;flex-wrap:wrap}
+.misitem{font-size:clamp(1.2rem,4.2vw,2rem);font-weight:900;color:#fff;background:rgba(255,255,255,.1);border-radius:10px;padding:5px 10px;min-width:44px;text-align:center}
 .misitem.misblank{background:rgba(255,215,0,.2);border:2px dashed #FFD700;color:#FFD700}
-.misarrow{font-size:1.1rem;color:rgba(255,255,255,.5)}
+.misarrow{font-size:1rem;color:rgba(255,255,255,.45)}
+/* scramble tiles */
+.scramble-tiles{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin:4px auto}
+.stile{width:clamp(42px,12vw,62px);height:clamp(42px,12vw,62px);border-radius:12px;background:linear-gradient(135deg,rgba(255,215,0,.25),rgba(255,165,0,.15));border:2px solid rgba(255,215,0,.5);display:flex;align-items:center;justify-content:center;font-size:clamp(1.4rem,5vw,2.2rem);font-weight:900;color:#FFD700}
+/* shape display */
+.shape-wrap{display:flex;justify-content:center;align-items:center;width:100%;margin:4px 0}
+/* memory grid */
+.memgrid{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;padding:4px}
+.memitem{font-size:clamp(2rem,7vw,3.2rem);background:rgba(255,255,255,.1);border-radius:14px;padding:8px 12px;min-width:55px;text-align:center;transition:all .4s}
+.memitem.memhide{background:rgba(255,255,255,.05);color:transparent;filter:blur(6px)}
+/* flag display */
+.flag-display{font-size:clamp(5rem,18vw,9rem);line-height:1;margin:4px 0}
 /* urdu tip */
-.urdu-tip{width:100%;max-width:660px;background:rgba(255,215,0,.1);border:1px solid rgba(255,215,0,.3);border-radius:14px;padding:10px 16px;text-align:center;font-family:'Noto Nastaliq Urdu','Traditional Arabic',serif;font-size:clamp(1rem,3.5vw,1.6rem);color:#FFD700;direction:rtl;line-height:2;display:none;flex-shrink:0;animation:fadein .3s ease}
+.urdu-tip{width:100%;max-width:660px;background:rgba(255,215,0,.1);border:1px solid rgba(255,215,0,.3);border-radius:14px;padding:9px 15px;text-align:center;font-family:'Noto Nastaliq Urdu','Traditional Arabic',serif;font-size:clamp(.95rem,3.3vw,1.55rem);color:#FFD700;direction:rtl;line-height:2;display:none;flex-shrink:0}
 .urdu-tip.show{display:block}
-/* try bar */
-.trybar{width:100%;max-width:660px;background:rgba(255,70,70,.22);border:2px solid rgba(255,70,70,.4);border-radius:50px;padding:8px 15px;text-align:center;color:#fff;font-size:clamp(.82rem,2.6vw,1.05rem);font-weight:800;display:none;flex-shrink:0}
+/* trybar */
+.trybar{width:100%;max-width:660px;border-radius:50px;padding:8px 14px;text-align:center;color:#fff;font-size:clamp(.8rem,2.5vw,1rem);font-weight:800;display:none;flex-shrink:0;background:rgba(255,70,70,.22);border:2px solid rgba(255,70,70,.4)}
 .trybar.show{display:block}
+.trybar.info{background:rgba(255,215,0,.18);border-color:rgba(255,215,0,.4)}
 /* options */
 .opts{display:grid;grid-template-columns:1fr 1fr;gap:10px;width:100%;max-width:660px;flex-shrink:0}
-.opts.tf-opts{grid-template-columns:1fr 1fr}
-.opt{padding:14px 8px;font-size:clamp(1rem,3.6vw,1.65rem);font-weight:900;border:3px solid rgba(255,255,255,.2);border-radius:16px;background:rgba(255,255,255,.09);color:#fff;cursor:pointer;min-height:64px;touch-action:manipulation;transition:transform .1s,background .15s;display:flex;align-items:center;justify-content:center;text-align:center;line-height:1.2;font-family:'Nunito',sans-serif}
+.opt{padding:13px 8px;font-size:clamp(.95rem,3.5vw,1.6rem);font-weight:900;border:3px solid rgba(255,255,255,.2);border-radius:16px;background:rgba(255,255,255,.09);color:#fff;cursor:pointer;min-height:62px;touch-action:manipulation;transition:transform .1s,background .15s;display:flex;align-items:center;justify-content:center;text-align:center;line-height:1.2;font-family:'Nunito',sans-serif}
 .opt:hover{background:rgba(255,255,255,.18);transform:scale(1.03)}.opt:active{transform:scale(.93)}
 .opt.correct{background:linear-gradient(135deg,#43E97B,#38F9D7)!important;color:#1a2e20;border-color:#43E97B}
 .opt.wrong{background:rgba(255,70,70,.3)!important;color:#fff;border-color:#ff4646;opacity:.55;pointer-events:none}
-.opt.tf-true{border-color:#43E97B;font-size:clamp(1.2rem,4vw,2rem)}
-.opt.tf-false{border-color:#FF5858;font-size:clamp(1.2rem,4vw,2rem)}
+.opt.tf-true{border-color:#43E97B;font-size:clamp(1.1rem,4vw,1.9rem)}
+.opt.tf-false{border-color:#FF5858;font-size:clamp(1.1rem,4vw,1.9rem)}
 /* buttons */
-.btn{padding:14px 26px;font-size:clamp(1rem,3.2vw,1.5rem);font-weight:900;border:none;border-radius:16px;cursor:pointer;min-width:165px;min-height:56px;font-family:'Nunito',sans-serif;touch-action:manipulation;transition:transform .1s;box-shadow:0 6px 18px rgba(0,0,0,.3)}
+.btn{padding:13px 24px;font-size:clamp(.95rem,3vw,1.4rem);font-weight:900;border:none;border-radius:16px;cursor:pointer;min-width:155px;min-height:54px;font-family:'Nunito',sans-serif;touch-action:manipulation;transition:transform .1s;box-shadow:0 6px 18px rgba(0,0,0,.3)}
 .btn:active{transform:scale(.93)}
 .btn-g{background:linear-gradient(135deg,#43E97B,#38F9D7);color:#1a2e20}
 .btn-b{background:linear-gradient(135deg,#4FACFE,#00F2FE);color:#0d1b4a}
+.btn-p{background:linear-gradient(135deg,#F093FB,#F5576C);color:#fff}
 /* complete */
-.statrow{display:flex;gap:12px;flex-wrap:wrap;justify-content:center}
-.statbox{background:rgba(255,255,255,.1);border-radius:16px;padding:14px 18px;text-align:center;min-width:90px}
-.statval{font-size:clamp(1.8rem,6vw,2.8rem);color:#FFD700;font-weight:900}
-.statlbl{font-size:.85rem;color:#bbb;margin-top:3px}
+.statrow{display:flex;gap:11px;flex-wrap:wrap;justify-content:center}
+.statbox{background:rgba(255,255,255,.1);border-radius:16px;padding:13px 17px;text-align:center;min-width:88px}
+.statval{font-size:clamp(1.7rem,6vw,2.7rem);color:#FFD700;font-weight:900}
+.statlbl{font-size:.83rem;color:#bbb;margin-top:2px}
 /* overlay */
 #overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.62);z-index:300;flex-direction:column;align-items:center;justify-content:center;gap:12px;pointer-events:none}
 #overlay.on{display:flex}
 .ov-e{font-size:5rem;animation:ovbounce .5s infinite alternate}
 .ov-t{font-size:clamp(1.3rem,5vw,2.1rem);font-weight:900;color:#FFD700;text-align:center;padding:0 20px}
-@keyframes ovbounce{from{transform:translateY(0)}to{transform:translateY(-15px)}}
+@keyframes ovbounce{from{transform:translateY(0)}to{transform:translateY(-14px)}}
 .cf{position:fixed;pointer-events:none;z-index:400;animation:cffall linear forwards}
 @keyframes cffall{0%{transform:translateY(-10px) rotate(0);opacity:1}100%{transform:translateY(110vh) rotate(720deg);opacity:0}}
 @keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-9px)}75%{transform:translateX(9px)}}
 @keyframes pop{0%{transform:scale(1)}50%{transform:scale(1.18)}100%{transform:scale(1)}}
-@keyframes fadein{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
+@keyframes fadein{from{opacity:0;transform:translateY(13px)}to{opacity:1;transform:translateY(0)}}
 .shake{animation:shake .35s ease!important}.pop{animation:pop .28s ease!important}
 .screen.active>*{animation:fadein .3s ease both}
 .screen{padding-top:max(14px,env(safe-area-inset-top));padding-bottom:max(14px,env(safe-area-inset-bottom))}
-/* center splash vertically */
-#scr-splash{justify-content:center}
-/* world screen needs top padding for back btn */
-#scr-world{padding-top:70px;justify-content:flex-start}
-@media(max-height:500px){.big-title{font-size:1.7rem}.pa{font-size:2.5rem}.qcard{padding:8px 12px 6px}.qemoji{font-size:2.3rem}.qimgbox,.qimg{width:75px;height:75px}.colordisk{width:75px;height:75px}.opt{min-height:50px}}
+@media(max-height:500px){.big-title{font-size:1.7rem}.pa{font-size:2.4rem}.qcard{padding:7px 11px 5px}.qemoji{font-size:2.2rem}.qimgbox,.qimg{width:72px;height:72px}.colordisk{width:72px;height:72px}.opt{min-height:48px}}
 </style>
 </head>
 <body>
@@ -138,19 +161,25 @@ body{font-family:'Nunito','Segoe UI',sans-serif;background:#120a2e;min-height:10
 <div class="screen active" id="scr-splash">
   <div class="big-title">🌟 Roshni World</div>
   <div class="sub">Who is playing today?</div>
-  <div class="profiles">
-    <div class="pcard" onclick="pickPlayer('Abubakr','🦁')">
-      <div class="pa">🦁</div><div class="pn">Abubakr</div>
-      <div class="ps" id="ps-Abubakr">⭐ 0 stars</div>
+  <div class="profiles" id="profiles"></div>
+</div>
+
+<!-- ADD PROFILE -->
+<div class="screen" id="scr-add">
+  <button class="back" onclick="go('scr-splash')">←</button>
+  <div class="big-title" style="font-size:clamp(1.8rem,6vw,2.8rem)">New Player 😊</div>
+  <div class="add-form">
+    <input class="name-input" id="custom-name" type="text" maxlength="14" placeholder="Type your name..." autocomplete="off" autocorrect="off" spellcheck="false">
+    <div class="sub">I am a...</div>
+    <div class="gender-row">
+      <div class="gcard" id="gc-m" onclick="selectGender('m')">
+        <div class="gicon">👦</div><div class="glabel">Boy</div>
+      </div>
+      <div class="gcard" id="gc-f" onclick="selectGender('f')">
+        <div class="gicon">👧</div><div class="glabel">Girl</div>
+      </div>
     </div>
-    <div class="pcard" onclick="pickPlayer('Muawiyyah','🐯')">
-      <div class="pa">🐯</div><div class="pn">Muawiyyah</div>
-      <div class="ps" id="ps-Muawiyyah">⭐ 0 stars</div>
-    </div>
-    <div class="pcard" onclick="pickPlayer('Khadija','🌸')">
-      <div class="pa">🌸</div><div class="pn">Khadija</div>
-      <div class="ps" id="ps-Khadija">⭐ 0 stars</div>
-    </div>
+    <button class="btn btn-g" onclick="saveCustomProfile()">Let's Go! 🚀</button>
   </div>
 </div>
 
@@ -159,8 +188,8 @@ body{font-family:'Nunito','Segoe UI',sans-serif;background:#120a2e;min-height:10
   <button class="back" onclick="go('scr-splash')">←</button>
   <div id="mascot">🦉</div>
   <div class="badge"><span id="wb-av"></span><span id="wb-nm"></span><span class="badge-stars" id="wb-st">⭐ 0</span></div>
-  <div id="diff-badge" onclick="toggleDiff()" style="cursor:pointer;border:2px solid rgba(67,233,123,.5);border-radius:50px;padding:6px 16px;font-size:.85rem;font-weight:900;color:#fff;background:rgba(67,233,123,.2);flex-shrink:0">🟢 Easy Mode</div>
-  <div class="sub">Choose your adventure!</div>
+  <div id="diff-badge" class="diff-badge" onclick="toggleDiff()">🟢 Easy Mode</div>
+  <div class="sub" style="margin-top:2px">Choose your adventure!</div>
   <div class="wsections">
     <div>
       <div class="wsec-label">📚 Learn</div>
@@ -184,6 +213,15 @@ body{font-family:'Nunito','Segoe UI',sans-serif;background:#120a2e;min-height:10
         <div class="wcard w-gk"      onclick="startWorld('gk')">     <div class="wicon">🌍</div><div class="wname">General Know.</div></div>
       </div>
     </div>
+    <div>
+      <div class="wsec-label">🎮 Play</div>
+      <div class="worlds">
+        <div class="wcard w-scramble" onclick="startWorld('scramble')"><div class="wicon">🔤</div><div class="wname">Scramble</div></div>
+        <div class="wcard w-flags"    onclick="startWorld('flags')">   <div class="wicon">🏳️</div><div class="wname">Flags</div></div>
+        <div class="wcard w-shapes"   onclick="startWorld('shapes')">  <div class="wicon">🔷</div><div class="wname">Shapes</div></div>
+        <div class="wcard w-memory"   onclick="startWorld('memory')">  <div class="wicon">🧠</div><div class="wname">Memory</div></div>
+      </div>
+    </div>
   </div>
 </div>
 
@@ -202,14 +240,14 @@ body{font-family:'Nunito','Segoe UI',sans-serif;background:#120a2e;min-height:10
     <div class="qarabic" id="qarabic"></div>
   </div>
   <div class="urdu-tip" id="urdu-tip"></div>
-  <div class="trybar" id="trybar">❌ Try again! <span id="tryleft"></span> tries left!</div>
+  <div class="trybar" id="trybar"></div>
   <div class="opts" id="opts"></div>
 </div>
 
 <!-- COMPLETE -->
 <div class="screen" id="scr-complete">
   <div style="font-size:4.5rem">🎉</div>
-  <div class="big-title" style="font-size:clamp(1.7rem,6vw,3rem)">Amazing!</div>
+  <div class="big-title" style="font-size:clamp(1.7rem,6vw,2.8rem)">Amazing!</div>
   <div class="statrow">
     <div class="statbox"><div class="statval" id="c-cor">0</div><div class="statlbl">Correct ✅</div></div>
     <div class="statbox"><div class="statval" id="c-earn">0</div><div class="statlbl">Stars ⭐</div></div>
@@ -223,49 +261,119 @@ body{font-family:'Nunito','Segoe UI',sans-serif;background:#120a2e;min-height:10
 <div id="overlay"><div class="ov-e" id="ov-e">⭐</div><div class="ov-t" id="ov-t">Correct!</div></div>
 
 <script>
-/* ── STATE ── */
+/* ═══ CONFIG ═══ */
 const CFG={totalQs:7,maxTries:3};
-const S={player:'',avatar:'',world:'',qs:[],qi:0,tries:0,sStars:0,sCorrect:0,streak:0,easy:false};
-const DB={Abubakr:{stars:0},Muawiyyah:{stars:0},Khadija:{stars:0}};
-function el(id){return document.getElementById(id)}
-function dbLoad(){try{const d=JSON.parse(localStorage.getItem('rw5')||'{}');if(d.A)DB.Abubakr=d.A;if(d.M)DB.Muawiyyah=d.M;if(d.K)DB.Khadija=d.K;}catch(e){}refreshBadges()}
-function dbSave(){localStorage.setItem('rw5',JSON.stringify({A:DB.Abubakr,M:DB.Muawiyyah,K:DB.Khadija}))}
-function refreshBadges(){el('ps-Abubakr').textContent=`⭐ ${DB.Abubakr.stars} stars`;el('ps-Muawiyyah').textContent=`⭐ ${DB.Muawiyyah.stars} stars`;el('ps-Khadija').textContent=`⭐ ${DB.Khadija.stars} stars`}
 
-/* ── AUDIO ── */
+/* ═══ STATE ═══ */
+const S={player:'',avatar:'',world:'',qs:[],qi:0,tries:0,sStars:0,sCorrect:0,streak:0,easy:false,gender:'m'};
+let _memTimer=null;
+let _pendingGender='';
+
+/* ═══ DB ═══ */
+const BUILTIN=[
+  {name:'Abubakr', avatar:'🦁', gender:'m'},
+  {name:'Muawiyyah',avatar:'🐯', gender:'m'},
+  {name:'Khadija',  avatar:'🌸', gender:'f'},
+];
+const DB={Abubakr:{stars:0},Muawiyyah:{stars:0},Khadija:{stars:0}};
+let CUSTOM=[];
+
+function dbLoad(){
+  try{const d=JSON.parse(localStorage.getItem('rw6')||'{}');
+    if(d.A)DB.Abubakr=d.A; if(d.M)DB.Muawiyyah=d.M; if(d.K)DB.Khadija=d.K;
+    if(d.C&&Array.isArray(d.C))CUSTOM=d.C;
+  }catch(e){}
+  renderSplash();
+}
+function dbSave(){localStorage.setItem('rw6',JSON.stringify({A:DB.Abubakr,M:DB.Muawiyyah,K:DB.Khadija,C:CUSTOM}))}
+function playerStars(name){const c=CUSTOM.find(p=>p.name===name);return c?c.stars:(DB[name]?.stars||0)}
+function addStar(){const c=CUSTOM.find(p=>p.name===S.player);if(c)c.stars++;else if(DB[S.player])DB[S.player].stars++;dbSave()}
+
+function el(id){return document.getElementById(id)}
+
+/* ═══ SPLASH ═══ */
+function renderSplash(){
+  const c=el('profiles'); c.innerHTML='';
+  [...BUILTIN,...CUSTOM.map((p,i)=>({...p,customIdx:i}))].forEach(p=>{
+    const d=document.createElement('div'); d.className='pcard';
+    const stars=playerStars(p.name);
+    d.innerHTML=`<div class="pa">${p.avatar}</div><div class="pn">${p.name}</div><div class="ps">⭐ ${stars} stars</div>`;
+    d.onclick=()=>pickPlayer(p.name,p.avatar,p.gender);
+    c.appendChild(d);
+  });
+  const add=document.createElement('div'); add.className='pcard add-card';
+  add.innerHTML=`<div class="pa">➕</div><div class="pn">Add Me!</div><div class="ps">New player</div>`;
+  add.onclick=()=>{_pendingGender='';el('gc-m').classList.remove('selected');el('gc-f').classList.remove('selected');el('custom-name').value='';go('scr-add')};
+  c.appendChild(add);
+}
+
+/* ═══ ADD PROFILE ═══ */
+function selectGender(g){
+  _pendingGender=g;
+  el('gc-m').classList.toggle('selected',g==='m');
+  el('gc-f').classList.toggle('selected',g==='f');
+}
+const BOY_AVATARS =['🦸','🧑','🐉','🎮','🚀','⚽'];
+const GIRL_AVATARS=['👑','🦋','🌈','🎀','🌟','🧁'];
+function saveCustomProfile(){
+  const name=(el('custom-name').value||'').trim();
+  if(!name){speak('براہ کرم اپنا نام لکھیں');return}
+  if(!_pendingGender){speak('لڑکا یا لڑکی؟ ایک انتخاب کریں');return}
+  if(CUSTOM.find(p=>p.name.toLowerCase()===name.toLowerCase())||BUILTIN.find(p=>p.name.toLowerCase()===name.toLowerCase())){speak('یہ نام پہلے سے موجود ہے');return}
+  const avatars=_pendingGender==='f'?GIRL_AVATARS:BOY_AVATARS;
+  const avatar=avatars[Math.floor(Math.random()*avatars.length)];
+  CUSTOM.push({name,avatar,gender:_pendingGender,stars:0});
+  dbSave(); renderSplash();
+  pickPlayer(name,avatar,_pendingGender);
+}
+
+/* ═══ AUDIO ═══ */
 let _ac=null;
 function ac(){return _ac||(_ac=new(window.AudioContext||window.webkitAudioContext)())}
-function tone(f,d,type='sine',vol=.26,t=0){const c=ac(),o=c.createOscillator(),g=c.createGain();o.connect(g);g.connect(c.destination);o.type=type;o.frequency.value=f;g.gain.setValueAtTime(vol,c.currentTime+t);g.gain.exponentialRampToValueAtTime(.001,c.currentTime+t+d);o.start(c.currentTime+t);o.stop(c.currentTime+t+d+.05)}
+function tone(f,d,type='sine',vol=.25,t=0){const c=ac(),o=c.createOscillator(),g=c.createGain();o.connect(g);g.connect(c.destination);o.type=type;o.frequency.value=f;g.gain.setValueAtTime(vol,c.currentTime+t);g.gain.exponentialRampToValueAtTime(.001,c.currentTime+t+d);o.start(c.currentTime+t);o.stop(c.currentTime+t+d+.05)}
 function sndCorrect(){[[523,0],[659,.11],[784,.22],[1047,.33]].forEach(([f,d])=>tone(f,.3,'sine',.25,d))}
 function sndWrong(){const c=ac(),o=c.createOscillator(),g=c.createGain();o.connect(g);g.connect(c.destination);o.type='sawtooth';o.frequency.setValueAtTime(300,c.currentTime);o.frequency.exponentialRampToValueAtTime(80,c.currentTime+.45);g.gain.setValueAtTime(.38,c.currentTime);g.gain.exponentialRampToValueAtTime(.001,c.currentTime+.5);o.start(c.currentTime);o.stop(c.currentTime+.55)}
 function sndClick(){tone(900,.07,'sine',.12)}
 function sndFanfare(){[[523,0,.12],[523,.1,.08],[523,.2,.08],[659,.3,.25],[587,.55,.08],[523,.63,.25],[784,.9,.5]].forEach(([f,d,l])=>tone(f,l,'sine',.28,d))}
 
-/* ── SPEECH ── */
+/* ═══ SPEECH ═══ */
 let _vx=[];
 function loadVoices(){_vx=speechSynthesis.getVoices()}
-speechSynthesis.onvoiceschanged=loadVoices;
-loadVoices();
-function getBestVoice(){
-  const v=_vx;
-  return v.find(x=>x.name.toLowerCase().includes('google')&&x.lang.startsWith('ur'))
-      || v.find(x=>x.lang.startsWith('ur'))
-      || v.find(x=>x.lang==='ur-PK')
-      || v.find(x=>x.lang.startsWith('hi'))  // Hindi fallback — close to Urdu
-      || null;
-}
-function speak(txt,slow=false){
-  speechSynthesis.cancel();
-  const u=new SpeechSynthesisUtterance(txt);
-  u.lang='ur-PK';u.rate=slow?.72:.86;u.pitch=1.05;u.volume=1;
-  const v=getBestVoice();if(v)u.voice=v;
-  speechSynthesis.speak(u);
-}
-const GOOD=['شاباش! بہت اچھا!','واہ! بہت خوب!','زبردست! کمال ہے!','واہ واہ! بہت ذہین ہو!','بہت شاندار!'];
-const BAD=['نہیں نہیں! دوبارہ کوشش کرو!','نہیں! ایک بار اور!','ارے نہیں! پھر سوچو!'];
-const rnd=a=>a[Math.floor(Math.random()*a.length)];
+speechSynthesis.onvoiceschanged=loadVoices; loadVoices();
+function getBestVoice(){const v=_vx;return v.find(x=>x.name.toLowerCase().includes('google')&&x.lang.startsWith('ur'))||v.find(x=>x.lang.startsWith('ur'))||v.find(x=>x.lang.startsWith('hi'))||null}
+function speak(txt,slow=false){speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(txt);u.lang='ur-PK';u.rate=slow?.75:.88;u.pitch=1.06;u.volume=1;const v=getBestVoice();if(v)u.voice=v;speechSynthesis.speak(u)}
 
-/* ── URDU Q PROMPT ── */
+const rnd=a=>a[Math.floor(Math.random()*a.length)];
+function goodPhrase(){
+  const f=S.gender==='f';
+  return rnd([
+    f?'شاباش بیٹی! بہت اچھی!':'شاباش بیٹا! بہت اچھے!',
+    f?'واہ! بہت خوب بیٹی!':'واہ! بہت خوب بیٹا!',
+    'زبردست! کمال ہے!',
+    f?'بہت ذہین بچی ہو تم!':'بہت ذہین بچے ہو تم!',
+    'واہ واہ! بہت شاندار!',
+    f?'تم بہت ہوشیار ہو!':'تم بہت ہوشیار ہو!',
+    f?'کمال کی بچی ہو!':'کمال کے بچے ہو!',
+    'بہت بہت شاباش!',
+    S.streak>=3?'لگاتار درست جواب! تم چیمپیئن ہو!':'بہت اچھا جواب!',
+    f?`${S.player}، تم نے کمال کر دیا!`:`${S.player}، تم نے کمال کر دیا!`,
+    'ایک اور صحیح جواب! بہترین!',
+    f?'بہت اچھی بیٹی!':'بہت اچھے بیٹے!',
+  ]);
+}
+function badPhrase(){
+  const f=S.gender==='f';
+  return rnd([
+    f?'نہیں بیٹی! دوبارہ کوشش کرو!':'نہیں بیٹا! دوبارہ کوشش کرو!',
+    'نہیں نہیں! ایک بار اور!',
+    f?'ارے نہیں بیٹی! پھر سوچو!':'ارے نہیں بیٹا! پھر سوچو!',
+    'ہمت رکھو! پھر کوشش کرو!',
+    'کوئی بات نہیں! دوبارہ سوچو!',
+    'نہیں! غور سے سوچو!',
+  ]);
+}
+
+/* ═══ URDU PROMPTS ═══ */
 function urduPrompt(world,q){
   const m={
     math:{comparison:'کون سا نمبر بڑا ہے؟',addition:`${q.a} جمع ${q.b} کتنا ہوتا ہے؟`,subtraction:`${q.a} منہا ${q.b} کتنا ہے؟`,multiplication:`${q.a} ضرب ${q.b} کتنا ہے؟`},
@@ -274,80 +382,109 @@ function urduPrompt(world,q){
     animal:'یہ کون سا جانور ہے؟',
     color:'یہ کون سا رنگ ہے؟',
     count:'کتنے نظر آ رہے ہیں؟ گنو اور بتاؤ۔',
+    scramble:'ان حروف سے کون سا لفظ بنتا ہے؟',
+    flags:'یہ کس ملک کا جھنڈا ہے؟',
+    shapes:'یہ کون سی شکل ہے؟',
+    memory:'کون سا تھا؟ یاد کرو!',
   };
   if(world==='math')return m.math[q.type]||'حساب کا سوال';
-  if(m[world])return m[world];
-  return q.urdu||'سوال کا جواب دو۔';
+  return m[world]||q.urdu||'سوال کا جواب دو۔';
 }
 function speakUrduQ(){
-  const q=S.qs[S.qi];if(!q)return;
+  const q=S.qs[S.qi]; if(!q)return;
   sndClick();
   const txt=urduPrompt(S.world,q);
-  el('urdu-tip').textContent=txt;
-  el('urdu-tip').classList.add('show');
+  el('urdu-tip').textContent=txt; el('urdu-tip').classList.add('show');
   speak(txt,true);
-  setTimeout(()=>el('urdu-tip').classList.remove('show'),4000);
+  setTimeout(()=>el('urdu-tip').classList.remove('show'),4500);
 }
 
-/* ── NAV ── */
+/* ═══ NAV ═══ */
 function go(id){document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));el(id).classList.add('active')}
-function pickPlayer(name,avatar){
-  sndClick();S.player=name;S.avatar=avatar;
+function pickPlayer(name,avatar,gender){
+  sndClick(); S.player=name; S.avatar=avatar; S.gender=gender||'m';
   S.easy=(name==='Khadija');
-  el('wb-av').textContent=avatar;el('wb-nm').textContent=name;el('wb-st').textContent=`⭐ ${DB[name].stars}`;
+  el('wb-av').textContent=avatar; el('wb-nm').textContent=name; el('wb-st').textContent=`⭐ ${playerStars(name)}`;
   updateDiffBadge();
-  speak(`${name}! خوش آمدید! چلو کھیلتے ہیں!`);go('scr-world');
+  const f=S.gender==='f';
+  speak(f?`${name}! خوش آمدید بیٹی! چلو کھیلتے ہیں!`:`${name}! خوش آمدید بیٹا! چلو کھیلتے ہیں!`);
+  go('scr-world');
 }
 function toggleDiff(){S.easy=!S.easy;updateDiffBadge();sndClick();speak(S.easy?'آسان طریقہ':'مشکل طریقہ')}
-function updateDiffBadge(){el('diff-badge').textContent=S.easy?'🟢 Easy Mode':'🔵 Normal Mode';el('diff-badge').style.background=S.easy?'rgba(67,233,123,.2)':'rgba(79,172,254,.2)';el('diff-badge').style.borderColor=S.easy?'rgba(67,233,123,.5)':'rgba(79,172,254,.4)'}
-function confirmBack(){if(confirm('Go back?')){speechSynthesis.cancel();go('scr-world')}}
+function updateDiffBadge(){const b=el('diff-badge');b.textContent=S.easy?'🟢 Easy Mode':'🔵 Normal Mode';b.style.background=S.easy?'rgba(67,233,123,.2)':'rgba(79,172,254,.2)';b.style.borderColor=S.easy?'rgba(67,233,123,.5)':'rgba(79,172,254,.4)'}
+function confirmBack(){if(confirm('Go back?')){if(_memTimer){clearInterval(_memTimer);_memTimer=null}speechSynthesis.cancel();go('scr-world')}}
 function playAgain(){startWorld(S.world)}
 
-/* ── PARTICLES ── */
+/* ═══ PARTICLES ═══ */
 (function(){const c=el('pts'),cols=['#FFD700','#FF69B4','#7DF9FF','#90EE90','#FFA07A','#DA70D6'];for(let i=0;i<26;i++){const p=document.createElement('div');p.className='pt';const s=3+Math.random()*7;p.style.cssText=`width:${s}px;height:${s}px;left:${Math.random()*100}vw;background:${cols[~~(Math.random()*cols.length)]};animation-duration:${9+Math.random()*13}s;animation-delay:-${Math.random()*18}s`;c.appendChild(p)}})();
 
-/* ── GAME ENGINE ── */
-function startWorld(w){sndClick();S.world=w;S.qi=0;S.tries=0;S.sStars=0;S.sCorrect=0;S.streak=0;S.qs=shuffle(getPool(w)).slice(0,CFG.totalQs);go('scr-game');el('g-name').textContent=`${S.avatar} ${S.player}`;el('g-stars').textContent=`⭐ ${DB[S.player].stars}`;renderDots();loadQ()}
+/* ═══ GAME ENGINE ═══ */
+function startWorld(w){
+  sndClick(); S.world=w; S.qi=0; S.tries=0; S.sStars=0; S.sCorrect=0; S.streak=0;
+  S.qs=shuffle(getPool(w)).slice(0,CFG.totalQs);
+  go('scr-game');
+  el('g-name').textContent=`${S.avatar} ${S.player}`;
+  el('g-stars').textContent=`⭐ ${playerStars(S.player)}`;
+  renderDots(); loadQ();
+  speak(worldGreet(w));
+}
+function worldGreet(w){
+  const f=S.gender==='f';
+  const map={math:f?'چلو ریاضی کھیلتے ہیں بیٹی!':'چلو ریاضی کھیلتے ہیں بیٹا!',spelling:'ہجے کا کھیل شروع!',quran:'قرآن کا سوال آ رہا ہے!',animal:'جانوروں کی دنیا!',color:'رنگوں کی دنیا!',count:'گنو اور بتاؤ!',pattern:'پیٹرن مکمل کرو!',odd:'الگ تلاش کرو!',riddle:'پہیلی سنو اور بتاؤ!',tf:'صحیح یا غلط بتاؤ!',missing:'خالی جگہ بھرو!',gk:'عام معلومات!',scramble:'حروف کو صحیح ترتیب میں لگاؤ!',flags:'جھنڈا پہچانو!',shapes:'شکل پہچانو!',memory:'یاد رکھو اور جواب دو!'};
+  return map[w]||'چلو شروع کرتے ہیں!';
+}
 function renderDots(){const c=el('g-dots');c.innerHTML='';for(let i=0;i<CFG.totalQs;i++){const d=document.createElement('div');d.className='dot'+(i<S.qi?' done':i===S.qi?' cur':'');c.appendChild(d)}}
 function loadQ(){
+  if(_memTimer){clearInterval(_memTimer);_memTimer=null}
   if(S.qi>=S.qs.length){endSession();return}
   S.tries=0;
-  el('trybar').classList.remove('show');
+  const tb=el('trybar');tb.className='trybar';tb.textContent='';
   el('urdu-tip').classList.remove('show');
-  el('qarabic').style.display='none';el('qarabic').textContent='';
+  el('qarabic').style.display='none'; el('qarabic').textContent='';
   el('qtext').className='qtext';
   renderDots();
   const q=S.qs[S.qi];
-  const renderers={math:rMath,spelling:rSpell,quran:rQuran,animal:rAnimal,color:rColor,count:rCount,pattern:rPattern,odd:rOdd,riddle:rRiddle,tf:rTF,missing:rMissing,gk:rGK};
-  renderers[S.world](q);
+  ({math:rMath,spelling:rSpell,quran:rQuran,animal:rAnimal,color:rColor,count:rCount,
+    pattern:rPattern,odd:rOdd,riddle:rRiddle,tf:rTF,missing:rMissing,gk:rGK,
+    scramble:rScramble,flags:rFlags,shapes:rShapes,memory:rMemory})[S.world](q);
 }
 function handleAns(btn,chosen,answer){
   const ok=String(chosen).trim()===String(answer).trim();
   if(ok){
-    btn.classList.add('correct','pop');sndCorrect();speak(rnd(GOOD));
-    S.streak++;S.sCorrect++;S.sStars++;DB[S.player].stars++;dbSave();refreshBadges();
-    el('g-stars').textContent=`⭐ ${DB[S.player].stars}`;el('wb-st').textContent=`⭐ ${DB[S.player].stars}`;
-    mascotReact('🤩');showOv(true);
+    btn.classList.add('correct','pop'); sndCorrect(); speak(goodPhrase());
+    S.streak++; S.sCorrect++; S.sStars++; addStar();
+    el('g-stars').textContent=`⭐ ${playerStars(S.player)}`;
+    el('wb-st').textContent=`⭐ ${playerStars(S.player)}`;
+    mascotReact('🤩'); showOv(true);
     setTimeout(()=>{hideOv();S.qi++;loadQ()},1600);
   } else {
-    S.tries++;S.streak=0;btn.classList.add('wrong','shake');sndWrong();speak(rnd(BAD));mascotReact('😅');
+    S.tries++; S.streak=0; btn.classList.add('wrong','shake'); sndWrong(); speak(badPhrase()); mascotReact('😅');
     if(S.tries>=CFG.maxTries){showOv(false);setTimeout(()=>{hideOv();S.qi++;loadQ()},1700)}
-    else{el('tryleft').textContent=CFG.maxTries-S.tries;el('trybar').classList.add('show')}
+    else{const tb=el('trybar');tb.className='trybar show';tb.textContent=`❌ Try again! ${CFG.maxTries-S.tries} tries left!`}
   }
 }
-function endSession(){sndFanfare();speak('واہ! تم نے سب سوال مکمل کر لیے! بہت اچھے بچے ہو!');spawnConfetti(55);el('c-cor').textContent=`${S.sCorrect}/${CFG.totalQs}`;el('c-earn').textContent=S.sStars;el('c-tot').textContent=DB[S.player].stars;go('scr-complete')}
+function endSession(){
+  sndFanfare();
+  const f=S.gender==='f';
+  speak(f?`واہ ${S.player}! تم نے سب سوال مکمل کر لیے! بہت اچھی بچی ہو!`:`واہ ${S.player}! تم نے سب سوال مکمل کر لیے! بہت اچھے بچے ہو!`);
+  spawnConfetti(55);
+  el('c-cor').textContent=`${S.sCorrect}/${CFG.totalQs}`;
+  el('c-earn').textContent=S.sStars;
+  el('c-tot').textContent=playerStars(S.player);
+  go('scr-complete');
+}
 
-/* ── OVERLAY & CONFETTI ── */
+/* ═══ OVERLAY & CONFETTI ═══ */
 function showOv(ok){el('ov-e').textContent=ok?(S.streak>=3?'🔥':'⭐'):'💪';el('ov-t').textContent=ok?(S.streak>=3?`🔥 ${S.streak} in a row!`:'Correct! +1 Star ⭐'):"Let's try next one! 💪";el('overlay').classList.add('on');if(ok)spawnConfetti(22)}
 function hideOv(){el('overlay').classList.remove('on')}
 function spawnConfetti(n=30){const cols=['#FFD700','#FF5858','#43E97B','#4FACFE','#F093FB','#FDA085','#fff'];for(let i=0;i<n;i++){const p=document.createElement('div');p.className='cf';const s=5+Math.random()*9;p.style.cssText=`left:${Math.random()*100}vw;top:-8px;width:${s}px;height:${s}px;background:${rnd(cols)};border-radius:${Math.random()>.5?'50%':'3px'};animation-duration:${1.1+Math.random()*1.3}s;animation-delay:${Math.random()*.4}s`;document.body.appendChild(p);setTimeout(()=>p.remove(),3000)}}
 function mascotReact(e){const m=el('mascot');m.textContent=e;m.classList.add('react');setTimeout(()=>{m.textContent='🦉';m.classList.remove('react')},1500)}
 
-/* ── RENDERERS ── */
+/* ═══ RENDERERS ═══ */
 function setV(h){el('qvisual').innerHTML=h}
 function renderOpts(opts,answer,cls=''){
   const g=el('opts');g.innerHTML='';g.className='opts'+(cls?' '+cls:'');
-  shuffle([...opts]).forEach(o=>{const b=document.createElement('button');b.className='opt';b.textContent=o;b.dataset.v=o;b.onclick=()=>handleAns(b,o,answer);g.appendChild(b)});
+  shuffle([...opts]).forEach(o=>{const b=document.createElement('button');b.className='opt';b.textContent=o;b.onclick=()=>handleAns(b,o,answer);g.appendChild(b)});
 }
 function wikiImg(kw,cid,fb){fetch(`https://en.wikipedia.org/api/rest_v1/page/summary/${encodeURIComponent(kw)}`).then(r=>r.json()).then(d=>{const src=d.thumbnail?.source,box=el(cid);if(src&&box)box.innerHTML=`<img class="qimg" src="${src}" alt="${kw}" onerror="this.parentElement.textContent='${fb}'">`}).catch(()=>{})}
 
@@ -357,53 +494,82 @@ function rQuran(q){setV(`<div class="qemoji">📖</div>`);el('qtext').textConten
 function rAnimal(q){el('qtext').textContent='What animal is this? 🤔';setV(`<div class="qimgbox" id="aimg">${q.emoji}</div>`);wikiImg(q.keyword,'aimg',q.emoji);renderOpts(q.opts,q.answer)}
 function rColor(q){el('qtext').textContent='What color is this? 🎨';setV(`<div class="colordisk" style="background:${q.hex}"></div>`);renderOpts(q.opts,q.answer)}
 function rCount(q){el('qtext').textContent='How many can you see? 👀';const items=Array(q.count).fill(q.emoji).map(e=>`<span class="citem">${e}</span>`).join('');setV(`<div class="countgrid">${items}</div>`);renderOpts(q.opts,q.count)}
-
-function rPattern(q){
-  el('qtext').textContent='What comes next?';
-  const items=q.seq.map((x,i)=>`<span class="patitem${x==='?'?' patblank':''}">${x==='?'?'?':x}</span>`).join('');
-  setV(`<div class="patrow">${items}</div>`);
-  renderOpts(q.opts,q.answer);
-}
-function rOdd(q){
-  setV(`<div class="qemoji">🤔</div>`);
-  el('qtext').textContent='Which one does NOT belong?';
-  renderOpts(q.items,q.answer);
-}
-function rRiddle(q){
-  setV(`<div class="qemoji">🕵️</div>`);
-  el('qtext').className='qtext small';
-  el('qtext').textContent=q.q;
-  renderOpts(q.opts,q.answer);
-}
+function rPattern(q){el('qtext').textContent='What comes next?';const items=q.seq.map(x=>`<span class="patitem${x==='?'?' patblank':''}">${x==='?'?'?':x}</span>`).join('');setV(`<div class="patrow">${items}</div>`);renderOpts(q.opts,q.answer)}
+function rOdd(q){setV(`<div class="qemoji">🤔</div>`);el('qtext').textContent='Which one does NOT belong?';renderOpts(q.items,q.answer)}
+function rRiddle(q){setV(`<div class="qemoji">🕵️</div>`);el('qtext').className='qtext small';el('qtext').textContent=q.q;renderOpts(q.opts,q.answer)}
 function rTF(q){
-  setV(`<div class="qemoji">🤔</div>`);
-  el('qtext').textContent=q.stmt;
-  const g=el('opts');g.innerHTML='';g.className='opts tf-opts';
-  [['TRUE ✅','TRUE','tf-true'],['FALSE ❌','FALSE','tf-false']].forEach(([label,val,cls])=>{
-    const b=document.createElement('button');b.className=`opt ${cls}`;b.textContent=label;b.dataset.v=val;b.onclick=()=>handleAns(b,val,q.answer);g.appendChild(b);
-  });
+  setV(`<div class="qemoji">🤔</div>`);el('qtext').textContent=q.stmt;
+  const g=el('opts');g.innerHTML='';g.className='opts';
+  [['TRUE ✅','TRUE','tf-true'],['FALSE ❌','FALSE','tf-false']].forEach(([lbl,val,cls])=>{const b=document.createElement('button');b.className=`opt ${cls}`;b.textContent=lbl;b.onclick=()=>handleAns(b,val,q.answer);g.appendChild(b)});
 }
-function rMissing(q){
-  el('qtext').textContent='Fill in the missing number:';
-  const items=q.seq.map(x=>`<span class="misitem${x==='?'?' misblank':''}">${x}</span>${x!==q.seq[q.seq.length-1]?'<span class="misarrow">→</span>':''}`).join('');
-  setV(`<div class="misrow">${items}</div>`);
+function rMissing(q){el('qtext').textContent='Fill in the missing number:';const items=q.seq.map((x,i)=>`<span class="misitem${x==='?'?' misblank':''}">${x}</span>${i<q.seq.length-1?'<span class="misarrow">→</span>':''}`).join('');setV(`<div class="misrow">${items}</div>`);renderOpts(q.opts,q.answer)}
+function rGK(q){setV(`<div class="qemoji">🌍</div>`);el('qtext').textContent=q.q;renderOpts(q.opts,q.answer)}
+
+function rScramble(q){
+  el('qtext').textContent='What word do these letters make?';
+  const tiles=q.letters.split('').map(l=>`<div class="stile">${l}</div>`).join('');
+  setV(`<div class="scramble-tiles">${tiles}</div>`);
   renderOpts(q.opts,q.answer);
 }
-function rGK(q){
-  setV(`<div class="qemoji">🌍</div>`);
-  el('qtext').textContent=q.q;
+function rFlags(q){
+  el('qtext').textContent='Which country is this flag? 🤔';
+  setV(`<div class="flag-display">${q.flag}</div>`);
   renderOpts(q.opts,q.answer);
+}
+function rShapes(q){
+  el('qtext').textContent='What shape is this?';
+  setV(`<div class="shape-wrap">${shapeSVG(q.shape,q.color)}</div>`);
+  renderOpts(q.opts,q.answer);
+}
+function rMemory(q){
+  if(_memTimer){clearInterval(_memTimer);_memTimer=null}
+  el('opts').innerHTML='';
+  el('qtext').textContent='👀 Look carefully! Remember!';
+  const grid=q.items.map(e=>`<span class="memitem">${e}</span>`).join('');
+  setV(`<div class="memgrid">${grid}</div>`);
+  const tb=el('trybar');tb.className='trybar info show';
+  let countdown=3;
+  tb.textContent=`⏰ Remembering... ${countdown}`;
+  _memTimer=setInterval(()=>{
+    countdown--;
+    if(countdown>0){tb.textContent=`⏰ Remembering... ${countdown}`}
+    else{
+      clearInterval(_memTimer);_memTimer=null;
+      setV(`<div class="memgrid">${q.items.map(()=>`<span class="memitem memhide">❓</span>`).join('')}</div>`);
+      el('qtext').textContent=`What was the ${q.posLabel} one? 🤔`;
+      tb.className='trybar';
+      renderOpts(q.opts,q.answer);
+    }
+  },1000);
 }
 
-/* ── DATA ── */
+/* shape SVG helper */
+function shapeSVG(shape,color){
+  const s={
+    circle:`<circle cx="100" cy="100" r="90" fill="${color}"/>`,
+    square:`<rect x="10" y="10" width="180" height="180" rx="8" fill="${color}"/>`,
+    triangle:`<polygon points="100,8 192,188 8,188" fill="${color}"/>`,
+    rectangle:`<rect x="5" y="45" width="190" height="110" rx="8" fill="${color}"/>`,
+    star:`<polygon points="100,5 122,72 195,72 137,118 159,185 100,140 41,185 63,118 5,72 78,72" fill="${color}"/>`,
+    heart:`<path d="M100,170 C60,140 15,110 15,65 C15,35 40,12 68,12 C84,12 100,28 100,28 C100,28 116,12 132,12 C160,12 185,35 185,65 C185,110 140,140 100,170Z" fill="${color}"/>`,
+    diamond:`<polygon points="100,8 192,100 100,192 8,100" fill="${color}"/>`,
+    pentagon:`<polygon points="100,8 190,72 155,185 45,185 10,72" fill="${color}"/>`,
+    hexagon:`<polygon points="50,8 150,8 195,100 150,192 50,192 5,100" fill="${color}"/>`,
+    oval:`<ellipse cx="100" cy="100" rx="92" ry="58" fill="${color}"/>`,
+  };
+  return `<svg width="180" height="200" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">${s[shape]||''}</svg>`;
+}
+
+/* ═══ QUESTION POOLS ═══ */
 function getPool(w){
   if(S.easy){
-    const e={math:MATH_E,spelling:SPELL_E,quran:QURAN,animal:ANIMAL,color:COLOR,count:COUNT_E,pattern:PATTERN_E,odd:ODD_E,riddle:RIDDLE_E,tf:TF_E,missing:MISSING_E,gk:GK_E};
+    const e={math:MATH_E,spelling:SPELL_E,quran:QURAN,animal:ANIMAL,color:COLOR,count:COUNT_E,pattern:PATTERN_E,odd:ODD_E,riddle:RIDDLE_E,tf:TF_E,missing:MISSING_E,gk:GK_E,scramble:SCRAMBLE_E,flags:FLAGS,shapes:SHAPES,memory:MEMORY};
     return e[w]||[];
   }
-  return{math:MATH,spelling:SPELL,quran:QURAN,animal:ANIMAL,color:COLOR,count:COUNT,pattern:PATTERN,odd:ODD,riddle:RIDDLE,tf:TF,missing:MISSING,gk:GK}[w]||[];
+  return{math:MATH,spelling:SPELL,quran:QURAN,animal:ANIMAL,color:COLOR,count:COUNT,pattern:PATTERN,odd:ODD,riddle:RIDDLE,tf:TF,missing:MISSING,gk:GK,scramble:SCRAMBLE,flags:FLAGS,shapes:SHAPES,memory:MEMORY}[w]||[];
 }
 
+/* ═══ DATA ═══ */
 const MATH=[
   {type:'comparison',a:400,b:500,answer:500},{type:'comparison',a:200,b:300,answer:300},{type:'comparison',a:700,b:600,answer:700},{type:'comparison',a:150,b:250,answer:250},{type:'comparison',a:80,b:90,answer:90},{type:'comparison',a:55,b:45,answer:55},{type:'comparison',a:999,b:1000,answer:1000},{type:'comparison',a:33,b:23,answer:33},
   {type:'addition',a:300,b:200,answer:500,opts:[400,500,600,700]},{type:'addition',a:10,b:20,answer:30,opts:[20,30,40,50]},{type:'addition',a:100,b:200,answer:300,opts:[200,300,400,500]},{type:'addition',a:50,b:50,answer:100,opts:[80,90,100,110]},{type:'addition',a:25,b:25,answer:50,opts:[40,45,50,55]},{type:'addition',a:40,b:30,answer:70,opts:[60,70,80,90]},{type:'addition',a:200,b:400,answer:600,opts:[500,600,700,800]},{type:'addition',a:60,b:40,answer:100,opts:[80,100,120,140]},{type:'addition',a:500,b:500,answer:1000,opts:[800,900,1000,1100]},{type:'addition',a:7,b:8,answer:15,opts:[13,14,15,16]},
@@ -412,241 +578,107 @@ const MATH=[
 ];
 MATH.filter(q=>q.type==='comparison').forEach(q=>q.opts=[q.a,q.b]);
 
-const SPELL=[
-  {keyword:'cat',emoji:'🐱',display:'C _ T',opts:['A','O','U','E'],answer:'A'},{keyword:'dog',emoji:'🐶',display:'D _ G',opts:['A','O','I','U'],answer:'O'},{keyword:'sun',emoji:'☀️',display:'S _ N',opts:['O','U','A','I'],answer:'U'},{keyword:'hat',emoji:'🎩',display:'H _ T',opts:['A','O','E','I'],answer:'A'},{keyword:'cup',emoji:'☕',display:'C _ P',opts:['A','U','O','I'],answer:'U'},{keyword:'bed',emoji:'🛏️',display:'B _ D',opts:['A','E','O','I'],answer:'E'},{keyword:'duck',emoji:'🦆',display:'D U _ K',opts:['C','K','S','T'],answer:'C'},{keyword:'fish',emoji:'🐟',display:'F I _ H',opts:['S','C','T','P'],answer:'S'},{keyword:'frog',emoji:'🐸',display:'F R _ G',opts:['O','A','E','U'],answer:'O'},{keyword:'tree',emoji:'🌳',display:'T R _ E',opts:['E','A','I','O'],answer:'E'},{keyword:'ant',emoji:'🐜',display:'A _ T',opts:['N','M','P','D'],answer:'N'},{keyword:'pen',emoji:'✏️',display:'P _ N',opts:['E','A','I','O'],answer:'E'},{keyword:'bus',emoji:'🚌',display:'B _ S',opts:['U','A','I','O'],answer:'U'},{keyword:'hen',emoji:'🐔',display:'H _ N',opts:['E','A','I','O'],answer:'E'},{keyword:'cow',emoji:'🐄',display:'C _ W',opts:['O','A','E','U'],answer:'O'},{keyword:'fox',emoji:'🦊',display:'F _ X',opts:['O','A','E','U'],answer:'O'},{keyword:'owl',emoji:'🦉',display:'_ W L',opts:['O','A','E','I'],answer:'O'},{keyword:'ball',emoji:'⚽',display:'B _ L L',opts:['A','O','E','U'],answer:'A'},{keyword:'milk',emoji:'🥛',display:'M I L _',opts:['K','C','G','T'],answer:'K'},{keyword:'ship',emoji:'🚢',display:'S H I _',opts:['P','B','T','D'],answer:'P'},{keyword:'rain',emoji:'🌧️',display:'R _ I N',opts:['A','O','E','U'],answer:'A'},{keyword:'star',emoji:'⭐',display:'S T _ R',opts:['A','O','E','U'],answer:'A'},{keyword:'apple',emoji:'🍎',display:'_ P P L E',opts:['A','O','I','U'],answer:'A'},{keyword:'bee',emoji:'🐝',display:'B _ E',opts:['E','A','I','O'],answer:'E'},{keyword:'lion',emoji:'🦁',display:'L I _ N',opts:['O','A','E','U'],answer:'O'},{keyword:'rose',emoji:'🌹',display:'R _ S E',opts:['O','A','E','U'],answer:'O'},{keyword:'cake',emoji:'🎂',display:'C _ K E',opts:['A','O','U','I'],answer:'A'},{keyword:'bird',emoji:'🐦',display:'B I R _',opts:['D','T','G','P'],answer:'D'},
+const MATH_E=[
+  {type:'comparison',a:3,b:5,answer:5},{type:'comparison',a:8,b:4,answer:8},{type:'comparison',a:2,b:7,answer:7},{type:'comparison',a:10,b:6,answer:10},{type:'comparison',a:1,b:9,answer:9},
+  {type:'addition',a:1,b:2,answer:3,opts:[2,3,4,5]},{type:'addition',a:2,b:3,answer:5,opts:[4,5,6,7]},{type:'addition',a:3,b:3,answer:6,opts:[5,6,7,8]},{type:'addition',a:4,b:2,answer:6,opts:[5,6,7,8]},{type:'addition',a:5,b:5,answer:10,opts:[8,9,10,11]},{type:'addition',a:2,b:2,answer:4,opts:[3,4,5,6]},{type:'addition',a:1,b:4,answer:5,opts:[4,5,6,7]},{type:'addition',a:3,b:4,answer:7,opts:[6,7,8,9]},{type:'addition',a:1,b:1,answer:2,opts:[1,2,3,4]},{type:'addition',a:4,b:4,answer:8,opts:[7,8,9,10]},
 ];
+MATH_E.filter(q=>q.type==='comparison').forEach(q=>q.opts=[q.a,q.b]);
+
+const SPELL=[
+  {keyword:'cat',emoji:'🐱',display:'C _ T',opts:['A','O','U','E'],answer:'A'},{keyword:'dog',emoji:'🐶',display:'D _ G',opts:['A','O','I','U'],answer:'O'},{keyword:'sun',emoji:'☀️',display:'S _ N',opts:['O','U','A','I'],answer:'U'},{keyword:'hat',emoji:'🎩',display:'H _ T',opts:['A','O','E','I'],answer:'A'},{keyword:'cup',emoji:'☕',display:'C _ P',opts:['A','U','O','I'],answer:'U'},{keyword:'bed',emoji:'🛏️',display:'B _ D',opts:['A','E','O','I'],answer:'E'},{keyword:'duck',emoji:'🦆',display:'D U _ K',opts:['C','K','S','T'],answer:'C'},{keyword:'fish',emoji:'🐟',display:'F I _ H',opts:['S','C','T','P'],answer:'S'},{keyword:'frog',emoji:'🐸',display:'F R _ G',opts:['O','A','E','U'],answer:'O'},{keyword:'tree',emoji:'🌳',display:'T R _ E',opts:['E','A','I','O'],answer:'E'},{keyword:'ant',emoji:'🐜',display:'A _ T',opts:['N','M','P','D'],answer:'N'},{keyword:'pen',emoji:'✏️',display:'P _ N',opts:['E','A','I','O'],answer:'E'},{keyword:'bus',emoji:'🚌',display:'B _ S',opts:['U','A','I','O'],answer:'U'},{keyword:'hen',emoji:'🐔',display:'H _ N',opts:['E','A','I','O'],answer:'E'},{keyword:'cow',emoji:'🐄',display:'C _ W',opts:['O','A','E','U'],answer:'O'},{keyword:'fox',emoji:'🦊',display:'F _ X',opts:['O','A','E','U'],answer:'O'},{keyword:'owl',emoji:'🦉',display:'_ W L',opts:['O','A','E','I'],answer:'O'},{keyword:'ball',emoji:'⚽',display:'B _ L L',opts:['A','O','E','U'],answer:'A'},{keyword:'milk',emoji:'🥛',display:'M I L _',opts:['K','C','G','T'],answer:'K'},{keyword:'ship',emoji:'🚢',display:'S H I _',opts:['P','B','T','D'],answer:'P'},{keyword:'rain',emoji:'🌧️',display:'R _ I N',opts:['A','O','E','U'],answer:'A'},{keyword:'star',emoji:'⭐',display:'S T _ R',opts:['A','O','E','U'],answer:'A'},{keyword:'lion',emoji:'🦁',display:'L I _ N',opts:['O','A','E','U'],answer:'O'},{keyword:'cake',emoji:'🎂',display:'C _ K E',opts:['A','O','U','I'],answer:'A'},{keyword:'bird',emoji:'🐦',display:'B I R _',opts:['D','T','G','P'],answer:'D'},
+];
+const SPELL_E=SPELL.filter(q=>q.display.split('_').length===2); // only 1 missing letter
 
 const QURAN=[
   {ayah:'قُلْ هُوَ اللَّهُ أَحَدٌ',answer:'Al-Ikhlas',opts:['Al-Ikhlas','Al-Falaq','An-Nas','Al-Kawthar']},{ayah:'قُلْ أَعُوذُ بِرَبِّ الْفَلَقِ',answer:'Al-Falaq',opts:['Al-Falaq','An-Nas','Al-Ikhlas','Al-Asr']},{ayah:'قُلْ أَعُوذُ بِرَبِّ النَّاسِ',answer:'An-Nas',opts:['An-Nas','Al-Falaq','Al-Ikhlas','Al-Kawthar']},{ayah:'إِنَّا أَعْطَيْنَاكَ الْكَوْثَرَ',answer:'Al-Kawthar',opts:['Al-Kawthar','Al-Maun','Al-Fil','Al-Asr']},{ayah:'وَالْعَصْرِ',answer:'Al-Asr',opts:['Al-Asr','Al-Kawthar','Al-Fil','Al-Maun']},{ayah:'أَلَمْ تَرَ كَيْفَ فَعَلَ رَبُّكَ بِأَصْحَابِ الْفِيلِ',answer:'Al-Fil',opts:['Al-Fil','Al-Maun','Al-Asr','Al-Kawthar']},{ayah:'الْحَمْدُ لِلَّهِ رَبِّ الْعَالَمِينَ',answer:'Al-Fatiha',opts:['Al-Fatiha','Al-Ikhlas','Al-Falaq','An-Nas']},{ayah:'أَرَأَيْتَ الَّذِي يُكَذِّبُ بِالدِّينِ',answer:'Al-Maun',opts:['Al-Maun','Al-Fil','Al-Asr','Al-Kawthar']},{ayah:'لِإِيلَافِ قُرَيْشٍ',answer:'Al-Quraish',opts:['Al-Quraish','Al-Fil','Al-Maun','Al-Asr']},{ayah:'إِذَا جَاءَ نَصْرُ اللَّهِ وَالْفَتْحُ',answer:'An-Nasr',opts:['An-Nasr','Al-Kawthar','Al-Fil','Al-Asr']},{ayah:'تَبَّتْ يَدَا أَبِي لَهَبٍ وَتَبَّ',answer:'Al-Masad',opts:['Al-Masad','Al-Fil','An-Nasr','Al-Quraish']},{ayah:'قُلْ يَا أَيُّهَا الْكَافِرُونَ',answer:'Al-Kafirun',opts:['Al-Kafirun','An-Nas','Al-Ikhlas','Al-Falaq']},{ayah:'وَيْلٌ لِّكُلِّ هُمَزَةٍ لُّمَزَةٍ',answer:'Al-Humazah',opts:['Al-Humazah','Al-Masad','Al-Quraish','Al-Fil']},
 ];
-
 const ANIMAL=[
-  {keyword:'lion',emoji:'🦁',answer:'Lion',opts:['Lion','Tiger','Leopard','Cheetah']},{keyword:'elephant',emoji:'🐘',answer:'Elephant',opts:['Elephant','Hippo','Rhino','Giraffe']},{keyword:'giraffe',emoji:'🦒',answer:'Giraffe',opts:['Giraffe','Zebra','Horse','Camel']},{keyword:'zebra',emoji:'🦓',answer:'Zebra',opts:['Zebra','Horse','Donkey','Giraffe']},{keyword:'penguin',emoji:'🐧',answer:'Penguin',opts:['Penguin','Duck','Swan','Flamingo']},{keyword:'butterfly',emoji:'🦋',answer:'Butterfly',opts:['Butterfly','Moth','Bee','Dragonfly']},{keyword:'rabbit',emoji:'🐰',answer:'Rabbit',opts:['Rabbit','Squirrel','Mouse','Cat']},{keyword:'parrot',emoji:'🦜',answer:'Parrot',opts:['Parrot','Eagle','Crow','Pigeon']},{keyword:'camel',emoji:'🐪',answer:'Camel',opts:['Camel','Horse','Donkey','Buffalo']},{keyword:'peacock',emoji:'🦚',answer:'Peacock',opts:['Peacock','Turkey','Parrot','Eagle']},{keyword:'dolphin',emoji:'🐬',answer:'Dolphin',opts:['Dolphin','Shark','Whale','Fish']},{keyword:'owl',emoji:'🦉',answer:'Owl',opts:['Owl','Eagle','Parrot','Crow']},{keyword:'crocodile',emoji:'🐊',answer:'Crocodile',opts:['Crocodile','Lizard','Snake','Turtle']},{keyword:'horse',emoji:'🐴',answer:'Horse',opts:['Horse','Zebra','Donkey','Camel']},{keyword:'sheep',emoji:'🐑',answer:'Sheep',opts:['Sheep','Goat','Cow','Deer']},{keyword:'tiger',emoji:'🐯',answer:'Tiger',opts:['Tiger','Lion','Leopard','Cheetah']},{keyword:'flamingo',emoji:'🦩',answer:'Flamingo',opts:['Flamingo','Parrot','Swan','Crane']},{keyword:'kangaroo',emoji:'🦘',answer:'Kangaroo',opts:['Kangaroo','Wallaby','Rabbit','Deer']},
+  {keyword:'lion',emoji:'🦁',answer:'Lion',opts:['Lion','Tiger','Leopard','Cheetah']},{keyword:'elephant',emoji:'🐘',answer:'Elephant',opts:['Elephant','Hippo','Rhino','Giraffe']},{keyword:'giraffe',emoji:'🦒',answer:'Giraffe',opts:['Giraffe','Zebra','Horse','Camel']},{keyword:'zebra',emoji:'🦓',answer:'Zebra',opts:['Zebra','Horse','Donkey','Giraffe']},{keyword:'penguin',emoji:'🐧',answer:'Penguin',opts:['Penguin','Duck','Swan','Flamingo']},{keyword:'butterfly',emoji:'🦋',answer:'Butterfly',opts:['Butterfly','Moth','Bee','Dragonfly']},{keyword:'rabbit',emoji:'🐰',answer:'Rabbit',opts:['Rabbit','Squirrel','Mouse','Cat']},{keyword:'parrot',emoji:'🦜',answer:'Parrot',opts:['Parrot','Eagle','Crow','Pigeon']},{keyword:'camel',emoji:'🐪',answer:'Camel',opts:['Camel','Horse','Donkey','Buffalo']},{keyword:'peacock',emoji:'🦚',answer:'Peacock',opts:['Peacock','Turkey','Parrot','Eagle']},{keyword:'dolphin',emoji:'🐬',answer:'Dolphin',opts:['Dolphin','Shark','Whale','Fish']},{keyword:'owl',emoji:'🦉',answer:'Owl',opts:['Owl','Eagle','Parrot','Crow']},{keyword:'crocodile',emoji:'🐊',answer:'Crocodile',opts:['Crocodile','Lizard','Snake','Turtle']},{keyword:'horse',emoji:'🐴',answer:'Horse',opts:['Horse','Zebra','Donkey','Camel']},{keyword:'tiger',emoji:'🐯',answer:'Tiger',opts:['Tiger','Lion','Leopard','Cheetah']},{keyword:'flamingo',emoji:'🦩',answer:'Flamingo',opts:['Flamingo','Parrot','Swan','Crane']},{keyword:'kangaroo',emoji:'🦘',answer:'Kangaroo',opts:['Kangaroo','Wallaby','Rabbit','Deer']},
 ];
-
 const COLOR=[
   {hex:'#E62020',answer:'Red',opts:['Red','Blue','Pink','Orange']},{hex:'#1565C0',answer:'Blue',opts:['Green','Blue','Purple','Black']},{hex:'#2E7D32',answer:'Green',opts:['Yellow','Green','Blue','Brown']},{hex:'#F9A825',answer:'Yellow',opts:['Yellow','Orange','White','Pink']},{hex:'#E65100',answer:'Orange',opts:['Red','Yellow','Orange','Pink']},{hex:'#6A1B9A',answer:'Purple',opts:['Purple','Blue','Pink','Brown']},{hex:'#E91E8C',answer:'Pink',opts:['Red','Pink','Purple','Orange']},{hex:'#5D4037',answer:'Brown',opts:['Black','Brown','Orange','Red']},{hex:'#111111',answer:'Black',opts:['Black','Brown','Blue','Purple']},{hex:'#F5F5F5',answer:'White',opts:['White','Yellow','Pink','Grey']},{hex:'#757575',answer:'Grey',opts:['Grey','White','Black','Blue']},{hex:'#00838F',answer:'Teal',opts:['Teal','Blue','Green','Purple']},
 ];
-
 const COUNT=[];
 ['⭐','🍎','🌸','🎈','🦋','🍭','🐟','🏀','🌻','🍌'].forEach(em=>{for(let n=2;n<=12;n++){const w=shuffle([n-1,n+1,n+2,n-2].filter(x=>x>0&&x!==n)).slice(0,3);COUNT.push({emoji:em,count:n,opts:shuffle([n,...w])})}});
+const COUNT_E=COUNT.filter(q=>q.count<=5);
 
 const PATTERN=[
-  {seq:['🔴','🔵','🔴','🔵','🔴','?'],answer:'🔵',opts:['🔵','🟢','🟡','🔴'],urdu:'اگلا رنگ کیا آئے گا؟'},
-  {seq:['🟡','🟢','🟡','🟢','🟡','?'],answer:'🟢',opts:['🟡','🟢','🔴','🔵'],urdu:'اگلا کیا ہے؟'},
-  {seq:['⭐','🌙','⭐','🌙','⭐','?'],answer:'🌙',opts:['⭐','🌙','☀️','🌟'],urdu:'اگلا کیا آئے گا؟'},
-  {seq:['🐱','🐶','🐱','🐶','🐱','?'],answer:'🐶',opts:['🐱','🐶','🐸','🐰'],urdu:'اگلا کیا ہے؟'},
-  {seq:['🍎','🍌','🍎','🍌','🍎','?'],answer:'🍌',opts:['🍎','🍌','🍊','🍇'],urdu:'اگلا کیا آئے گا؟'},
-  {seq:['🔴','🔵','🟢','🔴','🔵','?'],answer:'🟢',opts:['🔴','🔵','🟢','🟡'],urdu:'تین کا پیٹرن ہے۔ اگلا کیا ہے؟'},
-  {seq:['2','4','6','8','?'],answer:'10',opts:['9','10','11','12'],urdu:'جوڑے والے نمبر۔ اگلا کیا ہے؟'},
-  {seq:['5','10','15','20','?'],answer:'25',opts:['22','23','24','25'],urdu:'پانچ پانچ بڑھ رہے ہیں۔ اگلا کیا ہے؟'},
-  {seq:['1','3','5','7','?'],answer:'9',opts:['8','9','10','11'],urdu:'طاق نمبر۔ اگلا کیا ہے؟'},
-  {seq:['10','20','30','40','?'],answer:'50',opts:['45','50','55','60'],urdu:'دس دس بڑھ رہے ہیں۔ اگلا کیا ہے؟'},
-  {seq:['100','200','300','400','?'],answer:'500',opts:['400','450','500','600'],urdu:'سو سو بڑھ رہے ہیں۔ اگلا کیا ہے؟'},
-  {seq:['3','6','9','12','?'],answer:'15',opts:['13','14','15','16'],urdu:'تین کا پہاڑہ۔ اگلا کیا ہے؟'},
-  {seq:['2','4','8','16','?'],answer:'32',opts:['24','30','32','34'],urdu:'دوگنا ہو رہا ہے۔ اگلا کیا ہے؟'},
-  {seq:['30','25','20','15','?'],answer:'10',opts:['8','10','12','13'],urdu:'پانچ پانچ کم ہو رہے ہیں۔ اگلا کیا ہے؟'},
-  {seq:['🔺','🔷','🔺','🔷','?'],answer:'🔺',opts:['🔺','🔷','⭐','🔴'],urdu:'اگلا کیا آئے گا؟'},
+  {seq:['🔴','🔵','🔴','🔵','🔴','?'],answer:'🔵',opts:['🔵','🟢','🟡','🔴'],urdu:'اگلا رنگ کیا آئے گا؟'},{seq:['🟡','🟢','🟡','🟢','🟡','?'],answer:'🟢',opts:['🟡','🟢','🔴','🔵'],urdu:'اگلا کیا ہے؟'},{seq:['⭐','🌙','⭐','🌙','⭐','?'],answer:'🌙',opts:['⭐','🌙','☀️','🌟'],urdu:'اگلا کیا آئے گا؟'},{seq:['🐱','🐶','🐱','🐶','🐱','?'],answer:'🐶',opts:['🐱','🐶','🐸','🐰'],urdu:'اگلا کیا ہے؟'},{seq:['🔴','🔵','🟢','🔴','🔵','?'],answer:'🟢',opts:['🔴','🔵','🟢','🟡'],urdu:'تین کا پیٹرن ہے۔ اگلا کیا ہے؟'},
+  {seq:['2','4','6','8','?'],answer:'10',opts:['9','10','11','12'],urdu:'جوڑے والے نمبر۔ اگلا کیا ہے؟'},{seq:['5','10','15','20','?'],answer:'25',opts:['22','23','24','25'],urdu:'پانچ پانچ بڑھ رہے ہیں۔'},{seq:['1','3','5','7','?'],answer:'9',opts:['8','9','10','11'],urdu:'طاق نمبر۔ اگلا کیا ہے؟'},{seq:['10','20','30','40','?'],answer:'50',opts:['45','50','55','60'],urdu:'دس دس بڑھ رہے ہیں۔'},{seq:['3','6','9','12','?'],answer:'15',opts:['13','14','15','16'],urdu:'تین کا پہاڑہ۔'},{seq:['2','4','8','16','?'],answer:'32',opts:['24','30','32','34'],urdu:'دوگنا ہو رہا ہے۔'},{seq:['30','25','20','15','?'],answer:'10',opts:['8','10','12','13'],urdu:'پانچ پانچ کم ہو رہے ہیں۔'},
+];
+const PATTERN_E=[
+  {seq:['🔴','🔵','🔴','🔵','?'],answer:'🔴',opts:['🔴','🔵','🟢','🟡'],urdu:'اگلا کیا آئے گا؟'},{seq:['⭐','🌙','⭐','🌙','?'],answer:'⭐',opts:['⭐','🌙','☀️','🌟'],urdu:'اگلا کیا آئے گا؟'},{seq:['🐱','🐶','🐱','🐶','?'],answer:'🐱',opts:['🐱','🐶','🐸','🐰'],urdu:'اگلا کیا آئے گا؟'},{seq:['🍎','🍌','🍎','🍌','?'],answer:'🍎',opts:['🍎','🍌','🍊','🍇'],urdu:'اگلا کیا آئے گا؟'},{seq:['🌸','🌼','🌸','🌼','?'],answer:'🌸',opts:['🌸','🌼','🌺','🌻'],urdu:'اگلا کیا آئے گا؟'},{seq:['🔺','🔷','🔺','🔷','?'],answer:'🔺',opts:['🔺','🔷','⭐','🔴'],urdu:'اگلا کیا آئے گا؟'},{seq:['🍭','🎈','🍭','🎈','?'],answer:'🍭',opts:['🍭','🎈','⭐','🌸'],urdu:'اگلا کیا آئے گا؟'},{seq:['1','2','1','2','?'],answer:'1',opts:['1','2','3','4'],urdu:'اگلا نمبر کیا ہے؟'},
 ];
 
 const ODD=[
-  {items:['Cat','Dog','Car','Fish'],answer:'Car',urdu:'کون سا الگ ہے؟ تین جانور ہیں اور ایک نہیں۔'},
-  {items:['Apple','Banana','Mango','Carrot'],answer:'Carrot',urdu:'تین پھل ہیں اور ایک سبزی۔ کون سی سبزی ہے؟'},
-  {items:['Bus','Car','Truck','Horse'],answer:'Horse',urdu:'تین گاڑیاں ہیں اور ایک جانور۔ کون سا جانور ہے؟'},
-  {items:['Red','Blue','Happy','Green'],answer:'Happy',urdu:'تین رنگ ہیں اور ایک احساس۔ کون سا الگ ہے؟'},
-  {items:['2','4','5','8'],answer:'5',urdu:'تین جوڑے والے نمبر ہیں اور ایک طاق۔ کون سا طاق ہے؟'},
-  {items:['Cow','Goat','Sheep','Eagle'],answer:'Eagle',urdu:'تین چلنے والے جانور اور ایک اڑنے والا۔ کون سا اڑتا ہے؟'},
-  {items:['Rose','Tulip','Daisy','Mango'],answer:'Mango',urdu:'تین پھول اور ایک پھل۔ کون سا پھل ہے؟'},
-  {items:['Eye','Ear','Nose','Book'],answer:'Book',urdu:'تین جسم کے حصے اور ایک چیز۔ کون سی چیز ہے؟'},
-  {items:['10','20','30','35'],answer:'35',urdu:'تین دس کے گنتی کے نمبر اور ایک الگ۔ کون سا الگ ہے؟'},
-  {items:['Piano','Guitar','Drum','Pencil'],answer:'Pencil',urdu:'تین ساز اور ایک لکھنے کی چیز۔ کون سی ہے؟'},
-  {items:['Swim','Run','Jump','Book'],answer:'Book',urdu:'تین حرکات اور ایک چیز۔ کون سی ہے؟'},
-  {items:['Tiger','Lion','Elephant','Pigeon'],answer:'Pigeon',urdu:'تین زمین کے جانور اور ایک پرندہ۔ کون سا اڑتا ہے؟'},
-  {items:['Square','Circle','Triangle','Milk'],answer:'Milk',urdu:'تین شکلیں اور ایک مشروب۔ کون سا الگ ہے؟'},
-  {items:['Sun','Moon','Cloud','Chair'],answer:'Chair',urdu:'تین آسمانی چیزیں اور ایک فرنیچر۔ کون سا ہے؟'},
-  {items:['Pen','Pencil','Ruler','Mango'],answer:'Mango',urdu:'تین سکول کی چیزیں اور ایک پھل۔ کون سا پھل ہے؟'},
+  {items:['Cat','Dog','Car','Fish'],answer:'Car',urdu:'کون سا جانور نہیں ہے؟'},{items:['Apple','Banana','Mango','Carrot'],answer:'Carrot',urdu:'تین پھل ہیں اور ایک سبزی۔'},{items:['Bus','Car','Truck','Horse'],answer:'Horse',urdu:'تین گاڑیاں اور ایک جانور۔'},{items:['Red','Blue','Happy','Green'],answer:'Happy',urdu:'تین رنگ اور ایک احساس۔'},{items:['2','4','5','8'],answer:'5',urdu:'طاق نمبر کون سا ہے؟'},{items:['Cow','Goat','Sheep','Eagle'],answer:'Eagle',urdu:'اڑنے والا کون سا ہے؟'},{items:['Rose','Tulip','Daisy','Mango'],answer:'Mango',urdu:'پھول کون سے ہیں؟'},{items:['Eye','Ear','Nose','Book'],answer:'Book',urdu:'جسم کے حصے کون سے ہیں؟'},{items:['10','20','30','35'],answer:'35',urdu:'دس کے گنتی میں کون سا الگ ہے؟'},{items:['Piano','Guitar','Drum','Pencil'],answer:'Pencil',urdu:'ساز کون سے ہیں؟'},{items:['Tiger','Lion','Elephant','Pigeon'],answer:'Pigeon',urdu:'اڑنے والا پرندہ کون سا ہے؟'},{items:['Sun','Moon','Cloud','Chair'],answer:'Chair',urdu:'آسمانی چیزیں کون سی ہیں؟'},
+];
+const ODD_E=[
+  {items:['Cat','Dog','Fish','Car'],answer:'Car',urdu:'جانور کون سے ہیں؟'},{items:['Apple','Mango','Banana','Chair'],answer:'Chair',urdu:'پھل کون سے ہیں؟'},{items:['Red','Blue','Green','Mango'],answer:'Mango',urdu:'رنگ کون سے ہیں؟'},{items:['1','2','3','Cat'],answer:'Cat',urdu:'نمبر کون سے ہیں؟'},{items:['Eye','Ear','Nose','Ball'],answer:'Ball',urdu:'جسم کے حصے کون سے ہیں؟'},{items:['Cow','Goat','Sheep','Airplane'],answer:'Airplane',urdu:'جانور کون سے ہیں؟'},{items:['Sun','Moon','Star','Book'],answer:'Book',urdu:'آسمانی چیزیں کون سی ہیں؟'},{items:['Pen','Pencil','Eraser','Lion'],answer:'Lion',urdu:'پڑھنے کی چیزیں کون سی ہیں؟'},
 ];
 
 const RIDDLE=[
-  {q:'I have wings but I am not a bird.\nI fly but I am not a plane.\nWhat am I?',answer:'Butterfly',opts:['Butterfly','Bee','Dragonfly','Eagle'],urdu:'میرے پر ہیں لیکن میں پرندہ نہیں۔ میں اڑتا ہوں لیکن جہاز نہیں۔ میں کیا ہوں؟'},
-  {q:'I am yellow and shine in the sky.\nI give light and warmth.\nWhat am I?',answer:'Sun',opts:['Sun','Moon','Star','Fire'],urdu:'میں پیلا ہوں اور آسمان میں چمکتا ہوں۔ میں روشنی اور گرمی دیتا ہوں۔ میں کیا ہوں؟'},
-  {q:'I have four legs but cannot walk.\nYou sit on me every day.\nWhat am I?',answer:'Chair',opts:['Chair','Table','Bed','Dog'],urdu:'میرے چار ٹانگیں ہیں لیکن چل نہیں سکتا۔ تم روز مجھ پر بیٹھتے ہو۔ میں کیا ہوں؟'},
-  {q:'I have teeth but cannot eat.\nWhat am I?',answer:'Comb',opts:['Comb','Saw','Fork','Zipper'],urdu:'میرے دانت ہیں لیکن کھا نہیں سکتا۔ میں کیا ہوں؟'},
-  {q:'I get bigger when I eat\nand smaller when I drink.\nWhat am I?',answer:'Fire',opts:['Fire','Balloon','Stomach','Cloud'],urdu:'کھانے سے بڑا اور پانی سے چھوٹا ہوتا ہوں۔ میں کیا ہوں؟'},
-  {q:'I have hands but no arms.\nI tell you the time.\nWhat am I?',answer:'Clock',opts:['Clock','Robot','Book','Compass'],urdu:'میرے ہاتھ ہیں لیکن بازو نہیں۔ میں وقت بتاتا ہوں۔ میں کیا ہوں؟'},
-  {q:'I fall down but never get hurt.\nWhat am I?',answer:'Rain',opts:['Rain','Leaf','Ball','Snow'],urdu:'میں گرتا ہوں لیکن مجھے چوٹ نہیں لگتی۔ میں کیا ہوں؟'},
-  {q:'I have a head and tail\nbut no body.\nWhat am I?',answer:'Coin',opts:['Coin','Snake','Arrow','Needle'],urdu:'میرا سر اور دم ہے لیکن جسم نہیں۔ میں کیا ہوں؟'},
-  {q:'I live in water but I am not a fish.\nI carry my home on my back.\nWhat am I?',answer:'Turtle',opts:['Turtle','Crab','Snail','Frog'],urdu:'میں پانی میں رہتا ہوں پر مچھلی نہیں۔ گھر پیٹھ پر ہے۔ میں کیا ہوں؟'},
-  {q:'The more you take of me,\nthe more you leave behind.\nWhat am I?',answer:'Footsteps',opts:['Footsteps','Water','Time','Sand'],urdu:'جتنا لو اتنا پیچھے چھوڑو۔ میں کیا ہوں؟'},
-  {q:'I am always in front of you\nbut cannot be seen.\nWhat am I?',answer:'Future',opts:['Future','Mirror','Shadow','Wind'],urdu:'میں ہمیشہ تمہارے سامنے ہوں لیکن دکھتا نہیں۔ میں کیا ہوں؟'},
-  {q:'I am full of holes\nbut I can hold water.\nWhat am I?',answer:'Sponge',opts:['Sponge','Basket','Net','Cloth'],urdu:'میں سوراخوں سے بھرا ہوں لیکن پانی رکھ سکتا ہوں۔ میں کیا ہوں؟'},
+  {q:'I have wings but I am not a bird.\nI fly but I am not a plane.\nWhat am I?',answer:'Butterfly',opts:['Butterfly','Bee','Dragonfly','Eagle'],urdu:'میرے پر ہیں لیکن پرندہ نہیں۔ میں کیا ہوں؟'},{q:'I have teeth but cannot eat.\nWhat am I?',answer:'Comb',opts:['Comb','Saw','Fork','Zipper'],urdu:'میرے دانت ہیں لیکن کھا نہیں سکتا۔ میں کیا ہوں؟'},{q:'I get bigger when I eat\nand smaller when I drink.\nWhat am I?',answer:'Fire',opts:['Fire','Balloon','Stomach','Cloud'],urdu:'کھانے سے بڑا اور پانی سے چھوٹا ہوتا ہوں۔ میں کیا ہوں؟'},{q:'I have hands but no arms.\nI tell you the time.\nWhat am I?',answer:'Clock',opts:['Clock','Robot','Book','Compass'],urdu:'میرے ہاتھ ہیں لیکن بازو نہیں۔ وقت بتاتا ہوں۔'},{q:'I fall down but never get hurt.\nWhat am I?',answer:'Rain',opts:['Rain','Leaf','Ball','Snow'],urdu:'میں گرتا ہوں لیکن چوٹ نہیں لگتی۔ میں کیا ہوں؟'},{q:'I have a head and tail\nbut no body.\nWhat am I?',answer:'Coin',opts:['Coin','Snake','Arrow','Needle'],urdu:'سر اور دم ہے لیکن جسم نہیں۔ میں کیا ہوں؟'},{q:'I am full of holes\nbut I can hold water.\nWhat am I?',answer:'Sponge',opts:['Sponge','Basket','Net','Cloth'],urdu:'سوراخوں سے بھرا ہوں لیکن پانی رکھ سکتا ہوں۔'},{q:'The more you take,\nthe more you leave behind.\nWhat am I?',answer:'Footsteps',opts:['Footsteps','Water','Time','Sand'],urdu:'جتنا لو اتنا پیچھے چھوڑو۔ میں کیا ہوں؟'},{q:'I am always in front of you\nbut cannot be seen.\nWhat am I?',answer:'Future',opts:['Future','Mirror','Shadow','Wind'],urdu:'ہمیشہ سامنے ہوں لیکن دکھتا نہیں۔ میں کیا ہوں؟'},{q:'I live in water but I am not a fish.\nI carry my home on my back.\nWhat am I?',answer:'Turtle',opts:['Turtle','Crab','Snail','Frog'],urdu:'پانی میں رہتا ہوں، گھر پیٹھ پر۔ میں کیا ہوں؟'},
+];
+const RIDDLE_E=[
+  {q:'I am round and bouncy.\nYou play with me.\nWhat am I?',answer:'Ball',opts:['Ball','Apple','Sun','Stone'],urdu:'گول اور اچھلتا ہوں، تم مجھ سے کھیلتے ہو۔'},{q:'I have wheels.\nI take you to school.\nWhat am I?',answer:'Bus',opts:['Bus','Car','Bicycle','Train'],urdu:'پہیے ہیں، اسکول لے جاتا ہوں۔ میں کیا ہوں؟'},{q:'I am yellow.\nMonkeys love to eat me.\nWhat am I?',answer:'Banana',opts:['Banana','Apple','Mango','Orange'],urdu:'پیلا ہوں، بندر مجھے پسند کرتے ہیں۔'},{q:'I shine at night.\nI am round and bright.\nWhat am I?',answer:'Moon',opts:['Moon','Sun','Star','Lamp'],urdu:'رات کو چمکتا ہوں، گول اور چمکدار ہوں۔'},{q:'I say Meow.\nI like to drink milk.\nWhat am I?',answer:'Cat',opts:['Cat','Dog','Cow','Lion'],urdu:'میاؤں کرتا ہوں اور دودھ پیتا ہوں۔'},{q:'You wear me on your feet.\nWhat am I?',answer:'Shoes',opts:['Shoes','Hat','Gloves','Shirt'],urdu:'پاؤں میں پہنتے ہیں مجھے۔ میں کیا ہوں؟'},{q:'I am red and sweet.\nI grow on a tree.\nWhat am I?',answer:'Apple',opts:['Apple','Tomato','Ball','Cherry'],urdu:'لال اور میٹھا ہوں، درخت پر اگتا ہوں۔'},{q:'I live in water.\nI swim and have fins.\nWhat am I?',answer:'Fish',opts:['Fish','Duck','Frog','Crab'],urdu:'پانی میں رہتا ہوں اور تیرتا ہوں۔'},
 ];
 
 const TF=[
-  {stmt:'Fish live in water',answer:'TRUE',urdu:'مچھلی پانی میں رہتی ہے — سچ ہے یا جھوٹ؟'},
-  {stmt:'The sun rises in the WEST',answer:'FALSE',urdu:'سورج مغرب میں طلوع ہوتا ہے — سچ ہے یا جھوٹ؟'},
-  {stmt:'5 + 3 = 8',answer:'TRUE',urdu:'پانچ جمع تین آٹھ ہے — سچ ہے یا جھوٹ؟'},
-  {stmt:'A cow gives us milk',answer:'TRUE',urdu:'گائے دودھ دیتی ہے — سچ ہے یا جھوٹ؟'},
-  {stmt:'A bird has 4 legs',answer:'FALSE',urdu:'پرندے کی چار ٹانگیں ہوتی ہیں — سچ ہے یا جھوٹ؟'},
-  {stmt:'Pakistan is in Asia',answer:'TRUE',urdu:'پاکستان ایشیا میں ہے — سچ ہے یا جھوٹ؟'},
-  {stmt:'10 × 10 = 1000',answer:'FALSE',urdu:'دس ضرب دس ایک ہزار ہے — سچ ہے یا جھوٹ؟'},
-  {stmt:'Ice is frozen water',answer:'TRUE',urdu:'برف جمی ہوئی پانی ہے — سچ ہے یا جھوٹ؟'},
-  {stmt:'The moon is a star',answer:'FALSE',urdu:'چاند ایک ستارہ ہے — سچ ہے یا جھوٹ؟'},
-  {stmt:'Cats can fly',answer:'FALSE',urdu:'بلی اڑ سکتی ہے — سچ ہے یا جھوٹ؟'},
-  {stmt:'7 is an odd number',answer:'TRUE',urdu:'سات طاق نمبر ہے — سچ ہے یا جھوٹ؟'},
-  {stmt:'A triangle has 4 sides',answer:'FALSE',urdu:'مثلث کے چار اطراف ہیں — سچ ہے یا جھوٹ؟'},
-  {stmt:'Honey is made by bees',answer:'TRUE',urdu:'شہد مکھیاں بناتی ہیں — سچ ہے یا جھوٹ؟'},
-  {stmt:'100 − 50 = 60',answer:'FALSE',urdu:'ایک سو منہا پچاس ساٹھ ہے — سچ ہے یا جھوٹ؟'},
-  {stmt:'The sun is a star',answer:'TRUE',urdu:'سورج ایک ستارہ ہے — سچ ہے یا جھوٹ؟'},
-  {stmt:'Snakes have legs',answer:'FALSE',urdu:'سانپ کی ٹانگیں ہوتی ہیں — سچ ہے یا جھوٹ؟'},
-  {stmt:'Quran has 114 Surahs',answer:'TRUE',urdu:'قرآن میں ایک سو چودہ سورتیں ہیں — سچ ہے یا جھوٹ؟'},
-  {stmt:'We have 5 fingers on one hand',answer:'TRUE',urdu:'ایک ہاتھ میں پانچ انگلیاں ہیں — سچ ہے یا جھوٹ؟'},
-  {stmt:'50 + 50 = 90',answer:'FALSE',urdu:'پچاس جمع پچاس نوے ہے — سچ ہے یا جھوٹ؟'},
-  {stmt:'A week has 7 days',answer:'TRUE',urdu:'ہفتے میں سات دن ہوتے ہیں — سچ ہے یا جھوٹ؟'},
+  {stmt:'Fish live in water',answer:'TRUE',urdu:'مچھلی پانی میں رہتی ہے'},{stmt:'The sun rises in the WEST',answer:'FALSE',urdu:'سورج مغرب میں طلوع ہوتا ہے'},{stmt:'5 + 3 = 8',answer:'TRUE',urdu:'پانچ جمع تین آٹھ ہے'},{stmt:'A cow gives us milk',answer:'TRUE',urdu:'گائے دودھ دیتی ہے'},{stmt:'A bird has 4 legs',answer:'FALSE',urdu:'پرندے کی چار ٹانگیں ہوتی ہیں'},{stmt:'Pakistan is in Asia',answer:'TRUE',urdu:'پاکستان ایشیا میں ہے'},{stmt:'10 × 10 = 1000',answer:'FALSE',urdu:'دس ضرب دس ایک ہزار ہے'},{stmt:'Ice is frozen water',answer:'TRUE',urdu:'برف جمی ہوئی پانی ہے'},{stmt:'The moon is a star',answer:'FALSE',urdu:'چاند ایک ستارہ ہے'},{stmt:'7 is an odd number',answer:'TRUE',urdu:'سات طاق نمبر ہے'},{stmt:'A triangle has 4 sides',answer:'FALSE',urdu:'مثلث کے چار اطراف ہیں'},{stmt:'Honey is made by bees',answer:'TRUE',urdu:'شہد مکھیاں بناتی ہیں'},{stmt:'The sun is a star',answer:'TRUE',urdu:'سورج ایک ستارہ ہے'},{stmt:'Snakes have legs',answer:'FALSE',urdu:'سانپ کی ٹانگیں ہوتی ہیں'},{stmt:'Quran has 114 Surahs',answer:'TRUE',urdu:'قرآن میں ایک سو چودہ سورتیں ہیں'},{stmt:'50 + 50 = 90',answer:'FALSE',urdu:'پچاس جمع پچاس نوے ہے'},{stmt:'A week has 7 days',answer:'TRUE',urdu:'ہفتے میں سات دن ہوتے ہیں'},
+];
+const TF_E=[
+  {stmt:'A cat says Meow',answer:'TRUE',urdu:'بلی میاؤں کرتی ہے'},{stmt:'Fish live on land',answer:'FALSE',urdu:'مچھلی زمین پر رہتی ہے'},{stmt:'1 + 1 = 2',answer:'TRUE',urdu:'ایک جمع ایک دو ہے'},{stmt:'The sky is green',answer:'FALSE',urdu:'آسمان سبز ہے'},{stmt:'A dog has 4 legs',answer:'TRUE',urdu:'کتے کی چار ٹانگیں ہیں'},{stmt:'2 + 2 = 5',answer:'FALSE',urdu:'دو جمع دو پانچ ہے'},{stmt:'The sun is hot',answer:'TRUE',urdu:'سورج گرم ہے'},{stmt:'Birds can fly',answer:'TRUE',urdu:'پرندے اڑ سکتے ہیں'},{stmt:'3 is bigger than 1',answer:'TRUE',urdu:'تین ایک سے بڑا ہے'},{stmt:'Cats live in water',answer:'FALSE',urdu:'بلی پانی میں رہتی ہے'},{stmt:'Grass is green',answer:'TRUE',urdu:'گھاس سبز ہے'},{stmt:'A week has 5 days',answer:'FALSE',urdu:'ہفتے میں پانچ دن ہوتے ہیں'},
 ];
 
 const MISSING=[
-  {seq:['1','2','?','4','5'],answer:3,opts:[2,3,4,6],urdu:'خالی جگہ پر کیا نمبر آئے گا؟'},
-  {seq:['5','10','?','20'],answer:15,opts:[12,14,15,16],urdu:'خالی جگہ کیا ہے؟'},
-  {seq:['2','4','?','8'],answer:6,opts:[5,6,7,9],urdu:'خالی جگہ کیا ہے؟'},
-  {seq:['10','20','?','40'],answer:30,opts:[25,28,30,35],urdu:'خالی جگہ کیا ہے؟'},
-  {seq:['3','6','?','12'],answer:9,opts:[7,8,9,10],urdu:'خالی جگہ کیا ہے؟'},
-  {seq:['100','200','?','400'],answer:300,opts:[250,300,350,250],urdu:'خالی جگہ کیا ہے؟'},
-  {seq:['?','4','6','8'],answer:2,opts:[1,2,3,4],urdu:'شروع میں کیا تھا؟'},
-  {seq:['50','?','150','200'],answer:100,opts:[75,90,100,125],urdu:'خالی جگہ کیا ہے؟'},
-  {seq:['2','?','8','16'],answer:4,opts:[3,4,5,6],urdu:'دوگنا ہو رہا ہے۔ خالی جگہ کیا ہے؟'},
-  {seq:['30','25','20','?'],answer:15,opts:[12,14,15,16],urdu:'کم ہو رہا ہے۔ اگلا کیا ہے؟'},
-  {seq:['1','1','2','3','?'],answer:5,opts:[4,5,6,7],urdu:'پہلے دو نمبر جوڑو۔ خالی جگہ کیا ہے؟'},
-  {seq:['4','8','?','16','20'],answer:12,opts:[10,11,12,13],urdu:'چار چار بڑھ رہے ہیں۔ خالی جگہ کیا ہے؟'},
-  {seq:['90','?','70','60'],answer:80,opts:[75,78,80,85],urdu:'دس دس کم ہو رہے ہیں۔ خالی جگہ کیا ہے؟'},
-  {seq:['1','4','9','?'],answer:16,opts:[12,14,16,18],urdu:'مربع نمبر ہیں۔ خالی جگہ کیا ہے؟'},
+  {seq:['1','2','?','4','5'],answer:3,opts:[2,3,4,6],urdu:'خالی جگہ کیا ہے؟'},{seq:['5','10','?','20'],answer:15,opts:[12,14,15,16],urdu:'خالی جگہ کیا ہے؟'},{seq:['2','4','?','8'],answer:6,opts:[5,6,7,9],urdu:'خالی جگہ کیا ہے؟'},{seq:['10','20','?','40'],answer:30,opts:[25,28,30,35],urdu:'خالی جگہ کیا ہے؟'},{seq:['3','6','?','12'],answer:9,opts:[7,8,9,10],urdu:'خالی جگہ کیا ہے؟'},{seq:['100','200','?','400'],answer:300,opts:[250,300,350,150],urdu:'خالی جگہ کیا ہے؟'},{seq:['?','4','6','8'],answer:2,opts:[1,2,3,4],urdu:'شروع میں کیا تھا؟'},{seq:['50','?','150','200'],answer:100,opts:[75,90,100,125],urdu:'خالی جگہ کیا ہے؟'},{seq:['2','?','8','16'],answer:4,opts:[3,4,5,6],urdu:'دوگنا ہو رہا ہے۔'},{seq:['30','25','20','?'],answer:15,opts:[12,14,15,16],urdu:'کم ہو رہا ہے۔'},{seq:['1','1','2','3','?'],answer:5,opts:[4,5,6,7],urdu:'پہلے دو جوڑو۔'},{seq:['4','8','?','16','20'],answer:12,opts:[10,11,12,13],urdu:'چار چار بڑھ رہے ہیں۔'},
+];
+const MISSING_E=[
+  {seq:['1','2','?','4'],answer:3,opts:[2,3,4,5],urdu:'خالی جگہ کیا ہے؟'},{seq:['1','?','3','4'],answer:2,opts:[1,2,3,4],urdu:'خالی جگہ کیا ہے؟'},{seq:['?','2','3','4'],answer:1,opts:[1,2,3,4],urdu:'شروع میں کیا تھا؟'},{seq:['1','2','3','?'],answer:4,opts:[3,4,5,6],urdu:'اگلا نمبر کیا ہے؟'},{seq:['5','6','7','?'],answer:8,opts:[7,8,9,10],urdu:'اگلا نمبر کیا ہے؟'},{seq:['2','4','?','8'],answer:6,opts:[5,6,7,8],urdu:'دو دو بڑھ رہے ہیں'},{seq:['3','?','5','6'],answer:4,opts:[3,4,5,6],urdu:'خالی جگہ کیا ہے؟'},{seq:['?','3','4','5'],answer:2,opts:[1,2,3,4],urdu:'شروع میں کیا تھا؟'},{seq:['4','5','?','7'],answer:6,opts:[5,6,7,8],urdu:'خالی جگہ کیا ہے؟'},{seq:['1','2','3','4','?'],answer:5,opts:[4,5,6,7],urdu:'گنتی میں اگلا نمبر؟'},
 ];
 
 const GK=[
-  {q:'What do bees make?',answer:'Honey',opts:['Honey','Milk','Sugar','Butter'],urdu:'شہد کی مکھیاں کیا بناتی ہیں؟'},
-  {q:'How many days in a week?',answer:'7',opts:['5','6','7','8'],urdu:'ہفتے میں کتنے دن ہوتے ہیں؟'},
-  {q:"Pakistan's national language?",answer:'Urdu',opts:['Urdu','English','Punjabi','Sindhi'],urdu:'پاکستان کی قومی زبان کیا ہے؟'},
-  {q:'Capital of Pakistan?',answer:'Islamabad',opts:['Karachi','Lahore','Islamabad','Peshawar'],urdu:'پاکستان کا دارالحکومت کیا ہے؟'},
-  {q:'How many colors in a rainbow?',answer:'7',opts:['5','6','7','8'],urdu:'قوس قزح میں کتنے رنگ ہوتے ہیں؟'},
-  {q:'What do plants need to grow?',answer:'Water & Sun',opts:['Water & Sun','Milk & Sugar','Sand & Stone','Ice & Wind'],urdu:'پودوں کو بڑھنے کے لیے کیا چاہیے؟'},
-  {q:'Which is the largest animal on Earth?',answer:'Blue Whale',opts:['Elephant','Giraffe','Blue Whale','Rhino'],urdu:'دنیا کا سب سے بڑا جانور کون سا ہے؟'},
-  {q:'How many legs does a spider have?',answer:'8',opts:['4','6','8','10'],urdu:'مکڑی کی کتنی ٹانگیں ہوتی ہیں؟'},
-  {q:'From which animal do we get wool?',answer:'Sheep',opts:['Cow','Goat','Sheep','Camel'],urdu:'اون کس جانور سے ملتی ہے؟'},
-  {q:'How many months in a year?',answer:'12',opts:['10','11','12','13'],urdu:'ایک سال میں کتنے مہینے ہوتے ہیں؟'},
-  {q:'How many players in a cricket team?',answer:'11',opts:['9','10','11','12'],urdu:'کرکٹ ٹیم میں کتنے کھلاڑی ہوتے ہیں؟'},
-  {q:'Holy book of Muslims?',answer:'Quran',opts:['Quran','Bible','Torah','Vedas'],urdu:'مسلمانوں کی مقدس کتاب کون سی ہے؟'},
-  {q:'The Prophet of Islam?',answer:'Muhammad ﷺ',opts:['Muhammad ﷺ','Ibrahim ع','Musa ع','Isa ع'],urdu:'اسلام کے نبی کون ہیں؟'},
-  {q:'Which direction do Muslims face to pray?',answer:'Qibla',opts:['Qibla','North','South','East'],urdu:'مسلمان کس سمت نماز پڑھتے ہیں؟'},
-  {q:'What is water made of?',answer:'H₂O',opts:['H₂O','CO₂','O₂','NaCl'],urdu:'پانی کس چیز سے بنا ہے؟'},
-  {q:'How many sides does a hexagon have?',answer:'6',opts:['4','5','6','8'],urdu:'ہیکسا گون کے کتنے اطراف ہوتے ہیں؟'},
-  {q:'Largest planet in our solar system?',answer:'Jupiter',opts:['Jupiter','Saturn','Earth','Mars'],urdu:'ہمارے نظام شمسی کا سب سے بڑا سیارہ کون سا ہے؟'},
-  {q:'What do we call a baby cat?',answer:'Kitten',opts:['Kitten','Puppy','Cub','Calf'],urdu:'بلی کے بچے کو کیا کہتے ہیں؟'},
+  {q:'What do bees make?',answer:'Honey',opts:['Honey','Milk','Sugar','Butter'],urdu:'شہد کی مکھیاں کیا بناتی ہیں؟'},{q:'How many days in a week?',answer:'7',opts:['5','6','7','8'],urdu:'ہفتے میں کتنے دن ہوتے ہیں؟'},{q:"Pakistan's national language?",answer:'Urdu',opts:['Urdu','English','Punjabi','Sindhi'],urdu:'پاکستان کی قومی زبان کیا ہے؟'},{q:'Capital of Pakistan?',answer:'Islamabad',opts:['Karachi','Lahore','Islamabad','Peshawar'],urdu:'پاکستان کا دارالحکومت کیا ہے؟'},{q:'How many colors in a rainbow?',answer:'7',opts:['5','6','7','8'],urdu:'قوس قزح میں کتنے رنگ ہوتے ہیں؟'},{q:'Largest animal on Earth?',answer:'Blue Whale',opts:['Elephant','Giraffe','Blue Whale','Rhino'],urdu:'دنیا کا سب سے بڑا جانور؟'},{q:'How many legs does a spider have?',answer:'8',opts:['4','6','8','10'],urdu:'مکڑی کی کتنی ٹانگیں ہوتی ہیں؟'},{q:'From which animal do we get wool?',answer:'Sheep',opts:['Cow','Goat','Sheep','Camel'],urdu:'اون کس جانور سے ملتی ہے؟'},{q:'How many months in a year?',answer:'12',opts:['10','11','12','13'],urdu:'ایک سال میں کتنے مہینے؟'},{q:'Holy book of Muslims?',answer:'Quran',opts:['Quran','Bible','Torah','Vedas'],urdu:'مسلمانوں کی مقدس کتاب؟'},{q:'The Prophet of Islam?',answer:'Muhammad ﷺ',opts:['Muhammad ﷺ','Ibrahim ع','Musa ع','Isa ع'],urdu:'اسلام کے نبی کون ہیں؟'},{q:'How many sides does a hexagon have?',answer:'6',opts:['4','5','6','8'],urdu:'ہیکساگون کے کتنے اطراف؟'},{q:'Largest planet in solar system?',answer:'Jupiter',opts:['Jupiter','Saturn','Earth','Mars'],urdu:'سب سے بڑا سیارہ کون سا ہے؟'},{q:'What do we call a baby cat?',answer:'Kitten',opts:['Kitten','Puppy','Cub','Calf'],urdu:'بلی کے بچے کو کیا کہتے ہیں؟'},
 ];
-
-/* ── EASY MODE DATA ── */
-const MATH_E=[
-  {type:'comparison',a:3,b:5,answer:5,opts:[3,5]},{type:'comparison',a:8,b:4,answer:8,opts:[8,4]},{type:'comparison',a:2,b:7,answer:7,opts:[2,7]},{type:'comparison',a:10,b:6,answer:10,opts:[10,6]},{type:'comparison',a:1,b:9,answer:9,opts:[1,9]},{type:'comparison',a:4,b:2,answer:4,opts:[4,2]},{type:'comparison',a:6,b:3,answer:6,opts:[6,3]},
-  {type:'addition',a:1,b:2,answer:3,opts:[2,3,4,5]},{type:'addition',a:2,b:3,answer:5,opts:[4,5,6,7]},{type:'addition',a:3,b:3,answer:6,opts:[5,6,7,8]},{type:'addition',a:4,b:2,answer:6,opts:[5,6,7,8]},{type:'addition',a:5,b:5,answer:10,opts:[8,9,10,11]},{type:'addition',a:2,b:2,answer:4,opts:[3,4,5,6]},{type:'addition',a:1,b:4,answer:5,opts:[4,5,6,7]},{type:'addition',a:3,b:4,answer:7,opts:[6,7,8,9]},{type:'addition',a:2,b:5,answer:7,opts:[6,7,8,9]},{type:'addition',a:1,b:1,answer:2,opts:[1,2,3,4]},{type:'addition',a:4,b:4,answer:8,opts:[7,8,9,10]},
-];
-MATH_E.filter(q=>q.type==='comparison').forEach(q=>q.opts=[q.a,q.b]);
-
-const SPELL_E=[
-  {keyword:'cat',emoji:'🐱',display:'C _ T',opts:['A','O','U','E'],answer:'A'},{keyword:'dog',emoji:'🐶',display:'D _ G',opts:['A','O','I','U'],answer:'O'},{keyword:'sun',emoji:'☀️',display:'S _ N',opts:['O','U','A','I'],answer:'U'},{keyword:'hat',emoji:'🎩',display:'H _ T',opts:['A','O','E','I'],answer:'A'},{keyword:'bed',emoji:'🛏️',display:'B _ D',opts:['A','E','O','I'],answer:'E'},{keyword:'cup',emoji:'☕',display:'C _ P',opts:['A','U','O','I'],answer:'U'},{keyword:'hen',emoji:'🐔',display:'H _ N',opts:['E','A','I','O'],answer:'E'},{keyword:'cow',emoji:'🐄',display:'C _ W',opts:['O','A','E','U'],answer:'O'},{keyword:'fox',emoji:'🦊',display:'F _ X',opts:['O','A','E','U'],answer:'O'},{keyword:'bus',emoji:'🚌',display:'B _ S',opts:['U','A','I','O'],answer:'U'},{keyword:'ant',emoji:'🐜',display:'A _ T',opts:['N','M','P','D'],answer:'N'},{keyword:'pen',emoji:'✏️',display:'P _ N',opts:['E','A','I','O'],answer:'E'},{keyword:'fan',emoji:'🌀',display:'F _ N',opts:['A','E','I','O'],answer:'A'},{keyword:'map',emoji:'🗺️',display:'M _ P',opts:['A','E','I','O'],answer:'A'},
-];
-
-const COUNT_E=COUNT.filter(q=>q.count<=5);
-
-const PATTERN_E=[
-  {seq:['🔴','🔵','🔴','🔵','?'],answer:'🔴',opts:['🔴','🔵','🟢','🟡'],urdu:'اگلا کیا آئے گا؟'},
-  {seq:['⭐','🌙','⭐','🌙','?'],answer:'⭐',opts:['⭐','🌙','☀️','🌟'],urdu:'اگلا کیا آئے گا؟'},
-  {seq:['🐱','🐶','🐱','🐶','?'],answer:'🐱',opts:['🐱','🐶','🐸','🐰'],urdu:'اگلا کیا آئے گا؟'},
-  {seq:['🍎','🍌','🍎','🍌','?'],answer:'🍎',opts:['🍎','🍌','🍊','🍇'],urdu:'اگلا کیا آئے گا؟'},
-  {seq:['🟡','🟢','🟡','🟢','?'],answer:'🟡',opts:['🟡','🟢','🔴','🔵'],urdu:'اگلا کیا آئے گا؟'},
-  {seq:['🌸','🌼','🌸','🌼','?'],answer:'🌸',opts:['🌸','🌼','🌺','🌻'],urdu:'اگلا کیا آئے گا؟'},
-  {seq:['🔺','🔷','🔺','🔷','?'],answer:'🔺',opts:['🔺','🔷','⭐','🔴'],urdu:'اگلا کیا آئے گا؟'},
-  {seq:['🐠','🐸','🐠','🐸','?'],answer:'🐠',opts:['🐠','🐸','🐱','🐶'],urdu:'اگلا کیا آئے گا؟'},
-  {seq:['1','2','1','2','?'],answer:'1',opts:['1','2','3','4'],urdu:'اگلا نمبر کیا ہے؟'},
-  {seq:['🍭','🎈','🍭','🎈','?'],answer:'🍭',opts:['🍭','🎈','⭐','🌸'],urdu:'اگلا کیا آئے گا؟'},
-];
-
-const ODD_E=[
-  {items:['Cat','Dog','Fish','Car'],answer:'Car',urdu:'کون سا جانور نہیں ہے؟'},
-  {items:['Apple','Mango','Banana','Chair'],answer:'Chair',urdu:'کون سا پھل نہیں ہے؟'},
-  {items:['Red','Blue','Green','Mango'],answer:'Mango',urdu:'رنگ کون سے ہیں؟ پھل کون سا ہے؟'},
-  {items:['1','2','3','Cat'],answer:'Cat',urdu:'نمبر کون سے ہیں؟'},
-  {items:['Eye','Ear','Nose','Ball'],answer:'Ball',urdu:'جسم کے حصے کون سے ہیں؟'},
-  {items:['Rose','Tulip','Daisy','Car'],answer:'Car',urdu:'پھول کون سے ہیں؟'},
-  {items:['Cow','Goat','Sheep','Airplane'],answer:'Airplane',urdu:'جانور کون سے ہیں؟'},
-  {items:['Sun','Moon','Star','Book'],answer:'Book',urdu:'آسمانی چیزیں کون سی ہیں؟'},
-  {items:['Pen','Pencil','Eraser','Lion'],answer:'Lion',urdu:'پڑھنے کی چیزیں کون سی ہیں؟'},
-  {items:['Cup','Plate','Spoon','Dog'],answer:'Dog',urdu:'کھانے کی چیزیں کون سی ہیں؟'},
-];
-
-const RIDDLE_E=[
-  {q:'I am round and bouncy.\nYou play with me.\nWhat am I?',answer:'Ball',opts:['Ball','Apple','Sun','Stone'],urdu:'میں گول اور اچھلتا ہوں۔ تم مجھ سے کھیلتے ہو۔ میں کیا ہوں؟'},
-  {q:'I have wheels.\nI take you to school.\nWhat am I?',answer:'Bus',opts:['Bus','Car','Bicycle','Train'],urdu:'میرے پہیے ہیں۔ میں تمہیں اسکول لے جاتا ہوں۔ میں کیا ہوں؟'},
-  {q:'I am yellow.\nMonkeys love to eat me.\nWhat am I?',answer:'Banana',opts:['Banana','Apple','Mango','Orange'],urdu:'میں پیلا ہوں۔ بندر مجھے کھانا پسند کرتے ہیں۔ میں کیا ہوں؟'},
-  {q:'I shine at night.\nI am round and bright.\nWhat am I?',answer:'Moon',opts:['Moon','Sun','Star','Lamp'],urdu:'میں رات کو چمکتا ہوں۔ میں گول اور چمکدار ہوں۔ میں کیا ہوں؟'},
-  {q:'I say Meow.\nI like to drink milk.\nWhat am I?',answer:'Cat',opts:['Cat','Dog','Cow','Lion'],urdu:'میں میاؤں کرتا ہوں اور دودھ پیتا ہوں۔ میں کیا ہوں؟'},
-  {q:'I have a long neck.\nI am very tall.\nWhat am I?',answer:'Giraffe',opts:['Giraffe','Elephant','Horse','Camel'],urdu:'میری گردن لمبی ہے اور میں بہت اونچا ہوں۔ میں کیا ہوں؟'},
-  {q:'You wear me on your feet.\nWhat am I?',answer:'Shoes',opts:['Shoes','Hat','Gloves','Shirt'],urdu:'مجھے پاؤں میں پہنتے ہیں۔ میں کیا ہوں؟'},
-  {q:'I am red and sweet.\nI grow on a tree.\nWhat am I?',answer:'Apple',opts:['Apple','Tomato','Ball','Cherry'],urdu:'میں لال اور میٹھا ہوں۔ درخت پر اگتا ہوں۔ میں کیا ہوں؟'},
-  {q:'I give light at night.\nYou turn me on and off.\nWhat am I?',answer:'Lamp',opts:['Lamp','Sun','Moon','Fire'],urdu:'میں رات کو روشنی دیتا ہوں۔ تم مجھے آن آف کرتے ہو۔ میں کیا ہوں؟'},
-  {q:'I live in water.\nI swim and have fins.\nWhat am I?',answer:'Fish',opts:['Fish','Duck','Frog','Crab'],urdu:'میں پانی میں رہتا ہوں اور تیرتا ہوں۔ میں کیا ہوں؟'},
-];
-
-const TF_E=[
-  {stmt:'A cat says Meow',answer:'TRUE',urdu:'بلی میاؤں کرتی ہے — سچ یا جھوٹ؟'},
-  {stmt:'Fish live on land',answer:'FALSE',urdu:'مچھلی زمین پر رہتی ہے — سچ یا جھوٹ؟'},
-  {stmt:'1 + 1 = 2',answer:'TRUE',urdu:'ایک جمع ایک دو ہے — سچ یا جھوٹ؟'},
-  {stmt:'The sky is green',answer:'FALSE',urdu:'آسمان سبز ہے — سچ یا جھوٹ؟'},
-  {stmt:'A dog has 4 legs',answer:'TRUE',urdu:'کتے کی چار ٹانگیں ہیں — سچ یا جھوٹ؟'},
-  {stmt:'We drink milk',answer:'TRUE',urdu:'ہم دودھ پیتے ہیں — سچ یا جھوٹ؟'},
-  {stmt:'2 + 2 = 5',answer:'FALSE',urdu:'دو جمع دو پانچ ہے — سچ یا جھوٹ؟'},
-  {stmt:'The sun is hot',answer:'TRUE',urdu:'سورج گرم ہے — سچ یا جھوٹ؟'},
-  {stmt:'Birds can fly',answer:'TRUE',urdu:'پرندے اڑ سکتے ہیں — سچ یا جھوٹ؟'},
-  {stmt:'A fish can walk',answer:'FALSE',urdu:'مچھلی چل سکتی ہے — سچ یا جھوٹ؟'},
-  {stmt:'3 is bigger than 1',answer:'TRUE',urdu:'تین ایک سے بڑا ہے — سچ یا جھوٹ؟'},
-  {stmt:'Cats live in water',answer:'FALSE',urdu:'بلی پانی میں رہتی ہے — سچ یا جھوٹ؟'},
-  {stmt:'Grass is green',answer:'TRUE',urdu:'گھاس سبز ہے — سچ یا جھوٹ؟'},
-  {stmt:'A bird has 6 legs',answer:'FALSE',urdu:'پرندے کی چھ ٹانگیں ہیں — سچ یا جھوٹ؟'},
-];
-
-const MISSING_E=[
-  {seq:['1','2','?','4'],answer:3,opts:[2,3,4,5],urdu:'خالی جگہ کیا ہے؟'},
-  {seq:['1','?','3','4'],answer:2,opts:[1,2,3,4],urdu:'خالی جگہ کیا ہے؟'},
-  {seq:['3','?','5','6'],answer:4,opts:[3,4,5,6],urdu:'خالی جگہ کیا ہے؟'},
-  {seq:['?','2','3','4'],answer:1,opts:[1,2,3,4],urdu:'شروع میں کیا تھا؟'},
-  {seq:['1','2','3','?'],answer:4,opts:[3,4,5,6],urdu:'اگلا نمبر کیا ہے؟'},
-  {seq:['2','4','?','8'],answer:6,opts:[5,6,7,8],urdu:'دو دو بڑھ رہے ہیں'},
-  {seq:['5','6','7','?'],answer:8,opts:[7,8,9,10],urdu:'اگلا نمبر کیا ہے؟'},
-  {seq:['?','3','4','5'],answer:2,opts:[1,2,3,4],urdu:'شروع میں کیا تھا؟'},
-  {seq:['4','5','?','7'],answer:6,opts:[5,6,7,8],urdu:'خالی جگہ کیا ہے؟'},
-  {seq:['1','2','3','4','?'],answer:5,opts:[4,5,6,7],urdu:'گنتی میں اگلا نمبر؟'},
-];
-
 const GK_E=[
-  {q:'What sound does a cat make?',answer:'Meow',opts:['Meow','Woof','Moo','Baa'],urdu:'بلی کیا آواز نکالتی ہے؟'},
-  {q:'What color is the sky?',answer:'Blue',opts:['Blue','Red','Green','Yellow'],urdu:'آسمان کا رنگ کیا ہے؟'},
-  {q:'How many fingers on one hand?',answer:'5',opts:['3','4','5','6'],urdu:'ایک ہاتھ میں کتنی انگلیاں ہیں؟'},
-  {q:'What do cows give us?',answer:'Milk',opts:['Milk','Honey','Eggs','Wool'],urdu:'گائے ہمیں کیا دیتی ہے؟'},
-  {q:'What color is grass?',answer:'Green',opts:['Green','Blue','Red','Yellow'],urdu:'گھاس کا رنگ کیا ہے؟'},
-  {q:'How many eyes do we have?',answer:'2',opts:['1','2','3','4'],urdu:'ہماری کتنی آنکھیں ہیں؟'},
-  {q:'What animal says Woof?',answer:'Dog',opts:['Dog','Cat','Cow','Duck'],urdu:'کون سا جانور وف وف کرتا ہے؟'},
-  {q:'What color is the sun?',answer:'Yellow',opts:['Yellow','Blue','Red','Green'],urdu:'سورج کا رنگ کیا ہے؟'},
-  {q:'Where do fish live?',answer:'Water',opts:['Water','Sky','Tree','Desert'],urdu:'مچھلی کہاں رہتی ہے؟'},
-  {q:'What do birds use to fly?',answer:'Wings',opts:['Wings','Legs','Tail','Beak'],urdu:'پرندے کس سے اڑتے ہیں؟'},
-  {q:'How many legs does a cow have?',answer:'4',opts:['2','4','6','8'],urdu:'گائے کی کتنی ٹانگیں ہیں؟'},
-  {q:'What do we use to see?',answer:'Eyes',opts:['Eyes','Ears','Nose','Hands'],urdu:'ہم دیکھنے کے لیے کیا استعمال کرتے ہیں؟'},
-  {q:'What color is a banana?',answer:'Yellow',opts:['Yellow','Red','Green','Blue'],urdu:'کیلے کا رنگ کیا ہے؟'},
-  {q:'What sound does a dog make?',answer:'Woof',opts:['Woof','Meow','Moo','Baa'],urdu:'کتا کیا آواز نکالتا ہے؟'},
+  {q:'What sound does a cat make?',answer:'Meow',opts:['Meow','Woof','Moo','Baa'],urdu:'بلی کیا آواز نکالتی ہے؟'},{q:'What color is the sky?',answer:'Blue',opts:['Blue','Red','Green','Yellow'],urdu:'آسمان کا رنگ کیا ہے؟'},{q:'How many fingers on one hand?',answer:'5',opts:['3','4','5','6'],urdu:'ایک ہاتھ میں کتنی انگلیاں ہیں؟'},{q:'What do cows give us?',answer:'Milk',opts:['Milk','Honey','Eggs','Wool'],urdu:'گائے ہمیں کیا دیتی ہے؟'},{q:'What color is grass?',answer:'Green',opts:['Green','Blue','Red','Yellow'],urdu:'گھاس کا رنگ کیا ہے؟'},{q:'How many eyes do we have?',answer:'2',opts:['1','2','3','4'],urdu:'ہماری کتنی آنکھیں ہیں؟'},{q:'What animal says Woof?',answer:'Dog',opts:['Dog','Cat','Cow','Duck'],urdu:'وف وف کون کرتا ہے؟'},{q:'What color is the sun?',answer:'Yellow',opts:['Yellow','Blue','Red','Green'],urdu:'سورج کا رنگ کیا ہے؟'},{q:'Where do fish live?',answer:'Water',opts:['Water','Sky','Tree','Desert'],urdu:'مچھلی کہاں رہتی ہے؟'},{q:'What do birds use to fly?',answer:'Wings',opts:['Wings','Legs','Tail','Beak'],urdu:'پرندے کس سے اڑتے ہیں؟'},{q:'What color is a banana?',answer:'Yellow',opts:['Yellow','Red','Green','Blue'],urdu:'کیلے کا رنگ کیا ہے؟'},{q:'How many legs does a cow have?',answer:'4',opts:['2','4','6','8'],urdu:'گائے کی کتنی ٹانگیں ہیں؟'},
 ];
 
-/* ── UTILS ── */
+const SCRAMBLE=[
+  {letters:'TAC',  answer:'Cat',  opts:['Cat','Car','Cab','Cot'],  emoji:'🐱',urdu:'ان حروف سے بلی بنتی ہے۔'},{letters:'ODG',  answer:'Dog',  opts:['Dog','Dot','Dig','Den'],  emoji:'🐶',urdu:'ان حروف سے کتا بنتا ہے۔'},{letters:'NUS',  answer:'Sun',  opts:['Sun','Sin','Son','Sip'],  emoji:'☀️',urdu:'ان حروف سے سورج بنتا ہے۔'},{letters:'XFO',  answer:'Fox',  opts:['Fox','For','Foe','Fur'],  emoji:'🦊',urdu:'ان حروف سے لومڑی بنتی ہے۔'},{letters:'WOC',  answer:'Cow',  opts:['Cow','Cob','Cot','Cod'],  emoji:'🐄',urdu:'ان حروف سے گائے بنتی ہے۔'},{letters:'NEH',  answer:'Hen',  opts:['Hen','Her','Hew','Hit'],  emoji:'🐔',urdu:'ان حروف سے مرغی بنتی ہے۔'},{letters:'ENP',  answer:'Pen',  opts:['Pen','Pet','Pew','Peg'],  emoji:'✏️',urdu:'ان حروف سے قلم بنتا ہے۔'},{letters:'EBE',  answer:'Bee',  opts:['Bee','Bed','Bet','Ben'],  emoji:'🐝',urdu:'ان حروف سے مکھی بنتی ہے۔'},{letters:'SUB',  answer:'Bus',  opts:['Bus','But','Bug','Bun'],  emoji:'🚌',urdu:'ان حروف سے بس بنتی ہے۔'},{letters:'ATH',  answer:'Hat',  opts:['Hat','Has','Ham','Hay'],  emoji:'🎩',urdu:'ان حروف سے ٹوپی بنتی ہے۔'},
+  {letters:'KCUD', answer:'Duck', opts:['Duck','Dusk','Dock','Luck'], emoji:'🦆',urdu:'ان حروف سے بطخ بنتی ہے۔'},{letters:'HSFI', answer:'Fish', opts:['Fish','Fist','Dish','Wish'], emoji:'🐟',urdu:'ان حروف سے مچھلی بنتی ہے۔'},{letters:'GORF', answer:'Frog', opts:['Frog','From','Fog','Flog'],  emoji:'🐸',urdu:'ان حروف سے مینڈک بنتا ہے۔'},{letters:'NALI', answer:'Lion', opts:['Lion','Loin','Loan','Lint'], emoji:'🦁',urdu:'ان حروف سے شیر بنتا ہے۔'},{letters:'EETR', answer:'Tree', opts:['Tree','Free','Thee','Flee'], emoji:'🌳',urdu:'ان حروف سے درخت بنتا ہے۔'},{letters:'LLBA', answer:'Ball', opts:['Ball','Bell','Bill','Call'], emoji:'⚽',urdu:'ان حروف سے گیند بنتی ہے۔'},{letters:'NIAR', answer:'Rain', opts:['Rain','Ruin','Rail','Rein'], emoji:'🌧️',urdu:'ان حروف سے بارش بنتی ہے۔'},{letters:'RATS', answer:'Star', opts:['Star','Scar','Stir','Lair'], emoji:'⭐',urdu:'ان حروف سے ستارہ بنتا ہے۔'},
+];
+const SCRAMBLE_E=SCRAMBLE.filter(q=>q.letters.length<=3);
+
+const FLAGS=[
+  {flag:'🇵🇰',answer:'Pakistan',opts:['Pakistan','India','Turkey','Iran'],urdu:'یہ پاکستان کا جھنڈا ہے۔'},{flag:'🇬🇧',answer:'England',opts:['England','France','Germany','Italy'],urdu:'یہ انگلینڈ کا جھنڈا ہے۔'},{flag:'🇺🇸',answer:'USA',opts:['USA','Canada','Australia','Mexico'],urdu:'یہ امریکہ کا جھنڈا ہے۔'},{flag:'🇸🇦',answer:'Saudi Arabia',opts:['Saudi Arabia','UAE','Kuwait','Jordan'],urdu:'یہ سعودی عرب کا جھنڈا ہے۔'},{flag:'🇦🇺',answer:'Australia',opts:['Australia','New Zealand','Canada','USA'],urdu:'یہ آسٹریلیا کا جھنڈا ہے۔'},{flag:'🇨🇳',answer:'China',opts:['China','Japan','Korea','India'],urdu:'یہ چین کا جھنڈا ہے۔'},{flag:'🇫🇷',answer:'France',opts:['France','Germany','Italy','Spain'],urdu:'یہ فرانس کا جھنڈا ہے۔'},{flag:'🇹🇷',answer:'Turkey',opts:['Turkey','Iran','Iraq','Jordan'],urdu:'یہ ترکیہ کا جھنڈا ہے۔'},{flag:'🇯🇵',answer:'Japan',opts:['Japan','China','Korea','Thailand'],urdu:'یہ جاپان کا جھنڈا ہے۔'},{flag:'🇦🇪',answer:'UAE',opts:['UAE','Saudi Arabia','Qatar','Kuwait'],urdu:'یہ متحدہ عرب امارات کا جھنڈا ہے۔'},{flag:'🇧🇷',answer:'Brazil',opts:['Brazil','Argentina','Mexico','Colombia'],urdu:'یہ برازیل کا جھنڈا ہے۔'},{flag:'🇮🇳',answer:'India',opts:['India','Pakistan','Bangladesh','Nepal'],urdu:'یہ بھارت کا جھنڈا ہے۔'},
+];
+
+const SHAPES=[
+  {shape:'circle',   color:'#FF5858',answer:'Circle',   opts:['Circle',   'Oval',    'Square',  'Sphere']},
+  {shape:'square',   color:'#43E97B',answer:'Square',   opts:['Square',   'Rectangle','Diamond','Cube']},
+  {shape:'triangle', color:'#4FACFE',answer:'Triangle', opts:['Triangle', 'Pyramid', 'Cone',    'Arrow']},
+  {shape:'rectangle',color:'#F093FB',answer:'Rectangle',opts:['Rectangle','Square',  'Oval',    'Strip']},
+  {shape:'star',     color:'#FFD700',answer:'Star',     opts:['Star',     'Circle',  'Diamond', 'Cross']},
+  {shape:'heart',    color:'#FF5858',answer:'Heart',    opts:['Heart',    'Diamond', 'Circle',  'Oval']},
+  {shape:'diamond',  color:'#C471ED',answer:'Diamond',  opts:['Diamond',  'Square',  'Kite',    'Star']},
+  {shape:'pentagon', color:'#12C2E9',answer:'Pentagon', opts:['Pentagon', 'Hexagon', 'Octagon', 'Square']},
+  {shape:'hexagon',  color:'#F6D365',answer:'Hexagon',  opts:['Hexagon',  'Pentagon','Octagon', 'Square']},
+  {shape:'oval',     color:'#43E97B',answer:'Oval',     opts:['Oval',     'Circle',  'Egg',     'Round']},
+];
+
+const MEMORY=[];
+[['🐱','🐶','🐸','🐰'],['🍎','🍌','🍊','🍇'],['⭐','🌙','☀️','🌟'],['🔴','🔵','🟢','🟡'],['🚗','🚀','🚂','✈️'],['🎈','🎁','🎂','🎉'],['🌸','🌻','🌹','🌺'],['🦁','🐯','🦊','🐼'],['🍭','🍕','🍦','🍩'],['🎸','🎺','🥁','🎹']].forEach(set=>{
+  for(let pos=0;pos<4;pos++){const correct=set[pos],wrong=set.filter((_,i)=>i!==pos);MEMORY.push({items:set,pos,answer:correct,opts:shuffle([correct,...wrong]),posLabel:['1st','2nd','3rd','4th'][pos]})}
+});
+
+/* ═══ UTIL ═══ */
 function shuffle(a){const b=[...a];for(let i=b.length-1;i>0;i--){const j=~~(Math.random()*(i+1));[b[i],b[j]]=[b[j],b[i]]}return b}
 
-/* ── INIT ── */
+/* ═══ INIT ═══ */
 dbLoad();
+updateDiffBadge();
 if('serviceWorker' in navigator) navigator.serviceWorker.register('/roshni-world/sw.js');
 </script>
 </body>
